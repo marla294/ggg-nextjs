@@ -4,7 +4,7 @@ export default function Ingredients({ ingredients }: { ingredients: any }) {
   return (
     <div>
       {ingredients?.map((ingredient: any) => (
-        <div key={ingredient?.id}>
+        <div key={ingredient?._id}>
           <div>{ingredient?.name}</div>
         </div>
       ))}
