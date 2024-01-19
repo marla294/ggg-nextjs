@@ -1,9 +1,25 @@
 import clientPromise from "../lib/mongodb";
 
-export default function Ingredients({ ingredients }: { ingredients: any }) {
+interface Ingredient {
+  _id: string;
+  name: string;
+  description: string;
+  store: string;
+  units: string;
+  aisle: string;
+  homeArea: string;
+  user: string;
+  photo: string;
+}
+
+export default function Ingredients({
+  ingredients,
+}: {
+  ingredients: Ingredient[];
+}) {
   return (
     <div>
-      {ingredients?.map((ingredient: any) => (
+      {ingredients?.map((ingredient: Ingredient) => (
         <div key={ingredient?._id}>
           <div>{ingredient?.name}</div>
         </div>
@@ -25,7 +41,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        ingredients: JSON.parse(JSON.stringify(ingredients)),
+        ingredients: JSON.parse(JSON.stringify(ingredients)) as Ingredient[],
       },
     };
   } catch (e) {
