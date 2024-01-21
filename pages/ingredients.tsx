@@ -9,7 +9,7 @@ interface Ingredient {
   aisle: string;
   homeArea: string;
   user: string;
-  photo: string;
+  photo: Object;
 }
 
 export default function Ingredients({
@@ -36,7 +36,7 @@ export async function getServerSideProps() {
     const ingredients = await db
       .collection("ingredients")
       .find({})
-      .limit(10)
+      .limit(1000)
       .toArray();
 
     return {
