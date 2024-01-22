@@ -1,27 +1,28 @@
+import dbConnect from "../lib/dbconnect";
 import clientPromise from "../lib/mongodb";
+import Ingredient from "../models/Ingredient";
+import User from "../models/User";
 
-interface Ingredient {
-  _id: string;
-  name: string;
-  description: string;
-  store: string;
-  units: string;
-  aisle: string;
-  homeArea: string;
-  user: string;
-  photo: Object;
-}
+// interface Ingredient {
+//   _id: string;
+//   name: string;
+//   description: string;
+//   store: string;
+//   units: string;
+//   aisle: string;
+//   homeArea: string;
+//   user: string;
+//   photo: Object;
+// }
 
-export default function Ingredients({
-  ingredients,
-}: {
-  ingredients: Ingredient[];
-}) {
+export default function Ingredients({ ingredients }) {
+  console.log({ ingredients });
   return (
     <div>
-      {ingredients?.map((ingredient: Ingredient) => (
+      {ingredients?.map((ingredient) => (
         <div key={ingredient?._id}>
           <div>{ingredient?.name}</div>
+          <div>{ingredient?.user?.name}</div>
         </div>
       ))}
     </div>
@@ -30,18 +31,18 @@ export default function Ingredients({
 
 export async function getServerSideProps() {
   try {
-    const client = await clientPromise;
-    const db = client.db("ggg");
+    await dbConnect();
+    // const db = client.db("ggg");
 
-    const ingredients = await db
-      .collection("ingredients")
-      .find({})
-      .limit(1000)
-      .toArray();
+    const ingredients = await Ingredient.find({}).populate(
+      "userId",
+      "user",
+      User
+    );
 
     return {
       props: {
-        ingredients: JSON.parse(JSON.stringify(ingredients)) as Ingredient[],
+        ingredients: JSON.parse(JSON.stringify(ingredients)),
       },
     };
   } catch (e) {
