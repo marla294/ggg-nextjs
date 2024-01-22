@@ -19,13 +19,16 @@ const ingredientSchema = new Schema({
   homeArea: {
     type: String,
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
+  },
+  photo: {
+    type: Schema.Types.ObjectId,
+    ref: 'IngredientImage'
   }
 });
 
-// const Ingredient = models.Ingredient || model("Ingredient", ingredientSchema);
-const Ingredient = model("Ingredient", ingredientSchema);
+const Ingredient = models.Ingredient || model("Ingredient", ingredientSchema);
 
 export default Ingredient;

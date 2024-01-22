@@ -1,14 +1,22 @@
 import { Schema, model, models } from 'mongoose';
 
 const userSchema = new Schema({
-  name: {
-    type: String,
-    required: [true, 'User name is required.']
-  }, 
+  _id: Schema.Types.ObjectId,
+  __v: {
+    type: Number
+  },
   email: {
     type: String,
-    required: [true, "User email is required."]
-  }
+  },
+  joinDate: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
 });
 
 const User = models.User || model("User", userSchema);

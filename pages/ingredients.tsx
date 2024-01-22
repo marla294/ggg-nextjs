@@ -1,6 +1,7 @@
 import dbConnect from "../lib/dbconnect";
 import clientPromise from "../lib/mongodb";
 import Ingredient from "../models/Ingredient";
+import IngredientImage from "../models/IngredientImage";
 import User from "../models/User";
 
 // interface Ingredient {
@@ -34,11 +35,10 @@ export async function getServerSideProps() {
     await dbConnect();
     // const db = client.db("ggg");
 
-    const ingredients = await Ingredient.find({}).populate(
-      "userId",
-      "user",
-      User
-    );
+    const ingredients = await Ingredient.find({})
+      .populate("user", "user", User)
+      .populate("photo", "ingredientImage", IngredientImage)
+      .exec();
 
     return {
       props: {
