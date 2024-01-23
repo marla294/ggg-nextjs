@@ -11,6 +11,7 @@ export default function Ingredients({ ingredients }) {
         <div key={ingredient?._id}>
           <div>{ingredient?.name}</div>
           <div>{ingredient?.user?.name}</div>
+          <img src={ingredient?.photo?.image?._meta?.url} />
         </div>
       ))}
     </div>
