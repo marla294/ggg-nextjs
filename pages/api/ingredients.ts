@@ -1,15 +1,14 @@
 import clientPromise from "../../lib/mongodb";
+import Ingredient from "../../models/Ingredient";
+import User from "../../models/User";
 
 export default async (_req: any, res: any) => {
   try {
     const client = await clientPromise;
-    const db = client.db('ggg');
 
-    const ingredients = await db
-    .collection('ingredients')
-    .find({})
-    .limit(10)
-    .toArray();
+    const ingredients = await Ingredient.find({})
+    .populate("user", "user", User)
+    .exec();
 
     res.json(ingredients);
   } catch (e) {

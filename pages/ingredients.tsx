@@ -17,7 +17,7 @@ import User from "../models/User";
 // }
 
 export default function Ingredients({ ingredients }) {
-  console.log({ ingredients });
+  // console.log({ ingredients });
   return (
     <div>
       {ingredients?.map((ingredient) => (
@@ -36,8 +36,12 @@ export async function getServerSideProps() {
     // const db = client.db("ggg");
 
     const ingredients = await Ingredient.find({})
-      .populate("user", "user", User)
-      .populate("photo", "ingredientImage", IngredientImage)
+      .populate([
+        {
+          path: "user",
+          model: User,
+        },
+      ])
       .exec();
 
     return {

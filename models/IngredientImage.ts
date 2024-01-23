@@ -2,10 +2,7 @@ import { Schema, model, models } from 'mongoose';
 
 const ingredientImageSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  __v: {
-    type: Number
-  },
-  altText: {
+  AltText: {
     type: String
   }
 });
