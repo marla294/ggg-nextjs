@@ -38,7 +38,6 @@ const ListItemStyles = styled.div`
 `;
 
 export default function Ingredients({ ingredients }) {
-  console.log({ ingredients });
   return (
     <div>
       {ingredients?.map((ingredient) => (
