@@ -1,14 +1,11 @@
-import bcryptjs from 'bcryptjs';
-import dbConnect from "../../lib/dbconnect";
 import User from "../../models/User";
 
-export default async (req: any, res: any) => {
+export default async (_req: any, res: any) => {
   try {
-    await dbConnect();
+    const user = await User.find({email: 'foremanfam@example.com'})
+    .exec();
 
-    const user = await User.find({});
-
-    res.json({isAuthenticated: true});
+    res.json(user);
   } catch (e) {
     console.error(e);
   }
