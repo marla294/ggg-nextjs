@@ -76,12 +76,22 @@ export default function Login() {
     });
   };
 
+  const signIn = async () => {
+    const response = await fetch("/api/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputs), // body data type must match "Content-Type" header
+    });
+  };
+
   return (
     <FormStyles
       method="POST"
       onSubmit={async (e) => {
         e.preventDefault();
-        // await signIn();
+        await signIn();
         // resetForm();
         // Router.push({ pathname: "/" });
       }}>
