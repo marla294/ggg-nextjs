@@ -77,7 +77,7 @@ export default function Login() {
   };
 
   const signIn = async () => {
-    const response = await fetch("/api/signin", {
+    const response = await fetch("/services/authentication/api/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

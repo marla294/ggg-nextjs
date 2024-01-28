@@ -1,21 +1,25 @@
-import dbConnect from "../../lib/dbconnect";
-import User from "../../models/User";
+import dbConnect from "../../../lib/dbconnect";
+import User from "../../../models/User";
 import bcryptjs from 'bcryptjs';
+import { setSession } from "../cookie-session";
 
 export default async (req: any, res: any) => {
   try {
     await dbConnect();
-    const {email, password} = req.body;
-    const users = await User.find({email})
-    .exec();
-    const user = users[0];
 
-    if (user) {
+    const {email, password} = req.body;
+
+    const users = await User.find({email}).exec();
+    const user = users[0];
+    console.log({user});
+
+    if (user) {\
       const authResult = await bcryptjs.compare(password, user.password);
-      console.log({authResult, user});
+      await setSession({login: email});
     }
 
-    res.json(user);
+    return;
+
   } catch (e) {
     console.error(e);
   }
