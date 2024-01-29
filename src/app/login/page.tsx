@@ -2,7 +2,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import signin from "./signin";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const FormStyles = styled.form`
@@ -68,8 +67,16 @@ const FormStyles = styled.form`
   }
 `;
 
+const Error = styled.div`
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+
 export default function Login() {
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleChange = (e: any) => {
@@ -85,6 +92,12 @@ export default function Login() {
     const result = await signin(inputs);
     if (result?.success) {
       router.push("/ingredients");
+    } else {
+      setError(
+        result?.error
+          ? result?.error
+          : "There was an error submitting your request"
+      );
     }
   };
 
@@ -95,11 +108,10 @@ export default function Login() {
         e.preventDefault();
         await handleSignIn();
         // resetForm();
-        // Router.push({ pathname: "/" });
       }}>
       <fieldset>
         <h2>Sign into your account</h2>
-        {/* <DisplayError error={error} /> */}
+        {error && <Error>{error}</Error>}
         <label htmlFor="email">
           Email<span className="required">&nbsp;*</span>
           <input
