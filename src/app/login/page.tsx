@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -77,12 +78,9 @@ export default function Login() {
   };
 
   const signIn = async () => {
-    const response = await fetch("/services/authentication/api/signin", {
+    const response = await fetch("/signin", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputs), // body data type must match "Content-Type" header
+      body: JSON.stringify(inputs),
     });
   };
 
