@@ -88,10 +88,19 @@ export default function Login() {
     });
   };
 
+  const resetForm = () => {
+    setInputs({
+      ...inputs,
+      email: "",
+      password: "",
+    });
+  };
+
   const handleSignIn = async () => {
     const result = await signin(inputs);
     if (result?.success) {
       router.push("/ingredients");
+      resetForm();
     } else {
       setError(
         result?.error
@@ -107,7 +116,6 @@ export default function Login() {
       onSubmit={async (e) => {
         e.preventDefault();
         await handleSignIn();
-        // resetForm();
       }}>
       <fieldset>
         <h2>Sign into your account</h2>
