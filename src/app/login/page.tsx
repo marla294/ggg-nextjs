@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import styled from "styled-components";
+import signin from "./signin";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -67,6 +70,7 @@ const FormStyles = styled.form`
 
 export default function Login() {
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const router = useRouter();
 
   const handleChange = (e: any) => {
     const { value, name } = e.target;
@@ -77,11 +81,11 @@ export default function Login() {
     });
   };
 
-  const signIn = async () => {
-    const response = await fetch("/signin", {
-      method: "POST",
-      body: JSON.stringify(inputs),
-    });
+  const handleSignIn = async () => {
+    const result = await signin(inputs);
+    if (result?.success) {
+      router.push("/ingredients");
+    }
   };
 
   return (
@@ -89,7 +93,7 @@ export default function Login() {
       method="POST"
       onSubmit={async (e) => {
         e.preventDefault();
-        await signIn();
+        await handleSignIn();
         // resetForm();
         // Router.push({ pathname: "/" });
       }}>
