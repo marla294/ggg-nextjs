@@ -1,3 +1,4 @@
+'use server'
 import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import Ingredient from "../../../models/Ingredient";
