@@ -10,7 +10,6 @@ export default async () => {
     await dbConnect();
 
     const session = await getSession();
-    console.log({session});
 
     const ingredients = await Ingredient.find({})
       .populate([
