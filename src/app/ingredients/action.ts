@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import Ingredient from "../../../models/Ingredient";
@@ -26,13 +26,15 @@ export default async () => {
       ])
       .exec();
 
-      if (ingredients) {
-        const ingredientsFiltered = ingredients.filter(ingredient => ingredient.user?.email === session?.login);
-        return JSON.stringify(ingredientsFiltered);
-      } else {
-        return null;
-      }
+    if (ingredients) {
+      const ingredientsFiltered = ingredients
+        .filter((ingredient) => ingredient.user?.email === session?.login)
+        .sort((a, b) => (a.name < b.name ? -1 : 1));
+      return JSON.stringify(ingredientsFiltered);
+    } else {
+      return null;
+    }
   } catch (e) {
     console.error(e);
   }
-}
+};
