@@ -24,7 +24,9 @@ export default async () => {
       .exec();
 
       if (ingredients) {
-        return ingredients;
+        return JSON.stringify(ingredients);
+      } else {
+        return null;
       }
   } catch (e) {
     console.error(e);

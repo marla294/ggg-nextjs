@@ -1,6 +1,8 @@
 "use server";
 // import styled from "styled-components";
 import getIngredients from "./action";
+import IngredientListItem from "../components/IngredientListItem";
+import IngredientsList from "../components/IngredientsList";
 
 // const ListItemStyles = styled.div`
 //   background: white;
@@ -37,28 +39,33 @@ import getIngredients from "./action";
 
 const fetchIngredients = async () => {
   const res = await getIngredients();
-  return res;
+  const data = JSON.stringify(res);
+  return data;
 };
 
 export default async function Ingredients() {
-  const ingredients = await getIngredients();
+  const res = await getIngredients();
+  const result = JSON.parse(res as string);
+  const ingredients = result || [];
 
   return (
-    <div>
-      {ingredients?.map((ingredient) => (
-        <div key={ingredient?._id}>
-          {ingredient?.photo?.image?._meta?.url ? (
-            <img
-              src={ingredient?.photo?.image?._meta?.url}
-              alt={ingredient?.photo?.altText || ingredient?.name}
-            />
-          ) : (
-            <div className="noPhoto">No Photo</div>
-          )}
+    <IngredientsList ingredients={ingredients} />
+    // <div>
+    //   {ingredients?.map((ingredient) => (
+    //     <IngredientListItem ingredient={ingredient} />
+    //     // <div key={ingredient?._id}>
+    //     //   {ingredient?.photo?.image?._meta?.url ? (
+    //     //     <img
+    //     //       src={ingredient?.photo?.image?._meta?.url}
+    //     //       alt={ingredient?.photo?.altText || ingredient?.name}
+    //     //     />
+    //     //   ) : (
+    //     //     <div className="noPhoto">No Photo</div>
+    //     //   )}
 
-          <div className="details">{ingredient?.name}</div>
-        </div>
-      ))}
-    </div>
+    //     //   <div className="details">{ingredient?.name}</div>
+    //     // </div>
+    //   ))}
+    // </div>
   );
 }
