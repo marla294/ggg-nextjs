@@ -34,11 +34,15 @@ const InnerNavStyles = styled.div`
   }
 `;
 
-export default function Nav() {
+export default function Nav({ signOut }: { signOut: any }) {
   const { navOpen, closeNav } = useNav();
 
   const clickHandler = () => {
     closeNav();
+  };
+
+  const handleSignOut = () => {
+    signOut();
   };
 
   return (
@@ -47,9 +51,7 @@ export default function Nav() {
         <Link href="/ingredients" legacyBehavior>
           <a onClick={clickHandler}>Ingredients</a>
         </Link>
-        <Link href="/account" legacyBehavior>
-          <a onClick={clickHandler}>Sign Out</a>
-        </Link>
+        <a onClick={handleSignOut}>Sign Out</a>
       </InnerNavStyles>
     </NavStyles>
   );

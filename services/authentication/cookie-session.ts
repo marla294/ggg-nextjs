@@ -33,6 +33,6 @@ export async function setSession(user: User) : Promise<void> {
     });
 }
 
-export async function deleteSession(user: User) : Promise<void> {
+export async function deleteSession() : Promise<void> {
     cookies().delete('auth_session');
 }

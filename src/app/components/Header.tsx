@@ -103,7 +103,13 @@ const Container = styled.div`
   }
 `;
 
-export default function Header({ children }: { children: React.ReactNode }) {
+export default function Header({
+  children,
+  signOut,
+}: {
+  children: React.ReactNode;
+  signOut: any;
+}) {
   const { navOpen, toggleNav } = useNav();
 
   return (
@@ -122,7 +128,7 @@ export default function Header({ children }: { children: React.ReactNode }) {
           </div>
         </NavStyles>
       </HeaderStyles>
-      <Nav />
+      <Nav signOut={signOut} />
       <Container>{children}</Container>
     </>
   );
