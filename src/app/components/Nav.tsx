@@ -7,7 +7,7 @@ import { useNav } from "../lib/navState";
 
 const NavStyles = styled.div`
   position: fixed;
-  top: 5rem;
+  top: 4.45rem;
   left: 0;
   display: none;
   background-color: white;

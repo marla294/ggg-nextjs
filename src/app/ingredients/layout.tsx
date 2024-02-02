@@ -19,6 +19,11 @@ const Logo = styled.h1`
 `;
 
 const HeaderStyles = styled.header`
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
   display: grid;
   grid-template-columns: minmax(200px, auto) 1fr;
   justify-content: space-between;
@@ -91,6 +96,13 @@ const NavStyles = styled.nav`
   }
 `;
 
+const Container = styled.div`
+  padding: 6rem 1rem 0 1rem;
+  @media (min-width: 768px) {
+    padding: 8rem 1rem 0 1rem;
+  }
+`;
+
 export default function IngredientsLayout({
   children,
 }: {
@@ -99,27 +111,23 @@ export default function IngredientsLayout({
   const { navOpen, toggleNav } = useNav();
 
   return (
-    <div>
-      <>
-        <HeaderStyles>
-          <Logo>
-            <Link href="/">Go Get Ur Groceries</Link>
-          </Logo>
-          <NavStyles>
-            <div
-              className={
-                navOpen ? "mobile-nav-button open" : "mobile-nav-button"
-              }
-              onClick={toggleNav}>
-              <span className="line line1" />
-              <span className="line line2" />
-              <span className="line line3" />
-            </div>
-          </NavStyles>
-        </HeaderStyles>
-        <Nav />
-      </>
-      {children}
-    </div>
+    <>
+      <HeaderStyles>
+        <Logo>
+          <Link href="/">Go Get Ur Groceries</Link>
+        </Logo>
+        <NavStyles>
+          <div
+            className={navOpen ? "mobile-nav-button open" : "mobile-nav-button"}
+            onClick={toggleNav}>
+            <span className="line line1" />
+            <span className="line line2" />
+            <span className="line line3" />
+          </div>
+        </NavStyles>
+      </HeaderStyles>
+      <Nav />
+      <Container>{children}</Container>
+    </>
   );
 }
