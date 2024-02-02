@@ -32,3 +32,7 @@ export async function setSession(user: User) : Promise<void> {
         // secure: true, # Uncomment this line when using HTTPS
     });
 }
+
+export async function deleteSession(user: User) : Promise<void> {
+    cookies().delete('auth_session');
+}
