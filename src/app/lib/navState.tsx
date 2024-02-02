@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client";
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const LocalStateContext = createContext({
@@ -6,13 +7,14 @@ const LocalStateContext = createContext({
   setNavOpen: () => {},
   closeNav: () => {},
   openNav: () => {},
+  toggleNav: () => {},
 });
 
 const LocalStateProvider = LocalStateContext.Provider;
 
 const NavStateProvider = ({ children }: { children: any }) => {
   const [navOpen, setNavOpen] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   const closeNav = () => {
     setNavOpen(false);
@@ -22,12 +24,17 @@ const NavStateProvider = ({ children }: { children: any }) => {
     setNavOpen(true);
   };
 
+  const toggleNav = () => {
+    setNavOpen(!navOpen);
+  };
+
   useEffect(() => {
     closeNav();
-  }, [router.pathname]);
+  }, [pathname]);
 
   return (
-    <LocalStateProvider value={{ navOpen, setNavOpen, closeNav, openNav }}>
+    <LocalStateProvider
+      value={{ navOpen, setNavOpen, closeNav, openNav, toggleNav }}>
       {children}
     </LocalStateProvider>
   );

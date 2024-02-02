@@ -1,5 +1,6 @@
 "use client";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
+import { NavStateProvider } from "./lib/navState";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -80,8 +81,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <GlobalStyles />
-      <body>{children}</body>
+      <NavStateProvider>
+        <GlobalStyles />
+        <body>{children}</body>
+      </NavStateProvider>
     </html>
   );
 }

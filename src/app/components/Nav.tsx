@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+"use client";
 import Link from "next/link";
 import styled from "styled-components";
-// import { useNav } from "../lib/NavState";
+import { useNav } from "../lib/navState";
 
 const NavStyles = styled.div`
   position: fixed;
@@ -16,9 +17,6 @@ const NavStyles = styled.div`
   z-index: 110;
   &.open {
     display: grid;
-    @media (min-width: 768px) {
-      display: none;
-    }
   }
 `;
 
@@ -34,19 +32,19 @@ const InnerNavStyles = styled.div`
 `;
 
 export default function Nav() {
-  const { NavOpen, closeNav } = useNav();
+  const { navOpen, closeNav } = useNav();
 
   const clickHandler = () => {
     closeNav();
   };
 
   return (
-    <NavStyles className={NavOpen ? "open" : ""}>
+    <NavStyles className={navOpen ? "open" : ""}>
       <InnerNavStyles>
-        <Link href="/ingredients">
+        <Link href="/ingredients" legacyBehavior>
           <a onClick={clickHandler}>Ingredients</a>
         </Link>
-        <Link href="/account">
+        <Link href="/account" legacyBehavior>
           <a onClick={clickHandler}>Sign Out</a>
         </Link>
       </InnerNavStyles>
