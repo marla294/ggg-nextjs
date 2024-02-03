@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import Nav from "./Nav";
 import { useNav } from "../lib/navState";
+import { useRouter } from "next/navigation";
 
 const Logo = styled.h1`
   font-size: 2rem;
@@ -111,6 +112,12 @@ export default function Header({
   signOut: any;
 }) {
   const { navOpen, toggleNav } = useNav();
+  const router = useRouter();
+
+  const handleSignout = async () => {
+    await signOut();
+    router.push("/login");
+  };
 
   return (
     <>
@@ -128,7 +135,7 @@ export default function Header({
           </div>
         </NavStyles>
       </HeaderStyles>
-      <Nav signOut={signOut} />
+      <Nav signOut={handleSignout} />
       <Container>{children}</Container>
     </>
   );
