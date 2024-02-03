@@ -31,6 +31,7 @@ const InnerNavStyles = styled.div`
   a {
     padding: 1.5rem 2.5rem;
     border-bottom: 0.5px solid var(--lightGray);
+    cursor: pointer;
   }
 `;
 
