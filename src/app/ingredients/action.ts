@@ -5,7 +5,7 @@ import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async () => {
+export default async ({name}: {name?: string | null}) => {
   try {
     await dbConnect();
 
@@ -29,6 +29,7 @@ export default async () => {
     if (ingredients) {
       const ingredientsFiltered = ingredients
         .filter((ingredient) => ingredient.user?.email === session?.login)
+        .filter((ingredient) => name ? ingredient.name === name : true)
         .sort((a, b) => (a.name < b.name ? -1 : 1));
       return JSON.stringify(ingredientsFiltered);
     } else {
