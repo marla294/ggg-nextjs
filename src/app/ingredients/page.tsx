@@ -8,14 +8,10 @@ export default async function Ingredients() {
 
   return (
     <>
-      <input
-        name="searchTerm"
-        id="searchTerm"
-        placeholder="Search..."
-        // value={inputs.searchTerm}
-        // onChange={handleChange}
+      <IngredientsList
+        ingredients={ingredients}
+        getIngredients={getIngredients}
       />
-      <IngredientsList ingredients={ingredients} />
     </>
   );
 }
