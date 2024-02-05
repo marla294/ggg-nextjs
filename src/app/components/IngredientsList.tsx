@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import IngredientListItem from "./IngredientListItem";
 import styled from "styled-components";
+import useDebounce from "../hooks/useDebounce";
 
 const IngredientsBarStyles = styled.div`
   display: grid;
@@ -32,14 +33,16 @@ const IngredientsList = ({
     setSearchTerm(val);
   };
 
-  useEffect(() => {
-    const fetchIngredients = async () => {
-      const res = await getIngredients({ name: searchTerm });
-      const tempIngredients = JSON.parse(res as string);
-      setDisplayIngredients(tempIngredients);
-    };
+  const fetchIngredients = async () => {
+    const res = await getIngredients({ name: searchTerm });
+    const tempIngredients = JSON.parse(res as string);
+    setDisplayIngredients(tempIngredients);
+  };
 
-    fetchIngredients();
+  const debouncedFetchIngredients = useDebounce(fetchIngredients, 200);
+
+  useEffect(() => {
+    debouncedFetchIngredients();
   }, [searchTerm]);
 
   return (
