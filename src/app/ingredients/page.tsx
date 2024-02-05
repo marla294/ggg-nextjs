@@ -6,5 +6,16 @@ export default async function Ingredients() {
   const res = await getIngredients({ name: null });
   const ingredients = JSON.parse(res as string);
 
-  return <IngredientsList ingredients={ingredients} />;
+  return (
+    <>
+      <input
+        name="searchTerm"
+        id="searchTerm"
+        placeholder="Search..."
+        // value={inputs.searchTerm}
+        // onChange={handleChange}
+      />
+      <IngredientsList ingredients={ingredients} />
+    </>
+  );
 }
