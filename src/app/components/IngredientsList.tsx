@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IngredientListItem from "./IngredientListItem";
 import styled from "styled-components";
 
@@ -14,9 +14,6 @@ const IngredientsBarStyles = styled.div`
     border: 1px solid black;
     font-size: 1.4rem;
     height: 4rem;
-    &:focus {
-      outline: 0;
-    }
   }
 `;
 
@@ -28,6 +25,22 @@ const IngredientsList = ({
   getIngredients: any;
 }) => {
   const [displayIngredients, setDisplayIngredients] = useState(ingredients);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e: any) => {
+    const val = e.target.value;
+    setSearchTerm(val);
+  };
+
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      const res = await getIngredients({ name: searchTerm });
+      const tempIngredients = JSON.parse(res as string);
+      setDisplayIngredients(tempIngredients);
+    };
+
+    fetchIngredients();
+  }, [searchTerm]);
 
   return (
     <div>
@@ -36,8 +49,8 @@ const IngredientsList = ({
           name="searchTerm"
           id="searchTerm"
           placeholder="Search..."
-          // value={inputs.searchTerm}
-          // onChange={handleChange}
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
       </IngredientsBarStyles>
       {displayIngredients?.map((ingredient: any) => (

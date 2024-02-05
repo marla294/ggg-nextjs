@@ -29,7 +29,13 @@ export default async ({name}: {name?: string | null}) => {
     if (ingredients) {
       const ingredientsFiltered = ingredients
         .filter((ingredient) => ingredient.user?.email === session?.login)
-        .filter((ingredient) => name ? ingredient.name === name : true)
+        .filter((ingredient) => {
+          if (name && name !== '') {
+            return ingredient.name.toLowerCase().includes(name.toLowerCase());
+          } else {
+            return true;
+          }
+        })
         .sort((a, b) => (a.name < b.name ? -1 : 1));
       return JSON.stringify(ingredientsFiltered);
     } else {
