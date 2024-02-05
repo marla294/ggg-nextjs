@@ -18,14 +18,8 @@ const IngredientsBarStyles = styled.div`
   }
 `;
 
-const IngredientsList = ({
-  ingredients,
-  getIngredients,
-}: {
-  ingredients: any;
-  getIngredients: any;
-}) => {
-  const [displayIngredients, setDisplayIngredients] = useState(ingredients);
+const IngredientsList = ({ getIngredients }: { getIngredients: any }) => {
+  const [displayIngredients, setDisplayIngredients] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (e: any) => {
