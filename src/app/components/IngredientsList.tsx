@@ -18,6 +18,16 @@ const IngredientsBarStyles = styled.div`
   }
 `;
 
+const BarContainer = styled.div`
+  position: fixed;
+  top: 4.45rem;
+  left: 0;
+  background-color: white !important;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+`;
+
 const IngredientsListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
@@ -47,16 +57,18 @@ const IngredientsList = ({ getIngredients }: { getIngredients: any }) => {
 
   return (
     <div>
-      <h3>Ingredients</h3>
-      <IngredientsBarStyles>
-        <input
-          name="searchTerm"
-          id="searchTerm"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </IngredientsBarStyles>
+      <BarContainer>
+        <h3>Ingredients</h3>
+        <IngredientsBarStyles>
+          <input
+            name="searchTerm"
+            id="searchTerm"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </IngredientsBarStyles>
+      </BarContainer>
       <IngredientsListContainer>
         {displayIngredients?.map((ingredient: any) => (
           <IngredientListItem key={ingredient._id} ingredient={ingredient} />
