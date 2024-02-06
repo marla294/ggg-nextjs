@@ -6,8 +6,15 @@ const ListItemStyles = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 10rem 5fr;
+  border: 1px solid var(--lightGray);
+  &:hover {
+    background: var(--lightGray);
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   img {
+    padding: 1rem;
     object-fit: cover;
     height: 10rem;
     min-width: 10rem;
@@ -15,6 +22,7 @@ const ListItemStyles = styled.div`
   }
 
   .noPhoto {
+    padding: 1rem;
     height: 10rem;
     min-width: 10rem;
     width: 5rem;
@@ -34,7 +42,7 @@ const ListItemStyles = styled.div`
   }
 `;
 
-const IngredientListItem = ({ ingredient }) => {
+const IngredientListItem = ({ ingredient }: { ingredient: any }) => {
   return (
     <ListItemStyles>
       {ingredient?.photo?.image?._meta?.url ? (
