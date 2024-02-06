@@ -91,7 +91,7 @@ const NavStyles = styled.nav`
 `;
 
 const Container = styled.div`
-  padding: 10rem 1rem 0 1rem;
+  padding: 12rem 1rem 0 1rem;
 `;
 
 export default function Header({
