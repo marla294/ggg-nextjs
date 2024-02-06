@@ -13,10 +13,6 @@ const Logo = styled.h1`
     text-decoration: none;
     padding: 0.5rem 1rem;
   }
-
-  @media (min-width: 768px) {
-    font-size: 3rem;
-  }
 `;
 
 const HeaderStyles = styled.header`
@@ -31,9 +27,6 @@ const HeaderStyles = styled.header`
   align-items: center;
   border-bottom: 0.5rem solid var(--purple);
   z-index: 1;
-  @media (min-width: 768px) {
-    border-bottom: 1rem solid var(--purple);
-  }
 `;
 
 const NavStyles = styled.nav`
@@ -98,10 +91,7 @@ const NavStyles = styled.nav`
 `;
 
 const Container = styled.div`
-  padding: 6rem 1rem 0 1rem;
-  @media (min-width: 768px) {
-    padding: 8rem 1rem 0 1rem;
-  }
+  padding: 4.5rem 1rem 0 1rem;
 `;
 
 export default function Header({

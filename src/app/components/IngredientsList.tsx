@@ -11,11 +11,17 @@ const IngredientsBarStyles = styled.div`
 
   input,
   select {
-    padding: 0.3rem;
+    padding: 1rem;
     border: 1px solid black;
     font-size: 1.4rem;
     height: 4rem;
   }
+`;
+
+const IngredientsListContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  margin-top: 1rem;
 `;
 
 const IngredientsList = ({ getIngredients }: { getIngredients: any }) => {
@@ -41,6 +47,7 @@ const IngredientsList = ({ getIngredients }: { getIngredients: any }) => {
 
   return (
     <div>
+      <h3>Ingredients</h3>
       <IngredientsBarStyles>
         <input
           name="searchTerm"
@@ -50,9 +57,11 @@ const IngredientsList = ({ getIngredients }: { getIngredients: any }) => {
           onChange={handleSearchChange}
         />
       </IngredientsBarStyles>
-      {displayIngredients?.map((ingredient: any) => (
-        <IngredientListItem key={ingredient._id} ingredient={ingredient} />
-      ))}
+      <IngredientsListContainer>
+        {displayIngredients?.map((ingredient: any) => (
+          <IngredientListItem key={ingredient._id} ingredient={ingredient} />
+        ))}
+      </IngredientsListContainer>
     </div>
   );
 };
