@@ -1,7 +1,8 @@
 "use client";
 import styled from "styled-components";
+import Link from "next/link";
 
-const ListItemStyles = styled.div`
+const ListItemStyles = styled(Link)`
   background: white;
   display: grid;
   grid-auto-flow: column;
@@ -44,7 +45,7 @@ const ListItemStyles = styled.div`
 
 const IngredientListItem = ({ ingredient }: { ingredient: any }) => {
   return (
-    <ListItemStyles>
+    <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
       {ingredient?.photo?.image?._meta?.url ? (
         <img
           src={ingredient?.photo?.image?._meta?.url}
