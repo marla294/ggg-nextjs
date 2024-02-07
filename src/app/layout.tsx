@@ -2,7 +2,7 @@
 import { createGlobalStyle } from "styled-components";
 import { NavStateProvider } from "./lib/navState";
 import Header from "./components/Header";
-import signOut from "./ingredients/signout";
+import signOut from "./lib/signout";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
