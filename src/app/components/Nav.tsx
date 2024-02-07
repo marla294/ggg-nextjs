@@ -15,9 +15,6 @@ const NavStyles = styled.div`
   max-width: 100%;
   max-height: 100%;
   z-index: 110;
-  @media (min-width: 768px) {
-    top: 7rem;
-  }
   &.open {
     display: grid;
   }

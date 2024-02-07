@@ -1,6 +1,8 @@
 "use client";
 import { createGlobalStyle } from "styled-components";
 import { NavStateProvider } from "./lib/navState";
+import Header from "./components/Header";
+import signOut from "./ingredients/signout";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -83,7 +85,9 @@ export default function RootLayout({
     <html lang="en">
       <NavStateProvider>
         <GlobalStyles />
-        <body>{children}</body>
+        <body>
+          <Header signOut={signOut}>{children}</Header>
+        </body>
       </NavStateProvider>
     </html>
   );
