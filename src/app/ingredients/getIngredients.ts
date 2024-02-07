@@ -5,7 +5,7 @@ import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async ({name}: {name?: string | null}) => {
+export default async ({name, id}: {name?: string | null | undefined, id?: string | null | undefined}) => {
   try {
     await dbConnect();
 
@@ -32,6 +32,13 @@ export default async ({name}: {name?: string | null}) => {
         .filter((ingredient) => {
           if (name && name !== '') {
             return ingredient.name.toLowerCase().includes(name.toLowerCase());
+          } else {
+            return true;
+          }
+        })
+        .filter((ingredient) => {
+          if (id) {
+            return ingredient.id === id;
           } else {
             return true;
           }
