@@ -1,11 +1,80 @@
-"use server";
-import getIngredients from "./action";
-import IngredientsList from "../components/IngredientsList";
+"use client";
+import getIngredients from "./getIngredients";
+import { useEffect, useState } from "react";
+import IngredientListItem from "../components/IngredientListItem";
+import styled from "styled-components";
+import useDebounce from "../hooks/useDebounce";
 
-export default async function Ingredients() {
+const IngredientsBarStyles = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  font-size: 0.8rem;
+
+  input,
+  select {
+    padding: 1rem;
+    border: 1px solid black;
+    font-size: 1.4rem;
+    height: 4rem;
+  }
+`;
+
+const BarContainer = styled.div`
+  position: fixed;
+  top: 4.45rem;
+  left: 0;
+  background-color: white !important;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+`;
+
+const IngredientsListContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  margin-top: 1rem;
+`;
+
+export default function Ingredients() {
+  const [displayIngredients, setDisplayIngredients] = useState<any>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e: any) => {
+    const val = e.target.value;
+    setSearchTerm(val);
+  };
+
+  const fetchIngredients = async () => {
+    const res = await getIngredients({ name: searchTerm });
+    const tempIngredients = JSON.parse(res as string);
+    setDisplayIngredients(tempIngredients);
+  };
+
+  const debouncedFetchIngredients = useDebounce(fetchIngredients, 200);
+
+  useEffect(() => {
+    debouncedFetchIngredients();
+  }, [searchTerm]);
+
   return (
-    <>
-      <IngredientsList getIngredients={getIngredients} />
-    </>
+    <div>
+      <BarContainer>
+        <h3>Ingredients</h3>
+        <IngredientsBarStyles>
+          <input
+            name="searchTerm"
+            id="searchTerm"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </IngredientsBarStyles>
+      </BarContainer>
+      <IngredientsListContainer>
+        {displayIngredients?.map((ingredient: any) => (
+          <IngredientListItem key={ingredient._id} ingredient={ingredient} />
+        ))}
+      </IngredientsListContainer>
+    </div>
   );
 }
