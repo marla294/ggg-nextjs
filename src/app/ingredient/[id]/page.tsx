@@ -15,12 +15,14 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchIngredient();
   }, []);
 
-  useEffect(() => {
-    console.log({ ingredient });
-  }, [ingredient]);
-
   return (
     <div>
+      {ingredient?.photo?.image?._meta?.url && (
+        <img
+          src={ingredient?.photo?.image?._meta?.url}
+          alt={ingredient?.photo?.altText || ingredient?.name}
+        />
+      )}
       <h3>{ingredient?.name}</h3>
       <div>Aisle: {ingredient?.aisle}</div>
       <div>Home Area: {ingredient?.homeArea}</div>
