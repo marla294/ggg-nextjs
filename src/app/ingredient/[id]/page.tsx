@@ -33,11 +33,13 @@ const SingleItemStyles = styled.div`
 
 export default function Page({ params }: { params: { id: string } }) {
   const [ingredient, setIngredient] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
     const tempIngredients = JSON.parse(res as string);
     setIngredient(tempIngredients[0]);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -45,24 +47,29 @@ export default function Page({ params }: { params: { id: string } }) {
   }, []);
 
   return (
-    <SingleItemStyles>
-      <div>
-        {ingredient?.photo?.image?._meta?.url ? (
-          <img
-            src={ingredient?.photo?.image?._meta?.url}
-            alt={ingredient?.photo?.altText || ingredient?.name}
-          />
-        ) : (
-          <div className="noPhoto">Needs photo 📸</div>
-        )}
-      </div>
-      <div>
-        <h3>{ingredient?.name}</h3>
-        <div>Aisle: {ingredient?.aisle}</div>
-        <div>Home Area: {ingredient?.homeArea}</div>
-        <div>Units: {ingredient?.units}</div>
-        <div>Store: {ingredient?.store}</div>
-      </div>
-    </SingleItemStyles>
+    <div>
+      {loading && <div>Loading...</div>}
+      {!loading && (
+        <SingleItemStyles>
+          <div>
+            {ingredient?.photo?.image?._meta?.url ? (
+              <img
+                src={ingredient?.photo?.image?._meta?.url}
+                alt={ingredient?.photo?.altText || ingredient?.name}
+              />
+            ) : (
+              <div className="noPhoto">Needs photo 📸</div>
+            )}
+          </div>
+          <div>
+            <h3>{ingredient?.name}</h3>
+            <div>Aisle: {ingredient?.aisle}</div>
+            <div>Home Area: {ingredient?.homeArea}</div>
+            <div>Units: {ingredient?.units}</div>
+            <div>Store: {ingredient?.store}</div>
+          </div>
+        </SingleItemStyles>
+      )}
+    </div>
   );
 }
