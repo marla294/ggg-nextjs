@@ -10,7 +10,10 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
 
     const session = await getSession();
 
-    const ingredient = Ingredient.create([{name}]);
+    const [user] = await User.find({email: session?.login});
+    console.log(user._id);
+
+    // const ingredient = Ingredient.create([{name}]);
 
     // const ingredients = await Ingredient.find({})
     //   .populate([
