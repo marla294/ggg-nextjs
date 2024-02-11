@@ -8,6 +8,7 @@ import {
 } from "react";
 import addIngredient from "./addIngredient";
 import styled from "styled-components";
+import stores from "../../lib/stores";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -73,10 +74,14 @@ const FormStyles = styled.form`
 `;
 
 export default function AddIngredient() {
-  const [inputs, setInputs] = useState({ name: "", description: "" });
+  const [inputs, setInputs] = useState({
+    name: "",
+    description: "",
+    store: "",
+  });
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { value, name } = e.target;
 
@@ -105,7 +110,7 @@ export default function AddIngredient() {
           />
         </label>
         <label htmlFor="description">
-          Description:
+          Description
           <textarea
             rows={7}
             id="description"
@@ -114,6 +119,20 @@ export default function AddIngredient() {
             value={inputs.description}
             onChange={handleChange}
           />
+        </label>
+        <label htmlFor="store">
+          Store
+          <select
+            name="store"
+            id="store"
+            onChange={handleChange}
+            value={inputs.store}>
+            {stores.map((store) => (
+              <option value={store} key={store}>
+                {store}
+              </option>
+            ))}
+          </select>
         </label>
       </FormStyles>
     </div>
