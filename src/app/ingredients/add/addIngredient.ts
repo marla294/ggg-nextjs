@@ -1,4 +1,5 @@
 "use server";
+import { ObjectId } from "mongodb";
 import dbConnect from "../../../../lib/dbconnect";
 import Ingredient from "../../../../models/Ingredient";
 import User from "../../../../models/User";
@@ -13,7 +14,7 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
     const [user] = await User.find({email: session?.login});
     console.log(user._id);
 
-    // const ingredient = Ingredient.create([{name}]);
+    const ingredient = Ingredient.create([{name, user: new ObjectId(user._id)}]);
 
     // const ingredients = await Ingredient.find({})
     //   .populate([
