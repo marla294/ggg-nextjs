@@ -1,0 +1,26 @@
+const aisles = [
+  'uncategorized',
+  'baby',
+  'baked goods',
+  'bakery',
+  'baking supplies',
+  'breakfast',
+  'canned goods',
+  'cheese',
+  'cleaning',
+  'condiments',
+  'dairy',
+  'frozen',
+  'health',
+  'meat',
+  'paper',
+  'pasta',
+  'produce',
+  'rice',
+  'seafood',
+  'snacks',
+  'soups',
+  'spices',
+];
+
+export default aisles;

@@ -9,6 +9,9 @@ import {
 import addIngredient from "./addIngredient";
 import styled from "styled-components";
 import stores from "../../lib/stores";
+import units from "../../lib/units";
+import aisles from "../../lib/aisles";
+import homeAreas from "../../lib/homeAreas";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -78,6 +81,9 @@ export default function AddIngredient() {
     name: "",
     description: "",
     store: "",
+    units: "",
+    aisle: "",
+    homeArea: "",
   });
 
   const handleChange = (
@@ -130,6 +136,48 @@ export default function AddIngredient() {
             {stores.map((store) => (
               <option value={store} key={store}>
                 {store}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="units">
+          Units
+          <select
+            name="units"
+            id="units"
+            onChange={handleChange}
+            value={inputs.units}>
+            {units.map((unit) => (
+              <option value={unit} key={unit}>
+                {unit}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="aisle">
+          Aisle
+          <select
+            name="aisle"
+            id="aisle"
+            onChange={handleChange}
+            value={inputs.aisle}>
+            {aisles.map((aisle) => (
+              <option value={aisle} key={aisle}>
+                {aisle}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="homeArea">
+          Home Area
+          <select
+            name="homeArea"
+            id="homeArea"
+            onChange={handleChange}
+            value={inputs.homeArea}>
+            {homeAreas.map((homeArea) => (
+              <option value={homeArea} key={homeArea}>
+                {homeArea}
               </option>
             ))}
           </select>
