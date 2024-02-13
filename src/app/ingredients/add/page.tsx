@@ -80,6 +80,7 @@ export default function AddIngredient() {
     aisle: "",
     homeArea: "",
   });
+  const [photo, setPhoto] = useState<any>();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -89,7 +90,7 @@ export default function AddIngredient() {
     if (type === "file") {
       const files = (e as ChangeEvent<HTMLInputElement>).target.files;
       if (files?.length) {
-        setInputs({ ...inputs, [name]: files[0] });
+        setPhoto(files[0]);
       }
     } else {
       setInputs({ ...inputs, [name]: value });
@@ -100,6 +101,7 @@ export default function AddIngredient() {
     e.preventDefault();
     const res = await addIngredient({ ...inputs });
     const [tempIngredient] = JSON.parse(res as string);
+    console.log({ photo });
   };
 
   return (
