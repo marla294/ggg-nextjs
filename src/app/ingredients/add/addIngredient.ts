@@ -7,7 +7,6 @@ import { getSession } from "../../../../services/authentication/cookie-session";
 
 export default async ({
   name, 
-  id, 
   store,
   units,
   aisle,
@@ -15,7 +14,6 @@ export default async ({
   description,
 }: {
     name?: string | null | undefined, 
-    id?: string | null | undefined, 
     store?: string | null | undefined, 
     units?: string | null | undefined,
     aisle?: string | null | undefined,
@@ -28,7 +26,9 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const ingredient = Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description}]);
+    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description}]);
+
+    return JSON.stringify(ingredient);
 
   } catch (e) {
     console.error(e);

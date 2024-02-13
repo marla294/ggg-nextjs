@@ -1,12 +1,7 @@
 "use client";
-import {
-  ChangeEvent,
-  FormEvent,
-  SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import addIngredient from "./addIngredient";
+import addIngredientImage from "./addIngredientImage";
 import styled from "styled-components";
 import stores from "../../lib/stores";
 import units from "../../lib/units";
@@ -94,9 +89,10 @@ export default function AddIngredient() {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    addIngredient({ ...inputs });
+    const res = await addIngredient({ ...inputs });
+    const [tempIngredient] = JSON.parse(res as string);
   };
 
   return (
@@ -114,6 +110,10 @@ export default function AddIngredient() {
             value={inputs.name}
             onChange={handleChange}
           />
+        </label>
+        <label htmlFor="image">
+          Image
+          <input type="file" id="image" name="image" onChange={handleChange} />
         </label>
         <label htmlFor="description">
           Description
@@ -182,6 +182,9 @@ export default function AddIngredient() {
             ))}
           </select>
         </label>
+        <button type="submit" className="submit">
+          Add Ingredient
+        </button>
       </FormStyles>
     </div>
   );
