@@ -101,6 +101,7 @@ export default function AddIngredient() {
     e.preventDefault();
     const res = await addIngredient({ ...inputs });
     const [tempIngredient] = JSON.parse(res as string);
+    await addIngredientImage({ altText: "apple", filePath: photo });
     console.log({ photo });
   };
 
