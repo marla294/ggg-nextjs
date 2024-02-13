@@ -84,9 +84,16 @@ export default function AddIngredient() {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { value, name } = e.target;
+    const { value, name, type } = e.target;
 
-    setInputs({ ...inputs, [name]: value });
+    if (type === "file") {
+      const files = (e as ChangeEvent<HTMLInputElement>).target.files;
+      if (files?.length) {
+        setInputs({ ...inputs, [name]: files[0] });
+      }
+    } else {
+      setInputs({ ...inputs, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
