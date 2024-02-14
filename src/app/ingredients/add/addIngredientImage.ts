@@ -7,13 +7,14 @@ import User from "../../../../models/User";
 import { getSession } from "../../../../services/authentication/cookie-session";
 import cloudinary from 'cloudinary';
 import { randomBytes } from 'crypto';
+import path from 'path';
 
 export default async ({
   altText,
-  filePath
+  fileName
 }: {
   altText?: string | null | undefined, 
-  filePath?: any, 
+  fileName?: string | null | undefined, 
   }) => {
   try {
     await dbConnect();
@@ -21,7 +22,11 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    if (filePath) {
+    if (fileName) {
+      // const fieldPath = path.resolve(__dirname, './');
+      const filePath = path.resolve('~', './Desktop', fileName);
+      console.log({filePath});
+
       const stream = fs.createReadStream(filePath);
       const id = randomBytes(20).toString('base64url');
       const _meta = await new Promise<cloudinary.UploadApiResponse>((resolve, reject) => {

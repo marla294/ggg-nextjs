@@ -99,10 +99,10 @@ export default function AddIngredient() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await addIngredient({ ...inputs });
-    const [tempIngredient] = JSON.parse(res as string);
-    await addIngredientImage({ altText: "apple", filePath: photo });
+    // const res = await addIngredient({ ...inputs });
+    // const [tempIngredient] = JSON.parse(res as string);
     console.log({ photo });
+    await addIngredientImage({ altText: "apple", fileName: photo?.name });
   };
 
   return (
