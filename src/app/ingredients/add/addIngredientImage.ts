@@ -24,7 +24,7 @@ export default async ({
 
     if (fileName) {
       // const fieldPath = path.resolve(__dirname, './');
-      const filePath = path.resolve('~', './Desktop', fileName);
+      const filePath = path.resolve('./Desktop', fileName);
       console.log({filePath});
 
       const stream = fs.createReadStream(filePath);
