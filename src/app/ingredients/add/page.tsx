@@ -80,7 +80,8 @@ export default function AddIngredient() {
     aisle: "",
     homeArea: "",
   });
-  const [photo, setPhoto] = useState<any>();
+  const [imageSrc, setImageSrc] = useState<any>();
+  const [uploadData, setUploadData] = useState<any>();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -88,14 +89,26 @@ export default function AddIngredient() {
     const { value, name, type } = e.target;
 
     if (type === "file") {
-      const files = (e as ChangeEvent<HTMLInputElement>).target.files;
-      if (files?.length) {
-        setPhoto(files[0]);
-      }
+      // const files = (e as ChangeEvent<HTMLInputElement>).target.files;
+      // if (files?.length) {
+      //   setPhoto(files[0]);
+      // }
     } else {
       setInputs({ ...inputs, [name]: value });
     }
   };
+
+  function handleImageChange(changeEvent: any) {
+    const reader = new FileReader();
+
+    reader.onload = function (onLoadEvent) {
+      console.log("on load");
+      setImageSrc(onLoadEvent?.target?.result);
+      setUploadData(undefined);
+    };
+
+    reader.readAsDataURL(changeEvent.target.files[0]);
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -123,7 +136,12 @@ export default function AddIngredient() {
         </label>
         <label htmlFor="image">
           Image
-          <input type="file" id="image" name="image" onChange={handleChange} />
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleImageChange}
+          />
         </label>
         <label htmlFor="description">
           Description
