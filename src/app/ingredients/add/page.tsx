@@ -88,12 +88,7 @@ export default function AddIngredient() {
   ) => {
     const { value, name, type } = e.target;
 
-    if (type === "file") {
-      // const files = (e as ChangeEvent<HTMLInputElement>).target.files;
-      // if (files?.length) {
-      //   setPhoto(files[0]);
-      // }
-    } else {
+    if (type !== "file") {
       setInputs({ ...inputs, [name]: value });
     }
   };
@@ -102,7 +97,6 @@ export default function AddIngredient() {
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
-      console.log("on load");
       setImageSrc(onLoadEvent?.target?.result);
       setUploadData(undefined);
     };
@@ -110,12 +104,36 @@ export default function AddIngredient() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const form = e.currentTarget;
+    const fileInput: any = Array.from(form.elements).find(
+      ({ name }: any) => name === "image"
+    );
+
+    const formData = new FormData();
+
+    for (const file of fileInput.files) {
+      formData.append("file", file);
+    }
+
+    formData.append("upload_preset", "sickfits");
+
+    const data = await fetch(
+      `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then((r) => r.json());
+
+    console.log({ data });
+
     // const res = await addIngredient({ ...inputs });
     // const [tempIngredient] = JSON.parse(res as string);
-    console.log({ photo });
-    await addIngredientImage({ altText: "apple", fileName: photo?.name });
+    // console.log({ photo });
+    // await addIngredientImage({ altText: "apple", fileName: photo?.name });
   };
 
   return (
