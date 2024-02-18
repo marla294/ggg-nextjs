@@ -11,10 +11,10 @@ import path from 'path';
 
 export default async ({
   altText,
-  fileName
+  url
 }: {
   altText?: string | null | undefined, 
-  fileName?: string | null | undefined, 
+  url?: string | null | undefined, 
   }) => {
   try {
     await dbConnect();
@@ -22,37 +22,7 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    if (fileName) {
-      // const fieldPath = path.resolve(__dirname, './');
-      const filePath = path.resolve('./Desktop', fileName);
-      console.log({filePath});
-
-      const stream = fs.createReadStream(filePath);
-      const id = randomBytes(20).toString('base64url');
-      const _meta = await new Promise<cloudinary.UploadApiResponse>((resolve, reject) => {
-        const cloudinaryStream = cloudinary.v2.uploader.upload_stream(
-          {
-            public_id: id,
-            folder: process.env.CLOUDINARY_FOLDER,
-            api_key: process.env.CLOUDINARY_KEY,
-            api_secret: process.env.CLOUDINARY_SECRET,
-            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-          },
-          (error, result) => {
-            if (error || !result) {
-              return reject(error)
-            }
-            resolve(result)
-          }
-        )
-
-        stream.pipe(cloudinaryStream)
-      });
-
-      console.log({_meta});
-    }
-
-    // const ingredient = Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description}]);
+    const ingredient = IngredientImage.create([{}]);
 
   } catch (e) {
     console.error(e);
