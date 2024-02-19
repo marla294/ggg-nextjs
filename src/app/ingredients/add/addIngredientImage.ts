@@ -18,7 +18,7 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const ingredientImage = IngredientImage.create([{altText, user: new ObjectId(user._id), imageUrl: url}]);
+    const ingredientImage = await IngredientImage.create([{altText, user: new ObjectId(user._id), imageUrl: url}]);
 
     return JSON.stringify(ingredientImage);
 

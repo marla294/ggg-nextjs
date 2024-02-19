@@ -120,7 +120,7 @@ export default function AddIngredient() {
 
     formData.append("upload_preset", "sickfits");
 
-    const data = await fetch(
+    const cloudinaryData = await fetch(
       `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
       {
         method: "POST",
@@ -128,16 +128,19 @@ export default function AddIngredient() {
       }
     ).then((r) => r.json());
 
-    console.log({ data });
-
-    await addIngredientImage({
-      altText: data.original_filename,
-      url: data.url,
+    const ingredientImageResult = await addIngredientImage({
+      altText: cloudinaryData.original_filename,
+      url: cloudinaryData.url,
     });
 
-    // const res = await addIngredient({ ...inputs });
-    // const [tempIngredient] = JSON.parse(res as string);
-    // console.log({ photo });
+    const [tempIngredientImage] = await JSON.parse(
+      ingredientImageResult as string
+    );
+
+    const res = await addIngredient({
+      ...inputs,
+      photoId: tempIngredientImage?._id,
+    });
   };
 
   return (

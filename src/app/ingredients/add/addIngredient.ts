@@ -12,6 +12,7 @@ export default async ({
   aisle,
   homeArea,
   description,
+  photoId,
 }: {
     name?: string | null | undefined, 
     store?: string | null | undefined, 
@@ -19,6 +20,7 @@ export default async ({
     aisle?: string | null | undefined,
     homeArea?: string | null | undefined,
     description?: string | null | undefined,
+    photoId?: any,
   }) => {
   try {
     await dbConnect();
@@ -26,7 +28,7 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description}]);
+    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description, photo: new ObjectId(photoId)}]);
 
     return JSON.stringify(ingredient);
 

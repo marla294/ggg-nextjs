@@ -46,13 +46,17 @@ const ListItemStyles = styled(Link)`
 const IngredientListItem = ({ ingredient }: { ingredient: any }) => {
   return (
     <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
-      {ingredient?.photo?.image?._meta?.url ? (
+      {ingredient?.photo?.image?._meta?.url && (
         <img
           src={ingredient?.photo?.image?._meta?.url}
           alt={ingredient?.photo?.altText || ingredient?.name}
         />
-      ) : (
-        <div className="noPhoto">No Photo</div>
+      )}
+      {ingredient?.photo?.imageUrl && (
+        <img
+          src={ingredient?.photo?.imageUrl}
+          alt={ingredient?.photo?.altText || ingredient?.name}
+        />
       )}
 
       <div className="details">{ingredient?.name}</div>
