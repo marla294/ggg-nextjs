@@ -130,10 +130,14 @@ export default function AddIngredient() {
 
     console.log({ data });
 
+    await addIngredientImage({
+      altText: data.original_filename,
+      url: data.url,
+    });
+
     // const res = await addIngredient({ ...inputs });
     // const [tempIngredient] = JSON.parse(res as string);
     // console.log({ photo });
-    // await addIngredientImage({ altText: "apple", fileName: photo?.name });
   };
 
   return (
