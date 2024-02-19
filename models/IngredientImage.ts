@@ -1,11 +1,14 @@
 import { Schema, model, models } from 'mongoose';
 
-const meta = new Schema({
-
+const _meta = new Schema({
+  url: {
+    type: String
+  }
 });
 
 const image = new Schema({
-
+  children: [_meta],
+  child: _meta
 });
 
 const ingredientImageSchema = new Schema({
@@ -14,8 +17,13 @@ const ingredientImageSchema = new Schema({
     type: String
   },
   image: {
-
-  }
+    children: [image],
+    child: image
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
 });
 
 const IngredientImage = models.IngredientImage || model("IngredientImage", ingredientImageSchema);
