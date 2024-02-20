@@ -7,6 +7,7 @@ import stores from "../../lib/stores";
 import units from "../../lib/units";
 import aisles from "../../lib/aisles";
 import homeAreas from "../../lib/homeAreas";
+import { useRouter } from "next/navigation";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -72,6 +73,7 @@ const FormStyles = styled.form`
 `;
 
 export default function AddIngredient() {
+  const router = useRouter();
   const [inputs, setInputs] = useState({
     name: "",
     description: "",
@@ -137,10 +139,15 @@ export default function AddIngredient() {
       ingredientImageResult as string
     );
 
-    const res = await addIngredient({
-      ...inputs,
-      photoId: tempIngredientImage?._id,
-    });
+    try {
+      await addIngredient({
+        ...inputs,
+        photoId: tempIngredientImage?._id,
+      });
+      router.push("/ingredients");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
