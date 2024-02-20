@@ -1,6 +1,7 @@
 "use client";
 import styled from "styled-components";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ListItemStyles = styled(Link)`
   background: white;
@@ -44,19 +45,26 @@ const ListItemStyles = styled(Link)`
 `;
 
 const IngredientListItem = ({ ingredient }: { ingredient: any }) => {
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  useEffect(() => {
+    if (ingredient?.photo?.image?._meta?.url) {
+      setImageUrl(ingredient?.photo?.image?._meta?.url);
+    }
+    if (ingredient?.photo?.imageUrl) {
+      setImageUrl(ingredient?.photo?.imageUrl);
+    }
+  }, [ingredient]);
+
   return (
     <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
-      {ingredient?.photo?.image?._meta?.url && (
+      {imageUrl ? (
         <img
-          src={ingredient?.photo?.image?._meta?.url}
+          src={imageUrl}
           alt={ingredient?.photo?.altText || ingredient?.name}
         />
-      )}
-      {ingredient?.photo?.imageUrl && (
-        <img
-          src={ingredient?.photo?.imageUrl}
-          alt={ingredient?.photo?.altText || ingredient?.name}
-        />
+      ) : (
+        <div className="noPhoto"></div>
       )}
 
       <div className="details">{ingredient?.name}</div>

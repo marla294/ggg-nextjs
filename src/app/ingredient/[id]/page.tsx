@@ -62,7 +62,7 @@ export default function Page({ params }: { params: { id: string } }) {
       {!loading && (
         <SingleItemStyles>
           <div>
-            {imageUrl !== "" ? (
+            {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={ingredient?.photo?.altText || ingredient?.name}
