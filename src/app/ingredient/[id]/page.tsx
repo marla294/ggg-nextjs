@@ -34,6 +34,7 @@ const SingleItemStyles = styled.div`
 export default function Page({ params }: { params: { id: string } }) {
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
@@ -46,23 +47,28 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchIngredient();
   }, []);
 
+  useEffect(() => {
+    if (ingredient?.photo?.image?._meta?.url) {
+      setImageUrl(ingredient?.photo?.image?._meta?.url);
+    }
+    if (ingredient?.photo?.imageUrl) {
+      setImageUrl(ingredient?.photo?.imageUrl);
+    }
+  }, [ingredient]);
+
   return (
     <div>
       {loading && <div>Loading...</div>}
       {!loading && (
         <SingleItemStyles>
           <div>
-            {ingredient?.photo?.image?._meta?.url && (
+            {imageUrl !== "" ? (
               <img
-                src={ingredient?.photo?.image?._meta?.url}
+                src={imageUrl}
                 alt={ingredient?.photo?.altText || ingredient?.name}
               />
-            )}
-            {ingredient?.photo?.imageUrl && (
-              <img
-                src={ingredient?.photo?.imageUrl}
-                alt={ingredient?.photo?.altText || ingredient?.name}
-              />
+            ) : (
+              <div className="noPhoto">Needs photo 📸</div>
             )}
           </div>
           <div>
