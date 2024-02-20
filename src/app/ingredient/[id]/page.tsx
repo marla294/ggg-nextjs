@@ -13,7 +13,7 @@ const SingleItemStyles = styled.div`
   }
   .noPhoto {
     width: 100%;
-    max-height: 300px;
+    height: 300px;
     display: grid;
     align-content: center;
     justify-content: center;
