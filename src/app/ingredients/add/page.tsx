@@ -37,7 +37,6 @@ const FormStyles = styled.form`
   button {
     width: auto;
     padding: 0.7rem 1rem;
-    margin: 1.5rem 1rem 0.5rem 0;
     transition: 0.2s;
   }
 
@@ -72,6 +71,19 @@ const FormStyles = styled.form`
   }
 `;
 
+const LoadingContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 500px;
+  align-items: center;
+  margin-top: 1rem;
+  grid-gap: 2rem;
+`;
+
+const LoadingStyles = styled.div`
+  color: green;
+`;
+
 export default function AddIngredient() {
   const router = useRouter();
   const [inputs, setInputs] = useState({
@@ -82,8 +94,7 @@ export default function AddIngredient() {
     aisle: "",
     homeArea: "",
   });
-  const [imageSrc, setImageSrc] = useState<any>();
-  const [uploadData, setUploadData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -98,16 +109,12 @@ export default function AddIngredient() {
   function handleImageChange(changeEvent: any) {
     const reader = new FileReader();
 
-    reader.onload = function (onLoadEvent) {
-      setImageSrc(onLoadEvent?.target?.result);
-      setUploadData(undefined);
-    };
-
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     const form = e.currentTarget;
     const fileInput: any = Array.from(form.elements).find(
@@ -144,6 +151,7 @@ export default function AddIngredient() {
         ...inputs,
         photoId: tempIngredientImage?._id,
       });
+      setLoading(false);
       router.push("/ingredients");
     } catch (e) {
       console.error(e);
@@ -242,9 +250,12 @@ export default function AddIngredient() {
             ))}
           </select>
         </label>
-        <button type="submit" className="submit">
-          Add Ingredient
-        </button>
+        <LoadingContainer>
+          <button type="submit" className="submit">
+            Add Ingredient
+          </button>
+          {loading && <LoadingStyles>Adding ingredient...</LoadingStyles>}
+        </LoadingContainer>
       </FormStyles>
     </div>
   );
