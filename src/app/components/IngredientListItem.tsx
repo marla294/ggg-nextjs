@@ -11,7 +11,6 @@ const ListItemStyles = styled(Link)`
   border: 1px solid var(--lightGray);
   &:hover {
     background: var(--lightGray);
-    text-decoration: underline;
     cursor: pointer;
   }
 
@@ -28,6 +27,8 @@ const ListItemStyles = styled(Link)`
     height: 10rem;
     min-width: 10rem;
     width: 5rem;
+    font-size: 4rem;
+    text-align: center;
   }
 
   .details {
@@ -64,7 +65,7 @@ const IngredientListItem = ({ ingredient }: { ingredient: any }) => {
           alt={ingredient?.photo?.altText || ingredient?.name}
         />
       ) : (
-        <div className="noPhoto"></div>
+        <div className="noPhoto">🛒</div>
       )}
 
       <div className="details">{ingredient?.name}</div>
