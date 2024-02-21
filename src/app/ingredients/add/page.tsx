@@ -8,6 +8,7 @@ import units from "../../lib/units";
 import aisles from "../../lib/aisles";
 import homeAreas from "../../lib/homeAreas";
 import { useRouter } from "next/navigation";
+import { Grid, ThreeDots } from "react-loader-spinner";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -252,9 +253,24 @@ export default function AddIngredient() {
         </label>
         <LoadingContainer>
           <button type="submit" className="submit">
-            Add Ingredient
+            {loading ? (
+              <ThreeDots
+                visible={true}
+                height="15"
+                width="40"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{
+                  display: "grid",
+                  justifyItems: "center",
+                }}
+                wrapperClass=""
+              />
+            ) : (
+              "Add Ingredient"
+            )}
           </button>
-          {loading && <LoadingStyles>Adding ingredient...</LoadingStyles>}
         </LoadingContainer>
       </FormStyles>
     </div>
