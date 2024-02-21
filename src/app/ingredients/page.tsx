@@ -45,7 +45,7 @@ const IngredientsHeaderContainer = styled.div`
 
 const AddIngredientLinkText = styled.div`
   font-size: 1.3rem;
-  color: green;
+  color: var(--green);
   &:hover {
     text-decoration: underline;
   }
@@ -78,7 +78,7 @@ export default function Ingredients() {
         <IngredientsHeaderContainer>
           <h3>Ingredients</h3>
           <Link href="ingredients/add">
-            <AddIngredientLinkText>Add Ingredient</AddIngredientLinkText>
+            <AddIngredientLinkText>+ Add Ingredient</AddIngredientLinkText>
           </Link>
         </IngredientsHeaderContainer>
         <IngredientsBarStyles>
