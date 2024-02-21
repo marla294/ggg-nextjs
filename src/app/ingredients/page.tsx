@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import IngredientListItem from "../components/IngredientListItem";
 import styled from "styled-components";
 import useDebounce from "../hooks/useDebounce";
+import Link from "next/link";
 
 const IngredientsBarStyles = styled.div`
   display: grid;
@@ -35,6 +36,21 @@ const IngredientsListContainer = styled.div`
   margin-top: 1rem;
 `;
 
+const IngredientsHeaderContainer = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  width: 250px;
+  align-items: center;
+`;
+
+const AddIngredientLinkText = styled.div`
+  font-size: 1.3rem;
+  color: green;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export default function Ingredients() {
   const [displayIngredients, setDisplayIngredients] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,7 +75,12 @@ export default function Ingredients() {
   return (
     <div>
       <BarContainer>
-        <h3>Ingredients</h3>
+        <IngredientsHeaderContainer>
+          <h3>Ingredients</h3>
+          <Link href="ingredients/add">
+            <AddIngredientLinkText>Add Ingredient</AddIngredientLinkText>
+          </Link>
+        </IngredientsHeaderContainer>
         <IngredientsBarStyles>
           <input
             name="searchTerm"
