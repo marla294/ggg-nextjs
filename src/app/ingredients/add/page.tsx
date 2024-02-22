@@ -8,7 +8,7 @@ import units from "../../lib/units";
 import aisles from "../../lib/aisles";
 import homeAreas from "../../lib/homeAreas";
 import { useRouter } from "next/navigation";
-import { Grid, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);

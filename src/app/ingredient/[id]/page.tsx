@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import getIngredients from "../../ingredients/getIngredients";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
+import { useRouter } from "next/navigation";
+import deleteIngredient from "./deleteIngredient";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -44,6 +46,7 @@ const DeleteButton = styled.button`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -54,6 +57,20 @@ export default function Page({ params }: { params: { id: string } }) {
     const tempIngredients = JSON.parse(res as string);
     setIngredient(tempIngredients[0]);
     setLoading(false);
+  };
+
+  const handleDelete = async () => {
+    setDeleteLoading(true);
+
+    try {
+      await deleteIngredient({
+        ingredientId: ingredient?._id,
+      });
+      setLoading(false);
+      router.push("/ingredients");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
@@ -90,7 +107,11 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>Home Area: {ingredient?.homeArea}</div>
             <div>Units: {ingredient?.units}</div>
             <div>Store: {ingredient?.store}</div>
-            <DeleteButton type="button">
+            <DeleteButton
+              type="button"
+              onClick={() => {
+                handleDelete();
+              }}>
               {deleteLoading ? (
                 <ThreeDots
                   visible={true}
