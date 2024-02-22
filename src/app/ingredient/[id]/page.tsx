@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import getIngredients from "../../ingredients/getIngredients";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -31,10 +32,22 @@ const SingleItemStyles = styled.div`
   }
 `;
 
+const DeleteButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--orange);
+  color: var(--darkOrange);
+  border: 1px solid var(--darkOrange);
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
@@ -77,6 +90,25 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>Home Area: {ingredient?.homeArea}</div>
             <div>Units: {ingredient?.units}</div>
             <div>Store: {ingredient?.store}</div>
+            <DeleteButton type="button">
+              {deleteLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="15"
+                  width="40"
+                  color="#551d11"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{
+                    display: "grid",
+                    justifyItems: "center",
+                  }}
+                  wrapperClass=""
+                />
+              ) : (
+                "Delete Ingredient"
+              )}
+            </DeleteButton>
           </div>
         </SingleItemStyles>
       )}
