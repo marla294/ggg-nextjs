@@ -10,12 +10,9 @@ export default async ({
   try {
     await dbConnect();
 
-    
-    const res = await Ingredient.deleteOne({filter: {_id: ingredientId}})
-    
-    console.log({ingredientId, res});
+    const res = await Ingredient.findByIdAndDelete(ingredientId);
 
-    // return JSON.stringify(ingredient);
+    return JSON.stringify(res);
 
   } catch (e) {
     console.error(e);
