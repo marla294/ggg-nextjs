@@ -45,12 +45,24 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
+const EditButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--green);
+  color: var(--darkGreen);
+  border: 1px solid var(--darkGreen);
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [editLoading, setEditLoading] = useState<boolean>(false);
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
@@ -130,6 +142,29 @@ export default function Page({ params }: { params: { id: string } }) {
                 "Delete Ingredient"
               )}
             </DeleteButton>
+            <EditButton
+              type="button"
+              onClick={() => {
+                handleDelete();
+              }}>
+              {editLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="15"
+                  width="40"
+                  color="#551d11"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{
+                    display: "grid",
+                    justifyItems: "center",
+                  }}
+                  wrapperClass=""
+                />
+              ) : (
+                "Edit Ingredient"
+              )}
+            </EditButton>
           </div>
         </SingleItemStyles>
       )}
