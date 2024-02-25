@@ -1,7 +1,7 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
-import addIngredient from "./addIngredient";
-import addIngredientImage from "./addIngredientImage";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+// import addIngredient from "./addIngredient";
+// import addIngredientImage from "./addIngredientImage";
 import styled from "styled-components";
 import stores from "../../../lib/stores";
 import units from "../../../lib/units";
@@ -9,6 +9,7 @@ import aisles from "../../../lib/aisles";
 import homeAreas from "../../../lib/homeAreas";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
+import getIngredients from "../../../ingredients/getIngredients";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -85,7 +86,7 @@ const LoadingStyles = styled.div`
   color: green;
 `;
 
-export default function EditIngredient() {
+export default function EditIngredient({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [inputs, setInputs] = useState({
     name: "",
@@ -96,6 +97,16 @@ export default function EditIngredient() {
     homeArea: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchIngredient = async () => {
+    const res = await getIngredients({ id: params.id });
+    const tempIngredients = JSON.parse(res as string);
+    setInputs({ ...inputs, ...tempIngredients[0] });
+  };
+
+  useEffect(() => {
+    fetchIngredient();
+  }, []);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -138,31 +149,31 @@ export default function EditIngredient() {
       }
     ).then((r) => r.json());
 
-    const ingredientImageResult = await addIngredientImage({
-      altText: cloudinaryData.original_filename,
-      url: cloudinaryData.url,
-    });
+    // const ingredientImageResult = await addIngredientImage({
+    //   altText: cloudinaryData.original_filename,
+    //   url: cloudinaryData.url,
+    // });
 
-    const [tempIngredientImage] = await JSON.parse(
-      ingredientImageResult as string
-    );
+    // const [tempIngredientImage] = await JSON.parse(
+    //   ingredientImageResult as string
+    // );
 
-    try {
-      await addIngredient({
-        ...inputs,
-        photoId: tempIngredientImage?._id,
-      });
-      setLoading(false);
-      router.push("/ingredients");
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   await addIngredient({
+    //     ...inputs,
+    //     photoId: tempIngredientImage?._id,
+    //   });
+    //   setLoading(false);
+    //   router.push("/ingredients");
+    // } catch (e) {
+    //   console.error(e);
+    // }
   };
 
   return (
     <div>
       <FormStyles onSubmit={handleSubmit}>
-        <h2>Add New Ingredient</h2>
+        <h2>Edit Ingredient</h2>
         <label>
           Name<span className="required">&nbsp;*</span>
           <input
