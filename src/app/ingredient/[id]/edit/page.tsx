@@ -10,6 +10,7 @@ import homeAreas from "../../../lib/homeAreas";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import getIngredients from "../../../ingredients/getIngredients";
+import editIngredient from "./editIngredient";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -158,16 +159,17 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
     //   ingredientImageResult as string
     // );
 
-    // try {
-    //   await addIngredient({
-    //     ...inputs,
-    //     photoId: tempIngredientImage?._id,
-    //   });
-    //   setLoading(false);
-    //   router.push("/ingredients");
-    // } catch (e) {
-    //   console.error(e);
-    // }
+    try {
+      await editIngredient({
+        id: params.id,
+        ...inputs,
+        // photoId: tempIngredientImage?._id,
+      });
+      setLoading(false);
+      router.push("/ingredients");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
