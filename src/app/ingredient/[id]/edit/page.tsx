@@ -281,7 +281,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
                 wrapperClass=""
               />
             ) : (
-              "Add Ingredient"
+              "Edit Ingredient"
             )}
           </button>
         </LoadingContainer>

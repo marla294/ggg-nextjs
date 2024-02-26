@@ -2,7 +2,6 @@
 import { ObjectId } from "mongodb";
 import dbConnect from "../../../../../lib/dbconnect";
 import Ingredient from "../../../../../models/Ingredient";
-import User from "../../../../../models/User";
 import { getSession } from "../../../../../services/authentication/cookie-session";
 
 export default async ({
@@ -28,11 +27,13 @@ export default async ({
     await dbConnect();
 
     const session = await getSession();
-    const [user] = await User.find({email: session?.login});
 
     const filter = { _id: id};
-    const update = { name };
-    // {name, user: new ObjectId(user._id), store, units, aisle, homeArea, description, photo: new ObjectId(photoId)}
+    let update = {name, store, units, aisle, homeArea, description};
+
+    if (photoId) {
+      update = {...update, photo: new ObjectId(photoId)}
+    }
 
     const ingredient = await Ingredient.findOneAndUpdate(filter, update);
 
