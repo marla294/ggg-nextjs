@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import getIngredients from "../../../ingredients/getIngredients";
 import editIngredient from "./editIngredient";
+import addIngredientImage from "../../../ingredients/add/addIngredientImage";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -134,36 +135,42 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
       ({ name }: any) => name === "image"
     );
 
-    const formData = new FormData();
+    let img = null;
 
-    for (const file of fileInput.files) {
-      formData.append("file", file);
-    }
+    if (fileInput.files.length) {
+      const formData = new FormData();
 
-    formData.append("upload_preset", "sickfits");
-
-    const cloudinaryData = await fetch(
-      `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
-      {
-        method: "POST",
-        body: formData,
+      for (const file of fileInput.files) {
+        formData.append("file", file);
       }
-    ).then((r) => r.json());
 
-    // const ingredientImageResult = await addIngredientImage({
-    //   altText: cloudinaryData.original_filename,
-    //   url: cloudinaryData.url,
-    // });
+      formData.append("upload_preset", "sickfits");
 
-    // const [tempIngredientImage] = await JSON.parse(
-    //   ingredientImageResult as string
-    // );
+      const cloudinaryData = await fetch(
+        `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((r) => r.json());
+
+      const ingredientImageResult = await addIngredientImage({
+        altText: cloudinaryData.original_filename,
+        url: cloudinaryData.url,
+      });
+
+      const [tempIngredientImage] = await JSON.parse(
+        ingredientImageResult as string
+      );
+
+      img = tempIngredientImage;
+    }
 
     try {
       await editIngredient({
         id: params.id,
         ...inputs,
-        // photoId: tempIngredientImage?._id,
+        photoId: img?._id,
       });
       setLoading(false);
       router.push("/ingredients");
@@ -189,7 +196,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
           />
         </label>
         <label htmlFor="image">
-          Image
+          Image (if no update, leave blank)
           <input
             type="file"
             id="image"
@@ -281,7 +288,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
                 wrapperClass=""
               />
             ) : (
-              "Edit Ingredient"
+              "Update"
             )}
           </button>
         </LoadingContainer>

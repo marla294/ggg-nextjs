@@ -2,7 +2,6 @@
 import { ObjectId } from "mongodb";
 import dbConnect from "../../../../../lib/dbconnect";
 import Ingredient from "../../../../../models/Ingredient";
-import { getSession } from "../../../../../services/authentication/cookie-session";
 
 export default async ({
   id,
@@ -25,8 +24,6 @@ export default async ({
   }) => {
   try {
     await dbConnect();
-
-    const session = await getSession();
 
     const filter = { _id: id};
     let update = {name, store, units, aisle, homeArea, description};
