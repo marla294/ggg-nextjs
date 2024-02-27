@@ -145,7 +145,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <EditButton
               type="button"
               onClick={() => {
-                handleDelete();
+                router.push(`/ingredient/${params.id}/edit`);
               }}>
               {editLoading ? (
                 <ThreeDots
