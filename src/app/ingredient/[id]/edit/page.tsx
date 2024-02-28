@@ -12,6 +12,7 @@ import { ThreeDots } from "react-loader-spinner";
 import getIngredients from "../../../ingredients/getIngredients";
 import editIngredient from "./editIngredient";
 import addIngredientImage from "../../../ingredients/add/addIngredientImage";
+import useForm from "../../../lib/useForm";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -90,7 +91,7 @@ const LoadingStyles = styled.div`
 
 export default function EditIngredient({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const [inputs, setInputs] = useState({
+  const { handleChange, inputs, setInputs } = useForm({
     name: "",
     description: "",
     store: "",
@@ -109,16 +110,6 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
   useEffect(() => {
     fetchIngredient();
   }, []);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { value, name, type } = e.target;
-
-    if (type !== "file") {
-      setInputs({ ...inputs, [name]: value });
-    }
-  };
 
   function handleImageChange(changeEvent: any) {
     const reader = new FileReader();
@@ -235,7 +226,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
             name="units"
             id="units"
             onChange={handleChange}
-            value={inputs.units}>
+            value={inputs?.units}>
             {units.map((unit) => (
               <option value={unit} key={unit}>
                 {unit}
