@@ -9,6 +9,7 @@ import aisles from "../../lib/aisles";
 import homeAreas from "../../lib/homeAreas";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
+import useForm from "../../lib/useForm";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -87,7 +88,7 @@ const LoadingStyles = styled.div`
 
 export default function AddIngredient() {
   const router = useRouter();
-  const [inputs, setInputs] = useState({
+  const { handleChange, inputs } = useForm({
     name: "",
     description: "",
     store: "",
@@ -96,16 +97,6 @@ export default function AddIngredient() {
     homeArea: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { value, name, type } = e.target;
-
-    if (type !== "file") {
-      setInputs({ ...inputs, [name]: value });
-    }
-  };
 
   function handleImageChange(changeEvent: any) {
     const reader = new FileReader();
