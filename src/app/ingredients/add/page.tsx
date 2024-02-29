@@ -99,11 +99,11 @@ export default function AddIngredient() {
   });
   const [loading, setLoading] = useState<boolean>(false);
 
-  function handleImageChange(changeEvent: any) {
+  const handleImageChange = (changeEvent: any) => {
     const reader = new FileReader();
 
     reader.readAsDataURL(changeEvent.target.files[0]);
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -160,118 +160,6 @@ export default function AddIngredient() {
         handleSubmit={handleSubmit}
         loading={loading}
       />
-      {/* <FormStyles onSubmit={handleSubmit}>
-        <h2>Add New Ingredient</h2>
-        <label>
-          Name<span className="required">&nbsp;*</span>
-          <input
-            required
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="image">
-          Image
-          <input
-            type="file"
-            id="image"
-            name="image"
-            onChange={handleImageChange}
-          />
-        </label>
-        <label htmlFor="description">
-          Description
-          <textarea
-            rows={7}
-            id="description"
-            name="description"
-            placeholder="Description"
-            value={inputs.description}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="store">
-          Store
-          <select
-            name="store"
-            id="store"
-            onChange={handleChange}
-            value={inputs.store}>
-            {stores.map((store) => (
-              <option value={store} key={store}>
-                {store}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="units">
-          Units
-          <select
-            name="units"
-            id="units"
-            onChange={handleChange}
-            value={inputs.units}>
-            {units.map((unit) => (
-              <option value={unit} key={unit}>
-                {unit}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="aisle">
-          Aisle
-          <select
-            name="aisle"
-            id="aisle"
-            onChange={handleChange}
-            value={inputs.aisle}>
-            {aisles.map((aisle) => (
-              <option value={aisle} key={aisle}>
-                {aisle}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="homeArea">
-          Home Area
-          <select
-            name="homeArea"
-            id="homeArea"
-            onChange={handleChange}
-            value={inputs.homeArea}>
-            {homeAreas.map((homeArea) => (
-              <option value={homeArea} key={homeArea}>
-                {homeArea}
-              </option>
-            ))}
-          </select>
-        </label>
-        <LoadingContainer>
-          <button type="submit" className="submit">
-            {loading ? (
-              <ThreeDots
-                visible={true}
-                height="15"
-                width="40"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{
-                  display: "grid",
-                  justifyItems: "center",
-                }}
-                wrapperClass=""
-              />
-            ) : (
-              "Add Ingredient"
-            )}
-          </button>
-        </LoadingContainer>
-      </FormStyles> */}
     </div>
   );
 }
