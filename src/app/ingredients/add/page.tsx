@@ -10,6 +10,7 @@ import homeAreas from "../../lib/homeAreas";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import useForm from "../../lib/useForm";
+import IngredientForm from "../../components/IngredientForm";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -152,7 +153,14 @@ export default function AddIngredient() {
 
   return (
     <div>
-      <FormStyles onSubmit={handleSubmit}>
+      <IngredientForm
+        handleChange={handleChange}
+        inputs={inputs}
+        handleImageChange={handleImageChange}
+        handleSubmit={handleSubmit}
+        loading={loading}
+      />
+      {/* <FormStyles onSubmit={handleSubmit}>
         <h2>Add New Ingredient</h2>
         <label>
           Name<span className="required">&nbsp;*</span>
@@ -263,7 +271,7 @@ export default function AddIngredient() {
             )}
           </button>
         </LoadingContainer>
-      </FormStyles>
+      </FormStyles> */}
     </div>
   );
 }

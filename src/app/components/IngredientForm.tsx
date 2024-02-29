@@ -79,29 +79,18 @@ const LoadingContainer = styled.div`
 `;
 
 const IngredientForm = ({
+  handleChange,
+  inputs,
   handleSubmit,
   loading,
-  initialInputs,
+  handleImageChange,
 }: {
+  handleChange: any;
+  inputs: any;
   handleSubmit: any;
   loading: boolean;
-  initialInputs?: any;
+  handleImageChange: any;
 }) => {
-  const { handleChange, inputs, setInputs } = useForm({
-    name: "",
-    description: "",
-    store: "",
-    units: "",
-    aisle: "",
-    homeArea: "",
-  });
-
-  useEffect(() => {
-    if (initialInputs) {
-      setInputs(initialInputs);
-    }
-  }, [initialInputs]);
-
   return (
     <FormStyles onSubmit={handleSubmit}>
       <h2>Edit Ingredient</h2>
