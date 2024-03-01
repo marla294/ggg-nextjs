@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import useForm from "../lib/useForm";
 import stores from "../lib/stores";
 import units from "../lib/units";
 import aisles from "../lib/aisles";
 import homeAreas from "../lib/homeAreas";
 import { ThreeDots } from "react-loader-spinner";
-import { useEffect } from "react";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -84,16 +82,18 @@ const IngredientForm = ({
   handleSubmit,
   loading,
   handleImageChange,
+  formName,
 }: {
   handleChange: any;
   inputs: any;
   handleSubmit: any;
   loading: boolean;
   handleImageChange: any;
+  formName: string;
 }) => {
   return (
     <FormStyles onSubmit={handleSubmit}>
-      <h2>Edit Ingredient</h2>
+      <h2>{formName ? formName : "Edit"} Ingredient</h2>
       <label>
         Name<span className="required">&nbsp;*</span>
         <input
@@ -199,7 +199,7 @@ const IngredientForm = ({
               wrapperClass=""
             />
           ) : (
-            "Update"
+            <>{formName ? formName : "Edit"}</>
           )}
         </button>
       </LoadingContainer>

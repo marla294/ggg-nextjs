@@ -78,6 +78,7 @@ export default function AddIngredient() {
         handleImageChange={handleImageChange}
         handleSubmit={handleSubmit}
         loading={loading}
+        formName={"Add"}
       />
     </div>
   );

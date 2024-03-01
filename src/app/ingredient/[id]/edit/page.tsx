@@ -97,6 +97,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
         handleImageChange={handleImageChange}
         handleSubmit={handleSubmit}
         loading={loading}
+        formName={"Edit"}
       />
     </div>
   );
