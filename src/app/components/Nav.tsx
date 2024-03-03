@@ -49,6 +49,9 @@ export default function Nav({ signOut }: { signOut: any }) {
         <Link href="/ingredients" legacyBehavior>
           <a onClick={clickHandler}>Ingredients</a>
         </Link>
+        <Link href="/shoppingList" legacyBehavior>
+          <a onClick={clickHandler}>Shopping List</a>
+        </Link>
         <a onClick={handleSignOut}>Sign Out</a>
       </InnerNavStyles>
     </NavStyles>
