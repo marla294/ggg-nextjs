@@ -20,7 +20,7 @@ const IngredientsBarStyles = styled.div`
   }
 `;
 
-const BarContainer = styled.div`
+export const BarContainer = styled.div`
   position: fixed;
   top: 4.45rem;
   left: 0;
@@ -30,7 +30,7 @@ const BarContainer = styled.div`
   padding: 0 1rem;
 `;
 
-const IngredientsListContainer = styled.div`
+export const ListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
   margin-top: 7rem;
@@ -91,11 +91,11 @@ export default function Ingredients() {
           />
         </IngredientsBarStyles>
       </BarContainer>
-      <IngredientsListContainer>
+      <ListContainer>
         {displayIngredients?.map((ingredient: any) => (
           <IngredientListItem key={ingredient._id} ingredient={ingredient} />
         ))}
-      </IngredientsListContainer>
+      </ListContainer>
     </div>
   );
 }
