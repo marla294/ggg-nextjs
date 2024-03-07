@@ -1,17 +1,32 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BarContainer, ListContainer } from "../ingredients/page";
+import getShoppingListItems from "./getShoppingListItems";
 
 export default function ShoppingList() {
   const [displayShoppingListItems, setDisplayShoppingListItems] =
     useState<any>(null);
+
+  useEffect(() => {
+    fetchShoppingListItems();
+  }, []);
+
+  const fetchShoppingListItems = async () => {
+    const res = await getShoppingListItems();
+    const tempShoppingListItems = JSON.parse(res as string);
+    setDisplayShoppingListItems(tempShoppingListItems);
+  };
 
   return (
     <div>
       <BarContainer>
         <h3>Shopping List</h3>
       </BarContainer>
-      <ListContainer>List items go here</ListContainer>
+      <ListContainer>
+        {displayShoppingListItems?.map((shoppingListItem: any) => {
+          shoppingListItem?.ingredient?.name;
+        })}
+      </ListContainer>
     </div>
   );
 }
