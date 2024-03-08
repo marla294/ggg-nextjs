@@ -11,6 +11,10 @@ export default function ShoppingList() {
     fetchShoppingListItems();
   }, []);
 
+  useEffect(() => {
+    console.log({ displayShoppingListItems });
+  }, [displayShoppingListItems]);
+
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems();
     const tempShoppingListItems = JSON.parse(res as string);
@@ -24,7 +28,7 @@ export default function ShoppingList() {
       </BarContainer>
       <ListContainer>
         {displayShoppingListItems?.map((shoppingListItem: any) => {
-          shoppingListItem?.ingredient?.name;
+          return <div>{shoppingListItem?.ingredient?.name}</div>;
         })}
       </ListContainer>
     </div>
