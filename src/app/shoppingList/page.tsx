@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
+import ShoppingListItem from "../components/ShoppingListItem";
 
 export default function ShoppingList() {
   const [displayShoppingListItems, setDisplayShoppingListItems] =
@@ -10,10 +11,6 @@ export default function ShoppingList() {
   useEffect(() => {
     fetchShoppingListItems();
   }, []);
-
-  useEffect(() => {
-    console.log({ displayShoppingListItems });
-  }, [displayShoppingListItems]);
 
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems();
@@ -27,8 +24,14 @@ export default function ShoppingList() {
         <h3>Shopping List</h3>
       </BarContainer>
       <ListContainer>
-        {displayShoppingListItems?.map((shoppingListItem: any) => {
+        {/* {displayShoppingListItems?.map((shoppingListItem: any) => {
           return <div>{shoppingListItem?.ingredient?.name}</div>;
+        })} */}
+        {displayShoppingListItems?.map((shoppingListItem: any) => {
+          const { ingredient } = shoppingListItem;
+          return (
+            <ShoppingListItem key={ingredient._id} ingredient={ingredient} />
+          );
         })}
       </ListContainer>
     </div>
