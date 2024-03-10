@@ -1,6 +1,7 @@
 "use server";
 import dbConnect from "../../../lib/dbconnect";
 import Ingredient from "../../../models/Ingredient";
+import IngredientImage from "../../../models/IngredientImage";
 import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
@@ -22,6 +23,10 @@ export default async () => {
         {
           path: "ingredient",
           model: Ingredient,
+          populate: {
+            path: "photo",
+            model: IngredientImage,
+          }
         },
       ])
       .exec();
