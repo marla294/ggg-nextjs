@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import getIngredients from "../../ingredients/getIngredients";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import getShoppingListItems from "../getShoppingListItems";
-// import deleteIngredient from "./deleteIngredient";
+import deleteShoppingListItem from "./deleteShoppingListItem";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -46,17 +45,6 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
-const EditButton = styled.button`
-  width: 200px;
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1.1rem;
-  background: var(--green);
-  color: black;
-  border: 1px solid var(--darkGreen);
-`;
-
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -65,12 +53,11 @@ const ButtonContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  // const router = useRouter();
+  const router = useRouter();
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
-  // const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  // const [editLoading, setEditLoading] = useState<boolean>(false);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const fetchShoppingListItem = async () => {
     const res = await getShoppingListItems({ id: params.id });
@@ -79,19 +66,19 @@ export default function Page({ params }: { params: { id: string } }) {
     setLoading(false);
   };
 
-  // const handleDelete = async () => {
-  //   setDeleteLoading(true);
+  const handleDelete = async () => {
+    setDeleteLoading(true);
 
-  //   try {
-  //     await deleteIngredient({
-  //       ingredientId: ingredient?._id,
-  //     });
-  //     setLoading(false);
-  //     router.push("/ingredients");
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
+    try {
+      await deleteShoppingListItem({
+        shoppingListItemId: shoppingListItem?._id,
+      });
+      setLoading(false);
+      router.push("/shoppingList");
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     fetchShoppingListItem();
@@ -126,12 +113,13 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
+            <h4>Amount: {shoppingListItem?.quantity / 10}</h4>
             <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
             <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
             <div>Store: {shoppingListItem?.ingredient?.store}</div>
             <ButtonContainer>
-              {/* <DeleteButton
+              <DeleteButton
                 type="button"
                 onClick={() => {
                   handleDelete();
@@ -151,33 +139,9 @@ export default function Page({ params }: { params: { id: string } }) {
                     wrapperClass=""
                   />
                 ) : (
-                  "Delete Ingredient"
+                  "Remove from shopping list"
                 )}
-              </DeleteButton> */}
-              {/* <EditButton
-                type="button"
-                onClick={() => {
-                  setEditLoading(true);
-                  router.push(`/ingredient/${params.id}/edit`);
-                }}>
-                {editLoading ? (
-                  <ThreeDots
-                    visible={true}
-                    height="13"
-                    width="40"
-                    color="#1e830f"
-                    radius="9"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{
-                      display: "grid",
-                      justifyItems: "center",
-                    }}
-                    wrapperClass=""
-                  />
-                ) : (
-                  "Edit Ingredient"
-                )}
-              </EditButton> */}
+              </DeleteButton>
             </ButtonContainer>
           </div>
         </SingleItemStyles>
