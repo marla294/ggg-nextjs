@@ -29,7 +29,11 @@ export default function ShoppingList() {
         {displayShoppingListItems?.map((shoppingListItem: any) => {
           const { ingredient } = shoppingListItem;
           return (
-            <ShoppingListItem key={ingredient._id} ingredient={ingredient} />
+            <ShoppingListItem
+              key={ingredient._id}
+              ingredient={ingredient}
+              quantity={shoppingListItem?.quantity}
+            />
           );
         })}
       </ListContainer>

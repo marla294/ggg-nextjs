@@ -45,7 +45,13 @@ const ListItemStyles = styled(Link)`
   }
 `;
 
-const ShoppingListItem = ({ ingredient }: { ingredient: any }) => {
+const ShoppingListItem = ({
+  ingredient,
+  quantity,
+}: {
+  ingredient: any;
+  quantity?: any;
+}) => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   useEffect(() => {
@@ -68,7 +74,10 @@ const ShoppingListItem = ({ ingredient }: { ingredient: any }) => {
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details">{ingredient?.name}</div>
+      <div className="details">
+        <h5>{ingredient?.name}</h5>
+        <h6>Amount: {quantity / 10}</h6>
+      </div>
     </ListItemStyles>
   );
 };
