@@ -24,9 +24,10 @@ export default function ShoppingList() {
         <h3>Shopping List</h3>
       </BarContainer>
       <ListContainer>
+        {!!!displayShoppingListItems?.length &&
+          "Please add some shopping list items to get started!"}
         {displayShoppingListItems?.map((shoppingListItem: any) => {
           const { ingredient } = shoppingListItem;
-          console.log({ ingredient });
           return (
             <ShoppingListItem key={ingredient._id} ingredient={ingredient} />
           );
