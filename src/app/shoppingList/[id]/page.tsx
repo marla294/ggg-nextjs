@@ -113,7 +113,12 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
-            <h4>Amount: {shoppingListItem?.quantity / 10}</h4>
+            <h4>
+              Amount: {shoppingListItem?.quantity / 10}{" "}
+              {shoppingListItem?.ingredient?.units === "none"
+                ? ""
+                : shoppingListItem?.ingredient?.units}
+            </h4>
             <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
             <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
             <div>Units: {shoppingListItem?.ingredient?.units}</div>

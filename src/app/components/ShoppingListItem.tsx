@@ -78,7 +78,10 @@ const ShoppingListItem = ({
 
       <div className="details">
         <h5>{ingredient?.name}</h5>
-        <h6>Amount: {quantity / 10}</h6>
+        <h6>
+          Amount: {quantity / 10}{" "}
+          {ingredient?.units === "none" ? "" : ingredient?.units}
+        </h6>
       </div>
     </ListItemStyles>
   );
