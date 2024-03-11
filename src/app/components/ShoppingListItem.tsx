@@ -48,9 +48,11 @@ const ListItemStyles = styled(Link)`
 const ShoppingListItem = ({
   ingredient,
   quantity,
+  shoppingListItemId,
 }: {
   ingredient: any;
   quantity?: any;
+  shoppingListItemId?: any;
 }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
@@ -64,7 +66,7 @@ const ShoppingListItem = ({
   }, [ingredient]);
 
   return (
-    <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
+    <ListItemStyles href={`/shoppingList/${shoppingListItemId}`}>
       {imageUrl ? (
         <img
           src={imageUrl}

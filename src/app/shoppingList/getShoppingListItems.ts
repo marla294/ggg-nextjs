@@ -6,7 +6,7 @@ import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async () => {
+export default async ({id}: {id?: string | null | undefined}) => {
   try {
     await dbConnect();
 
@@ -34,6 +34,13 @@ export default async () => {
     if (shoppingListItems) {
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
+        .filter((shoppingListItem) => {
+          if (id) {
+            return shoppingListItem.id === id;
+          } else {
+            return true;
+          }
+        })
         .sort((a, b) => (a.name < b.name ? -1 : 1));
       return JSON.stringify(shoppingListItemsFiltered);
     } else {

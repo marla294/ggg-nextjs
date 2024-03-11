@@ -13,7 +13,7 @@ export default function ShoppingList() {
   }, []);
 
   const fetchShoppingListItems = async () => {
-    const res = await getShoppingListItems();
+    const res = await getShoppingListItems({});
     const tempShoppingListItems = JSON.parse(res as string);
     setDisplayShoppingListItems(tempShoppingListItems);
   };
@@ -33,6 +33,7 @@ export default function ShoppingList() {
               key={ingredient._id}
               ingredient={ingredient}
               quantity={shoppingListItem?.quantity}
+              shoppingListItemId={shoppingListItem?._id}
             />
           );
         })}
