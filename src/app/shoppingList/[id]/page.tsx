@@ -58,6 +58,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const fetchShoppingListItem = async () => {
     const res = await getShoppingListItems({ id: params.id });
@@ -113,12 +114,34 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
-            <h4>
-              Amount: {shoppingListItem?.quantity / 10}{" "}
-              {shoppingListItem?.ingredient?.units === "none"
-                ? ""
-                : shoppingListItem?.ingredient?.units}
-            </h4>
+            {!isEditing && (
+              <h4>
+                Amount: {shoppingListItem?.quantity / 10}{" "}
+                {shoppingListItem?.ingredient?.units === "none"
+                  ? ""
+                  : shoppingListItem?.ingredient?.units}{" "}
+                <button
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}>
+                  Edit
+                </button>
+              </h4>
+            )}
+            {isEditing && (
+              <h4>
+                Amount: <input />{" "}
+                {shoppingListItem?.ingredient?.units === "none"
+                  ? ""
+                  : shoppingListItem?.ingredient?.units}{" "}
+                <button
+                  onClick={() => {
+                    setIsEditing(false);
+                  }}>
+                  Submit
+                </button>
+              </h4>
+            )}
             <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
             <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
