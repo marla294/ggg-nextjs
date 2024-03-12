@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import getShoppingListItems from "../getShoppingListItems";
 import deleteShoppingListItem from "./deleteShoppingListItem";
 import editShoppingListItem from "./editShoppingListItem";
+import useForm from "../../lib/useForm";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -60,11 +61,15 @@ export default function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { handleChange, inputs, setInputs } = useForm({
+    quantity: "",
+  });
 
   const fetchShoppingListItem = async () => {
     const res = await getShoppingListItems({ id: params.id });
     const tempShoppingListItems = JSON.parse(res as string);
     setShoppingListItem(tempShoppingListItems[0]);
+    setInputs({ ...inputs, quantity: tempShoppingListItems[0]?.quantity / 10 });
     setLoading(false);
   };
 
@@ -117,7 +122,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <h3>{shoppingListItem?.ingredient?.name}</h3>
             {!isEditing && (
               <h4>
-                Amount: {shoppingListItem?.quantity / 10}{" "}
+                Amount: {inputs?.quantity ? inputs?.quantity : 0}{" "}
                 {shoppingListItem?.ingredient?.units === "none"
                   ? ""
                   : shoppingListItem?.ingredient?.units}{" "}
@@ -131,7 +136,16 @@ export default function Page({ params }: { params: { id: string } }) {
             )}
             {isEditing && (
               <h4>
-                Amount: <input />{" "}
+                Amount:{" "}
+                <input
+                  required
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="Quantity"
+                  value={inputs?.quantity}
+                  onChange={handleChange}
+                />{" "}
                 {shoppingListItem?.ingredient?.units === "none"
                   ? ""
                   : shoppingListItem?.ingredient?.units}{" "}
