@@ -5,6 +5,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import getShoppingListItems from "../getShoppingListItems";
 import deleteShoppingListItem from "./deleteShoppingListItem";
+import editShoppingListItem from "./editShoppingListItem";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
