@@ -12,14 +12,14 @@ export default async ({
   try {
     await dbConnect();
 
-    const filter = { shoppingListItemId: id };
+    const filter = { _id: id}
 
     if (quantity) {
       let update = {quantity: quantity * 10};
   
-      const ingredient = await ShoppingListItem.findOneAndUpdate(filter, update);
+      const shoppingListItem = await ShoppingListItem.findOneAndUpdate(filter, update);
 
-      return JSON.stringify(ingredient);
+      return JSON.stringify(shoppingListItem);
     } else {
       return;
     }

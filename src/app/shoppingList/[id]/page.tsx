@@ -87,6 +87,17 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      await editShoppingListItem({
+        id: shoppingListItem?._id,
+        quantity: inputs?.quantity,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     fetchShoppingListItem();
   }, []);
@@ -151,6 +162,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   : shoppingListItem?.ingredient?.units}{" "}
                 <button
                   onClick={() => {
+                    handleSubmit();
                     setIsEditing(false);
                   }}>
                   Submit
