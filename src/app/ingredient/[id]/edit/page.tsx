@@ -1,6 +1,5 @@
 "use client";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import getIngredients from "../../../ingredients/getIngredients";
 import editIngredient from "./editIngredient";

@@ -56,6 +56,17 @@ const EditButton = styled.button`
   border: 1px solid var(--darkGreen);
 `;
 
+const AddToShoppingListButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--yellow);
+  color: black;
+  border: 1px solid var(--darkYellow);
+`;
+
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -174,6 +185,30 @@ export default function Page({ params }: { params: { id: string } }) {
                   "Edit Ingredient"
                 )}
               </EditButton>
+              <AddToShoppingListButton
+                type="button"
+                onClick={() => {
+                  setEditLoading(true);
+                  router.push(`/ingredient/${params.id}/edit`);
+                }}>
+                {editLoading ? (
+                  <ThreeDots
+                    visible={true}
+                    height="13"
+                    width="40"
+                    color="#1e830f"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{
+                      display: "grid",
+                      justifyItems: "center",
+                    }}
+                    wrapperClass=""
+                  />
+                ) : (
+                  "Add To Shopping List"
+                )}
+              </AddToShoppingListButton>
             </ButtonContainer>
           </div>
         </SingleItemStyles>
