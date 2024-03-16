@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import deleteIngredient from "./deleteIngredient";
+import addIngredientToShoppingList from "./addIngredientToShoppingList";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -188,8 +189,7 @@ export default function Page({ params }: { params: { id: string } }) {
               <AddToShoppingListButton
                 type="button"
                 onClick={() => {
-                  setEditLoading(true);
-                  router.push(`/ingredient/${params.id}/edit`);
+                  addIngredientToShoppingList({ ingredientId: params.id });
                 }}>
                 {editLoading ? (
                   <ThreeDots

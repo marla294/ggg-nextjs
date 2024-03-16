@@ -7,9 +7,9 @@ import { getSession } from "../../../../services/authentication/cookie-session";
 import User from "../../../../models/User";
 
 export default async ({
-  id,
+  ingredientId,
 }: {
-    id: string,
+  ingredientId: string,
   }) => {
   try {
     await dbConnect();
@@ -17,7 +17,7 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const filter = { _id: id};
+    const filter = { _id: ingredientId};
 
     const [ingredient] = await Ingredient.find(filter);
 
