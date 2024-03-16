@@ -21,7 +21,7 @@ export default async ({
 
     const [ingredient] = await Ingredient.find(filter);
 
-    const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 1, ingredient: new ObjectId(ingredient._id)}]);
+    const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 10, ingredient: new ObjectId(ingredient._id)}]);
 
     return JSON.stringify(shoppingListItem);
 
