@@ -200,7 +200,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     visible={true}
                     height="13"
                     width="40"
-                    color="#1e830f"
+                    color="#554100"
                     radius="9"
                     ariaLabel="three-dots-loading"
                     wrapperStyle={{
