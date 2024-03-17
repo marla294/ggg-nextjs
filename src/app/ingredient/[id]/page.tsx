@@ -82,6 +82,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [editLoading, setEditLoading] = useState<boolean>(false);
+  const [addToShoppingListLoading, setAddToShoppingListLoading] =
+    useState<boolean>(false);
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
@@ -189,9 +191,11 @@ export default function Page({ params }: { params: { id: string } }) {
               <AddToShoppingListButton
                 type="button"
                 onClick={() => {
+                  setAddToShoppingListLoading(true);
                   addIngredientToShoppingList({ ingredientId: params.id });
+                  router.push(`/shoppingList`);
                 }}>
-                {editLoading ? (
+                {addToShoppingListLoading ? (
                   <ThreeDots
                     visible={true}
                     height="13"
