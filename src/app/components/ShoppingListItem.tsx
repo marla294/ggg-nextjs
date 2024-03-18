@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import DeleteFromShoppingListButton from "./DeleteFromShoppingListButton";
 
 const ListItemStyles = styled(Link)`
   background: white;
@@ -83,6 +84,9 @@ const ShoppingListItem = ({
           {ingredient?.units === "none" ? "" : ingredient?.units}
         </h6>
       </div>
+      <DeleteFromShoppingListButton
+        shoppingListItem={{ _id: shoppingListItemId }}
+      />
     </ListItemStyles>
   );
 };

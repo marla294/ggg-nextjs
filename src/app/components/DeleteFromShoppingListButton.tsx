@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
+import ShoppingListItem from "../../../models/ShoppingListItem";
 
 const DeleteButton = styled.button`
   width: 200px;
