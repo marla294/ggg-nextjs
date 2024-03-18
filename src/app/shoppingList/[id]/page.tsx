@@ -1,12 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ThreeDots } from "react-loader-spinner";
-import { useRouter } from "next/navigation";
 import getShoppingListItems from "../getShoppingListItems";
-import deleteShoppingListItem from "./deleteShoppingListItem";
 import editShoppingListItem from "./editShoppingListItem";
 import useForm from "../../lib/useForm";
+import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -36,17 +34,6 @@ const SingleItemStyles = styled.div`
   }
 `;
 
-const DeleteButton = styled.button`
-  width: 200px;
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1.1rem;
-  background: var(--orange);
-  color: var(--darkOrange);
-  border: 1px solid var(--darkOrange);
-`;
-
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -55,11 +42,9 @@ const ButtonContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  const router = useRouter();
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
@@ -71,20 +56,6 @@ export default function Page({ params }: { params: { id: string } }) {
     setShoppingListItem(tempShoppingListItems[0]);
     setInputs({ ...inputs, quantity: tempShoppingListItems[0]?.quantity / 10 });
     setLoading(false);
-  };
-
-  const handleDelete = async () => {
-    setDeleteLoading(true);
-
-    try {
-      await deleteShoppingListItem({
-        shoppingListItemId: shoppingListItem?._id,
-      });
-      setLoading(false);
-      router.push("/shoppingList");
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   const handleSubmit = async () => {
@@ -174,29 +145,9 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
             <div>Store: {shoppingListItem?.ingredient?.store}</div>
             <ButtonContainer>
-              <DeleteButton
-                type="button"
-                onClick={() => {
-                  handleDelete();
-                }}>
-                {deleteLoading ? (
-                  <ThreeDots
-                    visible={true}
-                    height="13"
-                    width="40"
-                    color="#551d11"
-                    radius="9"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{
-                      display: "grid",
-                      justifyItems: "center",
-                    }}
-                    wrapperClass=""
-                  />
-                ) : (
-                  "Remove from shopping list"
-                )}
-              </DeleteButton>
+              <DeleteFromShoppingListButton
+                shoppingListItem={shoppingListItem}
+              />
             </ButtonContainer>
           </div>
         </SingleItemStyles>

@@ -210,7 +210,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     wrapperClass=""
                   />
                 ) : (
-                  "Add To Shopping List"
+                  "Add 1 To Shopping List"
                 )}
               </AddToShoppingListButton>
             </ButtonContainer>
