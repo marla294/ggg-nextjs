@@ -7,7 +7,9 @@ import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem"
 import ShoppingListItem from "../../../models/ShoppingListItem";
 
 const DeleteButton = styled.button`
-  width: 200px;
+  @media (min-width: 768px) {
+    width: 200px;
+  }
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
@@ -60,7 +62,7 @@ export default function DeleteFromShoppingListButton({
           wrapperClass=""
         />
       ) : (
-        "Remove from shopping list"
+        "Remove"
       )}
     </DeleteButton>
   );
