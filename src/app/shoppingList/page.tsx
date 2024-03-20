@@ -3,6 +3,15 @@ import { useEffect, useState } from "react";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
+import styled from "styled-components";
+
+const ClearButtonStyles = styled.button`
+  width: auto;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+`;
 
 export default function ShoppingList() {
   const [displayShoppingListItems, setDisplayShoppingListItems] =
@@ -22,6 +31,26 @@ export default function ShoppingList() {
     <div>
       <BarContainer>
         <h3>Shopping List</h3>
+        <ClearButtonStyles
+          type="button"
+          className="yellow small"
+          onClick={() => {
+            if (
+              confirm(
+                "Are you sure you want to clear the entire shopping list?"
+              )
+            ) {
+              // shoppingListItems?.allShoppingListItems?.forEach((item) => {
+              //   deleteShoppingListItem({
+              //     variables: {
+              //       id: item?.id,
+              //     },
+              //   });
+              // });
+            }
+          }}>
+          Clear
+        </ClearButtonStyles>
       </BarContainer>
       <ListContainer>
         {!!!displayShoppingListItems?.length &&

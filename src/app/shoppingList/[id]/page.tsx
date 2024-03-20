@@ -147,6 +147,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <ButtonContainer>
               <DeleteFromShoppingListButton
                 shoppingListItem={shoppingListItem}
+                isInList={false}
               />
             </ButtonContainer>
           </div>

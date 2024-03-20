@@ -86,6 +86,7 @@ const ShoppingListItem = ({
       </div>
       <DeleteFromShoppingListButton
         shoppingListItem={{ _id: shoppingListItemId }}
+        isInList={true}
       />
     </ListItemStyles>
   );

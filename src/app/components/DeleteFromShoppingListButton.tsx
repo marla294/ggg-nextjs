@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
-import ShoppingListItem from "../../../models/ShoppingListItem";
 
 const DeleteButton = styled.button`
   @media (min-width: 768px) {
@@ -21,8 +20,10 @@ const DeleteButton = styled.button`
 
 export default function DeleteFromShoppingListButton({
   shoppingListItem,
+  isInList,
 }: {
   shoppingListItem: any;
+  isInList: boolean;
 }) {
   const router = useRouter();
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
@@ -61,8 +62,10 @@ export default function DeleteFromShoppingListButton({
           }}
           wrapperClass=""
         />
-      ) : (
+      ) : isInList ? (
         "Remove"
+      ) : (
+        "Remove From Shopping List"
       )}
     </DeleteButton>
   );
