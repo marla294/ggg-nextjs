@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
+import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
 import styled from "styled-components";
 
 const ClearButtonStyles = styled.button`
@@ -40,13 +41,11 @@ export default function ShoppingList() {
                 "Are you sure you want to clear the entire shopping list?"
               )
             ) {
-              // shoppingListItems?.allShoppingListItems?.forEach((item) => {
-              //   deleteShoppingListItem({
-              //     variables: {
-              //       id: item?.id,
-              //     },
-              //   });
-              // });
+              displayShoppingListItems?.forEach((item: any) => {
+                deleteShoppingListItem({
+                  shoppingListItemId: shoppingListItem?._id,,
+                });
+              });
             }
           }}>
           Clear
