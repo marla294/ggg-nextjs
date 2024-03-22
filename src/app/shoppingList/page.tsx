@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
-import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
+
 import styled from "styled-components";
+import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 
 const ClearButtonStyles = styled.button`
   width: auto;
@@ -41,9 +42,9 @@ export default function ShoppingList() {
                 "Are you sure you want to clear the entire shopping list?"
               )
             ) {
-              displayShoppingListItems?.forEach((item: any) => {
-                deleteShoppingListItem({
-                  shoppingListItemId: shoppingListItem?._id,,
+              displayShoppingListItems?.forEach(async (item: any) => {
+                await deleteShoppingListItem({
+                  shoppingListItemId: item?._id,
                 });
               });
             }
