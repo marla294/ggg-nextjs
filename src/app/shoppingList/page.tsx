@@ -1,21 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styled from "styled-components";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
-
-import styled from "styled-components";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 
 const ClearButtonStyles = styled.button`
   width: auto;
-  transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
   font-size: 1.1rem;
+  background: var(--yellow);
+  color: var(--darkYellow);
+  border: 1px solid var(--darkYellow);
+  &:hover {
+    background: var(--darkYellow);
+    color: white;
+  }
 `;
 
 export default function ShoppingList() {
+  const router = useRouter();
   const [displayShoppingListItems, setDisplayShoppingListItems] =
     useState<any>(null);
 
@@ -35,8 +42,7 @@ export default function ShoppingList() {
         <h3>Shopping List</h3>
         <ClearButtonStyles
           type="button"
-          className="yellow small"
-          onClick={() => {
+          onClick={async () => {
             if (
               confirm(
                 "Are you sure you want to clear the entire shopping list?"
@@ -47,6 +53,7 @@ export default function ShoppingList() {
                   shoppingListItemId: item?._id,
                 });
               });
+              await fetchShoppingListItems();
             }
           }}>
           Clear
