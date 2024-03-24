@@ -21,6 +21,20 @@ const ClearButtonStyles = styled.button`
   }
 `;
 
+const ShoppingListBarStyles = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  font-size: 0.8rem;
+
+  input,
+  select {
+    padding: 1rem;
+    border: 1px solid black;
+    font-size: 1.4rem;
+    height: 4rem;
+  }
+`;
+
 export default function ShoppingList() {
   const router = useRouter();
   const [displayShoppingListItems, setDisplayShoppingListItems] =
@@ -40,24 +54,26 @@ export default function ShoppingList() {
     <div>
       <BarContainer>
         <h3>Shopping List</h3>
-        <ClearButtonStyles
-          type="button"
-          onClick={async () => {
-            if (
-              confirm(
-                "Are you sure you want to clear the entire shopping list?"
-              )
-            ) {
-              displayShoppingListItems?.forEach(async (item: any) => {
-                await deleteShoppingListItem({
-                  shoppingListItemId: item?._id,
+        <ShoppingListBarStyles>
+          <ClearButtonStyles
+            type="button"
+            onClick={async () => {
+              if (
+                confirm(
+                  "Are you sure you want to clear the entire shopping list?"
+                )
+              ) {
+                displayShoppingListItems?.forEach(async (item: any) => {
+                  await deleteShoppingListItem({
+                    shoppingListItemId: item?._id,
+                  });
                 });
-              });
-              await fetchShoppingListItems();
-            }
-          }}>
-          Clear
-        </ClearButtonStyles>
+                await fetchShoppingListItems();
+              }
+            }}>
+            Clear
+          </ClearButtonStyles>
+        </ShoppingListBarStyles>
       </BarContainer>
       <ListContainer>
         {!!!displayShoppingListItems?.length &&
