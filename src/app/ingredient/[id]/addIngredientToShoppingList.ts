@@ -21,9 +21,21 @@ export default async ({
 
     const [ingredient] = await Ingredient.find(filter);
 
-    const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 10, ingredient: new ObjectId(ingredient._id)}]);
+    // TODO: Search shopping list and if the ingredient already exists, add it to the existing shopping list item
+    const [existingShoppingListItem] = await ShoppingListItem.find({ingredient: new ObjectId(ingredient._id)});
 
-    return JSON.stringify(shoppingListItem);
+    console.log({existingShoppingListItem});
+
+    if (!!!existingShoppingListItem) {
+      const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 10, ingredient: new ObjectId(ingredient._id)}]);
+
+      return JSON.stringify(shoppingListItem);
+    } else {
+      existingShoppingListItem.quantity = existingShoppingListItem.quantity + 10;
+      
+    }
+
+    
 
   } catch (e) {
     console.error(e);
