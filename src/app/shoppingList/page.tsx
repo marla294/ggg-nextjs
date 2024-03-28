@@ -35,6 +35,21 @@ const ShoppingListBarStyles = styled.div`
   }
 `;
 
+const SortByStyles = styled.div`
+  display: grid;
+  align-items: center;
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(3.5rem, auto) 1fr;
+  }
+`;
+
+const sortOptions = [
+  { display: "Alphabetical", value: "alphabetical" },
+  { display: "Aisle", value: "aisle" },
+  { display: "Home area", value: "homeArea" },
+  { display: "Store", value: "store" },
+];
+
 export default function ShoppingList() {
   const router = useRouter();
   const [displayShoppingListItems, setDisplayShoppingListItems] =
@@ -73,6 +88,24 @@ export default function ShoppingList() {
             }}>
             Clear
           </ClearButtonStyles>
+          <SortByStyles>
+            <label htmlFor="sortBy">Sort:</label>
+            <select
+              name="sortBy"
+              id="sortBy"
+              value={inputs.sortBy}
+              onChange={handleChange}>
+              {sortOptions.map((option) => (
+                <option
+                  value={option.value}
+                  name={option.value}
+                  id={option.value}
+                  key={Math.random()}>
+                  {option.display}
+                </option>
+              ))}
+            </select>
+          </SortByStyles>
         </ShoppingListBarStyles>
       </BarContainer>
       <ListContainer>
