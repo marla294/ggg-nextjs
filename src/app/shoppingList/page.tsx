@@ -43,7 +43,12 @@ const SortByStyles = styled.div`
   }
 `;
 
-const sortOptions = [
+type SortOption = {
+  display: string;
+  value: string;
+};
+
+const sortOptions: SortOption[] = [
   { display: "Alphabetical", value: "alphabetical" },
   { display: "Aisle", value: "aisle" },
   { display: "Home area", value: "homeArea" },
@@ -54,6 +59,7 @@ export default function ShoppingList() {
   const router = useRouter();
   const [displayShoppingListItems, setDisplayShoppingListItems] =
     useState<any>(null);
+  const [sortBy, setSortBy] = useState<string>("alphabetical");
 
   useEffect(() => {
     fetchShoppingListItems();
@@ -63,6 +69,11 @@ export default function ShoppingList() {
     const res = await getShoppingListItems({});
     const tempShoppingListItems = JSON.parse(res as string);
     setDisplayShoppingListItems(tempShoppingListItems);
+  };
+
+  const handleChange = (e: any) => {
+    const val = e.target.value;
+    setSortBy(val);
   };
 
   return (
@@ -93,12 +104,11 @@ export default function ShoppingList() {
             <select
               name="sortBy"
               id="sortBy"
-              value={inputs.sortBy}
+              value={sortBy}
               onChange={handleChange}>
               {sortOptions.map((option) => (
                 <option
                   value={option.value}
-                  name={option.value}
                   id={option.value}
                   key={Math.random()}>
                   {option.display}
