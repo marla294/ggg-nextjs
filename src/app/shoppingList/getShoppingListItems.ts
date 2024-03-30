@@ -6,7 +6,7 @@ import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async ({id}: {id?: string | null | undefined}) => {
+export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: string | null | undefined}) => {
   try {
     await dbConnect();
 
@@ -40,9 +40,16 @@ export default async ({id}: {id?: string | null | undefined}) => {
           } else {
             return true;
           }
-        })
-        .sort((a, b) => (a.name < b.name ? -1 : 1));
-      return JSON.stringify(shoppingListItemsFiltered);
+        });
+      
+      let shoppingListItemsSorted;
+
+      switch (sortBy) {
+        default: 
+          shoppingListItemsSorted = shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1));
+      }
+
+      return JSON.stringify(shoppingListItemsSorted);
     } else {
       return null;
     }

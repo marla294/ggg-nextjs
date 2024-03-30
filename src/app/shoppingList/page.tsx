@@ -23,6 +23,7 @@ const ClearButtonStyles = styled.button`
 
 const ShoppingListBarStyles = styled.div`
   display: grid;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 0.5rem;
   font-size: 0.8rem;
 
