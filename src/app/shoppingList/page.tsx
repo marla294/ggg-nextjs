@@ -67,7 +67,7 @@ export default function ShoppingList() {
   }, []);
 
   const fetchShoppingListItems = async () => {
-    const res = await getShoppingListItems({});
+    const res = await getShoppingListItems({ sortBy });
     const tempShoppingListItems = JSON.parse(res as string);
     setDisplayShoppingListItems(tempShoppingListItems);
   };
