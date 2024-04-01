@@ -53,6 +53,8 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
           shoppingListItemsSorted = shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1));
       }
 
+      console.log({shoppingListItemsSorted});
+
       return JSON.stringify(shoppingListItemsSorted);
     } else {
       return null;

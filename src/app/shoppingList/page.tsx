@@ -64,7 +64,7 @@ export default function ShoppingList() {
 
   useEffect(() => {
     fetchShoppingListItems();
-  }, []);
+  }, [sortBy]);
 
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
