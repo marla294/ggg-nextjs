@@ -2,8 +2,8 @@
 // Level 1: grouping value
 // Level 2: all array items that have the matching grouping value
 
-export default function groupArrayBy(arr = [], groupBy: any) {
-  const grouping = arr.reduce((groupingObject, currentVal) => {
+export default function groupArrayBy(arr: any[] = [], groupBy: any) {
+  const grouping = arr.reduce((groupingObject: any, currentVal: any) => {
     let current = currentVal;
 
     // Get value of current object property to group on
