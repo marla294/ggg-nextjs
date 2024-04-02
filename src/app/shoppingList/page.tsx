@@ -69,6 +69,7 @@ export default function ShoppingList() {
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
     const tempShoppingListItems = JSON.parse(res as string);
+    console.log({ tempShoppingListItems });
     setDisplayShoppingListItems(tempShoppingListItems);
   };
 
@@ -124,14 +125,15 @@ export default function ShoppingList() {
           "Please add some shopping list items to get started!"}
         {displayShoppingListItems?.map((shoppingListItem: any) => {
           const { ingredient } = shoppingListItem;
-          return (
-            <ShoppingListItem
-              key={ingredient._id}
-              ingredient={ingredient}
-              quantity={shoppingListItem?.quantity}
-              shoppingListItemId={shoppingListItem?._id}
-            />
-          );
+          return <div>item</div>;
+          // return (
+          //   <ShoppingListItem
+          //     key={ingredient._id}
+          //     ingredient={ingredient}
+          //     quantity={shoppingListItem?.quantity}
+          //     shoppingListItemId={shoppingListItem?._id}
+          //   />
+          // );
         })}
       </ListContainer>
     </div>
