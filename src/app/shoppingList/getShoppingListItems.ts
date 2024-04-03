@@ -49,6 +49,12 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         case 'aisle': 
           shoppingListItemsSorted = groupArrayBy(shoppingListItemsFiltered, 'aisle', 'ingredient');
           break;
+        case 'homeArea': 
+          shoppingListItemsSorted = groupArrayBy(shoppingListItemsFiltered, 'homeArea', 'ingredient');
+          break;
+        case 'store': 
+          shoppingListItemsSorted = groupArrayBy(shoppingListItemsFiltered, 'store', 'ingredient');
+          break;
         default: 
           shoppingListItemsSorted = shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1));
       }
