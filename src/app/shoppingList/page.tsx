@@ -123,38 +123,26 @@ export default function ShoppingList() {
       <ListContainer>
         {!!!displayShoppingListItems?.length &&
           "Please add some shopping list items to get started!"}
-        {sortBy === "alphabetical"
-          ? displayShoppingListItems?.map((shoppingListItem: any) => {
-              const { ingredient } = shoppingListItem;
-              return (
-                <ShoppingListItem
-                  key={ingredient._id}
-                  ingredient={ingredient}
-                  quantity={shoppingListItem?.quantity}
-                  shoppingListItemId={shoppingListItem?._id}
-                />
-              );
-            })
-          : displayShoppingListItems?.map((grouping: any) => {
-              return (
-                <div>
-                  <h3>{grouping[0]}</h3>
-                  <div>
-                    {grouping[1]?.map((shoppingListItem: any) => {
-                      const { ingredient } = shoppingListItem;
-                      return (
-                        <ShoppingListItem
-                          key={ingredient._id}
-                          ingredient={ingredient}
-                          quantity={shoppingListItem?.quantity}
-                          shoppingListItemId={shoppingListItem?._id}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
+        {displayShoppingListItems?.map((grouping: any) => {
+          return (
+            <div>
+              <h3>{grouping[0]}</h3>
+              <div>
+                {grouping[1]?.map((shoppingListItem: any) => {
+                  const { ingredient } = shoppingListItem;
+                  return (
+                    <ShoppingListItem
+                      key={ingredient._id}
+                      ingredient={ingredient}
+                      quantity={shoppingListItem?.quantity}
+                      shoppingListItemId={shoppingListItem?._id}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </ListContainer>
     </div>
   );
