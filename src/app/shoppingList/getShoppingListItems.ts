@@ -36,11 +36,7 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
         .filter((shoppingListItem) => {
-          if (id) {
-            return shoppingListItem.id === id;
-          } else {
-            return true;
-          }
+          return id ? shoppingListItem.id === id : true;
         });
 
       if (id) {
