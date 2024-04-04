@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
@@ -44,6 +43,11 @@ const SortByStyles = styled.div`
   }
 `;
 
+const GroupingContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+`;
+
 type SortOption = {
   display: string;
   value: string;
@@ -57,7 +61,6 @@ const sortOptions: SortOption[] = [
 ];
 
 export default function ShoppingList() {
-  const router = useRouter();
   const [displayShoppingListItems, setDisplayShoppingListItems] =
     useState<any>(null);
   const [sortBy, setSortBy] = useState<string>("alphabetical");
@@ -69,7 +72,6 @@ export default function ShoppingList() {
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
     const tempShoppingListItems = JSON.parse(res as string);
-    console.log({ tempShoppingListItems });
     setDisplayShoppingListItems(tempShoppingListItems);
   };
 
@@ -125,9 +127,9 @@ export default function ShoppingList() {
           "Please add some shopping list items to get started!"}
         {displayShoppingListItems?.map((grouping: any) => {
           return (
-            <div>
+            <div key={grouping[0]}>
               <h3>{grouping[0]}</h3>
-              <div>
+              <GroupingContainer>
                 {grouping[1]?.map((shoppingListItem: any) => {
                   const { ingredient } = shoppingListItem;
                   return (
@@ -139,7 +141,7 @@ export default function ShoppingList() {
                     />
                   );
                 })}
-              </div>
+              </GroupingContainer>
             </div>
           );
         })}
