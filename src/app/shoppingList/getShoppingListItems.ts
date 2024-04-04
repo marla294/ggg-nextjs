@@ -42,14 +42,14 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
             return true;
           }
         });
-      
-      let shoppingListItemsSorted;
 
-      if (sortBy === 'alphabetical') {
-        shoppingListItemsSorted = [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]];
-      } else {
-        shoppingListItemsSorted = groupArrayBy(shoppingListItemsFiltered, sortBy, 'ingredient');
+      if (id) {
+        return JSON.stringify(shoppingListItemsFiltered);
       }
+
+      const shoppingListItemsSorted = sortBy === 'alphabetical' 
+        ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
+        : groupArrayBy(shoppingListItemsFiltered, sortBy, 'ingredient');
 
       return JSON.stringify(shoppingListItemsSorted);
     } else {
