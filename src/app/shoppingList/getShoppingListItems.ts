@@ -35,9 +35,7 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
     if (shoppingListItems) {
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
-        .filter((shoppingListItem) => {
-          return id ? shoppingListItem.id === id : true;
-        });
+        .filter((shoppingListItem) => id ? shoppingListItem.id === id : true);
 
       if (id) {
         return JSON.stringify(shoppingListItemsFiltered);
