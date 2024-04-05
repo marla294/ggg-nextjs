@@ -10,14 +10,12 @@ export default function groupArrayBy(arr: any[] = [], groupBy: any, subProperty?
       current = currentVal[subProperty];
     }
 
-    console.log({current, currentVal, groupBy});
-
     // Get value of current object property to group on
     const currentGroup = current[groupBy];
-    // const currentGroupLowercase = (currentGroup as string).toLowerCase();
+    const currentGroupLowercase = (currentGroup as string).toLowerCase();
     // If the groupingArray already has a grouping for this, add current value to it, if not then create a new one
-    groupingObject[currentGroup] = [
-      ...(groupingObject[currentGroup] || []),
+    groupingObject[currentGroupLowercase] = [
+      ...(groupingObject[currentGroupLowercase] || []),
       currentVal,
     ];
     return groupingObject;

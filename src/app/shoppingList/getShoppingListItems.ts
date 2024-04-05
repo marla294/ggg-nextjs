@@ -42,7 +42,7 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
       }
 
       const shoppingListItemsSorted = sortBy === 'alphabetical' 
-        ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
+        ? [['alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
         : groupArrayBy(shoppingListItemsFiltered, sortBy, 'ingredient');
 
       return JSON.stringify(shoppingListItemsSorted);
