@@ -1,4 +1,8 @@
+"use client";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import { ThreeDots } from "react-loader-spinner";
+import { useState } from "react";
 
 const EditButton = styled.button`
   width: 200px;
@@ -11,13 +15,16 @@ const EditButton = styled.button`
   border: 1px solid var(--darkGreen);
 `;
 
-export default function EditIngredientButton() {
+export default function EditIngredientButton({ id }: { id: string }) {
+  const router = useRouter();
+  const [editLoading, setEditLoading] = useState<boolean>(false);
+
   return (
     <EditButton
       type="button"
       onClick={() => {
         setEditLoading(true);
-        router.push(`/ingredient/${params.id}/edit`);
+        router.push(`/ingredient/${id}/edit`);
       }}>
       {editLoading ? (
         <ThreeDots

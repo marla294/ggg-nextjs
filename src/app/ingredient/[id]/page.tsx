@@ -6,6 +6,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
+import EditIngredientButton from "../../components/EditIngredientButton";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -46,17 +47,6 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
-const EditButton = styled.button`
-  width: 200px;
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1.1rem;
-  background: var(--green);
-  color: black;
-  border: 1px solid var(--darkGreen);
-`;
-
 const AddToShoppingListButton = styled.button`
   width: 200px;
   transition: 0.2s;
@@ -81,7 +71,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [editLoading, setEditLoading] = useState<boolean>(false);
   const [addToShoppingListLoading, setAddToShoppingListLoading] =
     useState<boolean>(false);
 
@@ -164,30 +153,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   "Delete Ingredient"
                 )}
               </DeleteButton>
-              <EditButton
-                type="button"
-                onClick={() => {
-                  setEditLoading(true);
-                  router.push(`/ingredient/${params.id}/edit`);
-                }}>
-                {editLoading ? (
-                  <ThreeDots
-                    visible={true}
-                    height="13"
-                    width="40"
-                    color="#1e830f"
-                    radius="9"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{
-                      display: "grid",
-                      justifyItems: "center",
-                    }}
-                    wrapperClass=""
-                  />
-                ) : (
-                  "Edit Ingredient"
-                )}
-              </EditButton>
+              <EditIngredientButton id={params.id} />
               <AddToShoppingListButton
                 type="button"
                 onClick={() => {
