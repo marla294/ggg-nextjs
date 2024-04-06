@@ -5,6 +5,7 @@ import getShoppingListItems from "../getShoppingListItems";
 import editShoppingListItem from "./editShoppingListItem";
 import useForm from "../../lib/useForm";
 import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
+import EditIngredientButton from "../../components/EditIngredientButton";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -149,6 +150,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 shoppingListItem={shoppingListItem}
                 isInList={false}
               />
+              <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
             </ButtonContainer>
           </div>
         </SingleItemStyles>
