@@ -199,7 +199,7 @@ const IngredientForm = ({
               wrapperClass=""
             />
           ) : (
-            <>{formName ? formName : "Edit"}</>
+            <>Submit</>
           )}
         </button>
       </LoadingContainer>
