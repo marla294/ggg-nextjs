@@ -7,7 +7,7 @@ import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 
 const ClearButtonStyles = styled.button`
-  width: auto;
+  width: 8rem;
   margin: 0 !important;
   padding: 0.7rem 1rem;
   font-size: 1.1rem;
@@ -22,7 +22,7 @@ const ClearButtonStyles = styled.button`
 
 const ShoppingListBarStyles = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 4fr;
   grid-gap: 0.5rem;
   font-size: 0.8rem;
 
@@ -38,8 +38,9 @@ const ShoppingListBarStyles = styled.div`
 const SortByStyles = styled.div`
   display: grid;
   align-items: center;
-  @media (min-width: 768px) {
-    grid-template-columns: minmax(3.5rem, auto) 1fr;
+  grid-template-columns: minmax(3.5rem, auto) 1fr;
+  label {
+    font-size: 1.2rem;
   }
 `;
 
