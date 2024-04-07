@@ -94,9 +94,11 @@ export default function ShoppingList() {
                   "Are you sure you want to clear the entire shopping list?"
                 )
               ) {
-                displayShoppingListItems?.forEach(async (item: any) => {
-                  await deleteShoppingListItem({
-                    shoppingListItemId: item?._id,
+                displayShoppingListItems?.forEach(async (grouping: any) => {
+                  grouping[1]?.forEach(async (item: any) => {
+                    await deleteShoppingListItem({
+                      shoppingListItemId: item?._id,
+                    });
                   });
                 });
                 await fetchShoppingListItems();
