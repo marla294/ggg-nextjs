@@ -2,6 +2,10 @@
 // Level 1: grouping value
 // Level 2: all array items that have the matching grouping value
 
+const capitalize = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export default function groupArrayBy(arr: any[] = [], groupBy: any, subProperty?: string) {
 
   const grouping = arr.reduce((groupingObject: any, currentVal: any) => {
@@ -12,7 +16,7 @@ export default function groupArrayBy(arr: any[] = [], groupBy: any, subProperty?
 
     // Get value of current object property to group on
     const currentGroup = current[groupBy];
-    const currentGroupLowercase = (currentGroup as string).toLowerCase();
+    const currentGroupLowercase = capitalize((currentGroup as string).toLowerCase());
     // If the groupingArray already has a grouping for this, add current value to it, if not then create a new one
     groupingObject[currentGroupLowercase] = [
       ...(groupingObject[currentGroupLowercase] || []),
