@@ -5,6 +5,7 @@ import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
+import useSWR from "swr";
 
 const ClearButtonStyles = styled.button`
   width: 8rem;
@@ -65,16 +66,21 @@ export default function ShoppingList() {
   const [displayShoppingListItems, setDisplayShoppingListItems] =
     useState<any>(null);
   const [sortBy, setSortBy] = useState<string>("alphabetical");
-
-  useEffect(() => {
-    fetchShoppingListItems();
-  }, [sortBy]);
-
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
-    const tempShoppingListItems = JSON.parse(res as string);
-    setDisplayShoppingListItems(tempShoppingListItems);
+    return JSON.parse(res as string);
   };
+  const { data, error, isLoading } = useSWR({ sortBy }, fetchShoppingListItems);
+
+  // useEffect(() => {
+  //   fetchShoppingListItems();
+  // }, [sortBy]);
+
+  useEffect(() => {
+    if (data) {
+      setDisplayShoppingListItems(data);
+    }
+  }, [data]);
 
   const handleChange = (e: any) => {
     const val = e.target.value;
