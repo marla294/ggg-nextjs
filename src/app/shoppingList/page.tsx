@@ -63,24 +63,16 @@ const sortOptions: SortOption[] = [
 ];
 
 export default function ShoppingList() {
-  const [displayShoppingListItems, setDisplayShoppingListItems] =
-    useState<any>(null);
   const [sortBy, setSortBy] = useState<string>("alphabetical");
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
     return JSON.parse(res as string);
   };
-  const { data, error, isLoading } = useSWR({ sortBy }, fetchShoppingListItems);
-
-  // useEffect(() => {
-  //   fetchShoppingListItems();
-  // }, [sortBy]);
-
-  useEffect(() => {
-    if (data) {
-      setDisplayShoppingListItems(data);
-    }
-  }, [data]);
+  const { data, error, isLoading } = useSWR(
+    { sortBy },
+    fetchShoppingListItems,
+    { refreshInterval: 1000 }
+  );
 
   const handleChange = (e: any) => {
     const val = e.target.value;
@@ -100,7 +92,7 @@ export default function ShoppingList() {
                   "Are you sure you want to clear the entire shopping list?"
                 )
               ) {
-                displayShoppingListItems?.forEach(async (grouping: any) => {
+                data?.forEach(async (grouping: any) => {
                   grouping[1]?.forEach(async (item: any) => {
                     await deleteShoppingListItem({
                       shoppingListItemId: item?._id,
@@ -132,9 +124,9 @@ export default function ShoppingList() {
         </ShoppingListBarStyles>
       </BarContainer>
       <ListContainer>
-        {!!!displayShoppingListItems?.length &&
+        {!!!data?.length &&
           "Please add some shopping list items to get started!"}
-        {displayShoppingListItems?.map((grouping: any) => {
+        {data?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
               <h3>{grouping[0]}</h3>
