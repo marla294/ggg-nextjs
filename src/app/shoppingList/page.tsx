@@ -5,6 +5,7 @@ import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
+import { ThreeDots } from "react-loader-spinner";
 import useSWR from "swr";
 
 const ClearButtonStyles = styled.button`
@@ -50,6 +51,13 @@ const GroupingContainer = styled.div`
   grid-gap: 1rem;
 `;
 
+const LoadingContainer = styled.div`
+  height: 50vh;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+`;
+
 type SortOption = {
   display: string;
   value: string;
@@ -80,7 +88,7 @@ export default function ShoppingList() {
   };
 
   return (
-    <div>
+    <>
       <BarContainer>
         <h3>Shopping List</h3>
         <ShoppingListBarStyles>
@@ -124,8 +132,23 @@ export default function ShoppingList() {
         </ShoppingListBarStyles>
       </BarContainer>
       <ListContainer>
-        {!!!data?.length &&
-          "Please add some shopping list items to get started!"}
+        {isLoading && (
+          <LoadingContainer>
+            <ThreeDots
+              visible={true}
+              height="13"
+              width="40"
+              color="gray"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{
+                display: "grid",
+                justifyItems: "center",
+              }}
+              wrapperClass=""
+            />
+          </LoadingContainer>
+        )}
         {data?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
@@ -147,6 +170,6 @@ export default function ShoppingList() {
           );
         })}
       </ListContainer>
-    </div>
+    </>
   );
 }
