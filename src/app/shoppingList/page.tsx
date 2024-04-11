@@ -91,13 +91,21 @@ export default function ShoppingList() {
   };
 
   useEffect(() => {
-    // const newQuery = new URLSearchParams(router.asPath.split("?")[1]);
-    // newQuery.set("sortBy", sortBy);
-    // router.push(`${router.pathname}?${newQuery.toString()}`);
+    const params = new URLSearchParams((searchParams || "").toString());
+    if (params.get("sortBy")) {
+      setSortBy(params.get("sortBy"));
+    }
+  }, []);
+
+  useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
     params.set("sortBy", sortBy);
     router.push(pathname + "?" + params.toString());
   }, [sortBy]);
+
+  useEffect(() => {
+    console.log({ data, sortBy });
+  }, [data]);
 
   return (
     <>

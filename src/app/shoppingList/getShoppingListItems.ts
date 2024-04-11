@@ -32,6 +32,8 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
       ])
       .exec();
 
+      console.log({shoppingListItems, sortBy});
+
     if (shoppingListItems) {
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
