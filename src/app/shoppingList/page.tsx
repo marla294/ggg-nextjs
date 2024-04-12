@@ -52,7 +52,7 @@ const GroupingContainer = styled.div`
   grid-gap: 1rem;
 `;
 
-const LoadingContainer = styled.div`
+const CenteredContainer = styled.div`
   height: 50vh;
   display: grid;
   align-items: center;
@@ -64,27 +64,37 @@ type SortOption = {
   value: string;
 };
 
+enum Sort {
+  alphabetical = "alphabetical",
+  aisle = "aisle",
+  homeArea = "homeArea",
+  store = "store",
+}
+
 const sortOptions: SortOption[] = [
-  { display: "Alphabetical", value: "alphabetical" },
-  { display: "Aisle", value: "aisle" },
-  { display: "Home area", value: "homeArea" },
-  { display: "Store", value: "store" },
+  { display: "Alphabetical", value: Sort.alphabetical },
+  { display: "Aisle", value: Sort.aisle },
+  { display: "Home area", value: Sort.homeArea },
+  { display: "Store", value: Sort.store },
 ];
 
 export default function ShoppingList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [sortBy, setSortBy] = useState<string>("alphabetical");
+  const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
+
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
     return JSON.parse(res as string);
   };
+
   const { data, error, isLoading } = useSWR(
     { sortBy },
     fetchShoppingListItems,
     { refreshInterval: 1000 }
   );
+
   const handleChange = (e: any) => {
     const val = e.target.value;
     setSortBy(val);
@@ -93,7 +103,7 @@ export default function ShoppingList() {
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
     if (params.get("sortBy")) {
-      setSortBy(params.get("sortBy"));
+      setSortBy(params.get("sortBy") || Sort.alphabetical);
     }
   }, []);
 
@@ -102,10 +112,6 @@ export default function ShoppingList() {
     params.set("sortBy", sortBy);
     router.push(pathname + "?" + params.toString());
   }, [sortBy]);
-
-  useEffect(() => {
-    console.log({ data, sortBy });
-  }, [data]);
 
   return (
     <>
@@ -153,7 +159,7 @@ export default function ShoppingList() {
       </BarContainer>
       <ListContainer>
         {isLoading && (
-          <LoadingContainer>
+          <CenteredContainer>
             <ThreeDots
               visible={true}
               height="13"
@@ -167,8 +173,9 @@ export default function ShoppingList() {
               }}
               wrapperClass=""
             />
-          </LoadingContainer>
+          </CenteredContainer>
         )}
+        {error && <CenteredContainer>An error has occurred</CenteredContainer>}
         {data?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
