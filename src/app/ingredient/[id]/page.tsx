@@ -58,6 +58,8 @@ const AddToShoppingListButton = styled.button`
   border: 1px solid var(--darkYellow);
 `;
 
+const AddToShoppingListButtonWrapper = styled.div``;
+
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -154,31 +156,43 @@ export default function Page({ params }: { params: { id: string } }) {
                 )}
               </DeleteButton>
               <EditIngredientButton id={params.id} />
-              <AddToShoppingListButton
-                type="button"
-                onClick={() => {
-                  setAddToShoppingListLoading(true);
-                  addIngredientToShoppingList({ ingredientId: params.id });
-                  router.push(`/shoppingList`);
-                }}>
-                {addToShoppingListLoading ? (
-                  <ThreeDots
-                    visible={true}
-                    height="13"
-                    width="40"
-                    color="#554100"
-                    radius="9"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{
-                      display: "grid",
-                      justifyItems: "center",
-                    }}
-                    wrapperClass=""
-                  />
-                ) : (
-                  "Add 1 To Shopping List"
-                )}
-              </AddToShoppingListButton>
+              <AddToShoppingListButtonWrapper>
+                <AddToShoppingListButton
+                  type="button"
+                  onClick={() => {
+                    setAddToShoppingListLoading(true);
+                    addIngredientToShoppingList({ ingredientId: params.id });
+                    router.push(`/shoppingList`);
+                  }}>
+                  Add To Shopping List
+                  {/* {addToShoppingListLoading ? (
+                    <ThreeDots
+                      visible={true}
+                      height="13"
+                      width="40"
+                      color="#554100"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{
+                        display: "grid",
+                        justifyItems: "center",
+                      }}
+                      wrapperClass=""
+                    />
+                  ) : (
+                    "Add    To Shopping List"
+                  )} */}
+                </AddToShoppingListButton>
+                <input
+                  required
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="Quantity"
+                  // value={inputs?.quantity}
+                  // onChange={handleChange}
+                />
+              </AddToShoppingListButtonWrapper>
             </ButtonContainer>
           </div>
         </SingleItemStyles>
