@@ -8,8 +8,10 @@ import User from "../../../../models/User";
 
 export default async ({
   ingredientId,
+  quantity
 }: {
   ingredientId: string,
+  quantity?: number
   }) => {
   try {
     await dbConnect();
@@ -24,7 +26,8 @@ export default async ({
       const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 10, ingredient: new ObjectId(ingredient._id)}]);
       return JSON.stringify(shoppingListItem);
     } else {
-      existingShoppingListItem.quantity = existingShoppingListItem.quantity + 10;
+      console.log({quantity});
+      existingShoppingListItem.quantity = existingShoppingListItem.quantity + (quantity || 1) * 10;
       const updatedShoppingListItem = await ShoppingListItem.findOneAndUpdate({_id: existingShoppingListItem._id}, existingShoppingListItem);
       return JSON.stringify(updatedShoppingListItem);
     }

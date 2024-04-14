@@ -165,9 +165,12 @@ export default function Page({ params }: { params: { id: string } }) {
               <AddToShoppingListButtonWrapper>
                 <AddToShoppingListButton
                   type="button"
-                  onClick={() => {
+                  onClick={async () => {
                     setAddToShoppingListLoading(true);
-                    addIngredientToShoppingList({ ingredientId: params.id });
+                    await addIngredientToShoppingList({
+                      ingredientId: params.id,
+                      quantity,
+                    });
                     router.push(`/shoppingList`);
                   }}>
                   Add To Shopping List
