@@ -75,6 +75,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [addToShoppingListLoading, setAddToShoppingListLoading] =
     useState<boolean>(false);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
@@ -95,6 +96,11 @@ export default function Page({ params }: { params: { id: string } }) {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleQuantityChange = (e: any) => {
+    const val = e.target.value;
+    setQuantity(val);
   };
 
   useEffect(() => {
@@ -189,8 +195,8 @@ export default function Page({ params }: { params: { id: string } }) {
                   id="quantity"
                   name="quantity"
                   placeholder="Quantity"
-                  // value={inputs?.quantity}
-                  // onChange={handleChange}
+                  value={quantity}
+                  onChange={handleQuantityChange}
                 />
               </AddToShoppingListButtonWrapper>
             </ButtonContainer>
