@@ -58,7 +58,12 @@ const AddToShoppingListButton = styled.button`
   border: 1px solid var(--darkYellow);
 `;
 
-const AddToShoppingListButtonWrapper = styled.div``;
+const AddToShoppingListButtonWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const AddToShoppingListInput = styled.input``;
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
@@ -163,6 +168,15 @@ export default function Page({ params }: { params: { id: string } }) {
               </DeleteButton>
               <EditIngredientButton id={params.id} />
               <AddToShoppingListButtonWrapper>
+                <AddToShoppingListInput
+                  required
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="Quantity"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                />
                 <AddToShoppingListButton
                   type="button"
                   onClick={async () => {
@@ -192,15 +206,6 @@ export default function Page({ params }: { params: { id: string } }) {
                     "Add    To Shopping List"
                   )} */}
                 </AddToShoppingListButton>
-                <input
-                  required
-                  type="text"
-                  id="quantity"
-                  name="quantity"
-                  placeholder="Quantity"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                />
               </AddToShoppingListButtonWrapper>
             </ButtonContainer>
           </div>
