@@ -47,7 +47,24 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
+const AddToShoppingListButtonWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const AddToShoppingListInput = styled.input`
+  position: relative;
+  width: 25px;
+  margin-left: 54px;
+  z-index: 100000;
+`;
+
 const AddToShoppingListButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 200px;
   transition: 0.2s;
   margin: 0 !important;
@@ -57,13 +74,6 @@ const AddToShoppingListButton = styled.button`
   color: black;
   border: 1px solid var(--darkYellow);
 `;
-
-const AddToShoppingListButtonWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const AddToShoppingListInput = styled.input``;
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
@@ -187,7 +197,8 @@ export default function Page({ params }: { params: { id: string } }) {
                     });
                     router.push(`/shoppingList`);
                   }}>
-                  Add To Shopping List
+                  Add &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To Shopping
+                  List
                   {/* {addToShoppingListLoading ? (
                     <ThreeDots
                       visible={true}
