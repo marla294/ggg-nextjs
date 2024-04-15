@@ -23,10 +23,9 @@ export default async ({
     const [existingShoppingListItem] = await ShoppingListItem.find({ingredient: new ObjectId(ingredient._id)});
 
     if (!!!existingShoppingListItem) {
-      const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: 10, ingredient: new ObjectId(ingredient._id)}]);
+      const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: (quantity || 1) * 10, ingredient: new ObjectId(ingredient._id)}]);
       return JSON.stringify(shoppingListItem);
     } else {
-      console.log({quantity});
       existingShoppingListItem.quantity = existingShoppingListItem.quantity + (quantity || 1) * 10;
       const updatedShoppingListItem = await ShoppingListItem.findOneAndUpdate({_id: existingShoppingListItem._id}, existingShoppingListItem);
       return JSON.stringify(updatedShoppingListItem);
