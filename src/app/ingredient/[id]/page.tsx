@@ -75,6 +75,10 @@ const AddToShoppingListButton = styled.button`
   border: 1px solid var(--darkYellow);
 `;
 
+const AddingToShoppingListLoadingMessage = styled.div`
+  color: var(--green);
+`;
+
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -199,26 +203,14 @@ export default function Page({ params }: { params: { id: string } }) {
                   }}>
                   Add &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To Shopping
                   List
-                  {/* {addToShoppingListLoading ? (
-                    <ThreeDots
-                      visible={true}
-                      height="13"
-                      width="40"
-                      color="#554100"
-                      radius="9"
-                      ariaLabel="three-dots-loading"
-                      wrapperStyle={{
-                        display: "grid",
-                        justifyItems: "center",
-                      }}
-                      wrapperClass=""
-                    />
-                  ) : (
-                    "Add    To Shopping List"
-                  )} */}
                 </AddToShoppingListButton>
               </AddToShoppingListButtonWrapper>
             </ButtonContainer>
+            {addToShoppingListLoading && (
+              <AddingToShoppingListLoadingMessage>
+                Adding to shopping list...
+              </AddingToShoppingListLoadingMessage>
+            )}
           </div>
         </SingleItemStyles>
       )}
