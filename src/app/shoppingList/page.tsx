@@ -52,7 +52,7 @@ const GroupingContainer = styled.div`
   grid-gap: 1rem;
 `;
 
-const CenteredContainer = styled.div`
+export const CenteredContainer = styled.div`
   height: 50vh;
   display: grid;
   align-items: center;

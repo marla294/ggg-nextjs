@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
+import { CenteredContainer } from "../../shoppingList/page";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -137,7 +138,23 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <CenteredContainer>
+          <ThreeDots
+            visible={true}
+            height="13"
+            width="40"
+            color="gray"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{
+              display: "grid",
+              justifyItems: "center",
+            }}
+            wrapperClass=""
+          />
+        </CenteredContainer>
+      )}
       {!loading && (
         <SingleItemStyles>
           <div>
