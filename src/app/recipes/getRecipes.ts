@@ -1,5 +1,8 @@
 "use server"
 import dbConnect from "../../../lib/dbconnect";
+import Recipe from "../../../models/Recipe";
+import RecipeImage from "../../../models/RecipeImage";
+import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
 
 export default async () => {
@@ -8,26 +11,27 @@ export default async () => {
 
     const session = await getSession();
 
-    // const ingredients = await Ingredient.find({})
-    //   .populate([
-    //     {
-    //       path: "user",
-    //       model: User,
-    //     },
-    //   ])
-    //   .populate([
-    //     {
-    //       path: "photo",
-    //       model: IngredientImage,
-    //     },
-    //   ])
-    //   .exec();
+    const recipes = await Recipe.find({})
+      .populate([
+        {
+          path: "user",
+          model: User,
+        },
+      ])
+      .populate([
+        {
+          path: "photo",
+          model: RecipeImage,
+        },
+      ])
+      .exec();
 
-    // if (ingredients) {
-    //   return JSON.stringify(ingredients);
-    // } else {
-    //   return null;
-    // }
+    if (recipes) {
+      const recipesFiltered = recipes.filter(recipe => recipe.user?.email === session?.login).sort((a, b) => (a.name < b.name ? -1 : 1));
+      return JSON.stringify(recipesFiltered);
+    } else {
+      return null;
+    }
   } catch (e) {
     console.error(e);
   }

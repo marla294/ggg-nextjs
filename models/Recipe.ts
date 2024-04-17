@@ -16,7 +16,7 @@ const recipeSchema = new Schema({
   },
   photo: {
     type: Schema.Types.ObjectId,
-    ref: 'IngredientImage'
+    ref: 'RecipeImage'
   }
 });
 
