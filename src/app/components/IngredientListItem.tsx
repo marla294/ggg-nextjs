@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const ListItemStyles = styled(Link)`
+export const ListItemStyles = styled(Link)`
   background: white;
   display: grid;
   grid-auto-flow: column;

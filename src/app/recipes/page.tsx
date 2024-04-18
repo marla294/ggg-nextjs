@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import getRecipes from "./getRecipes";
 import { ListContainer } from "../ingredients/page";
-import IngredientListItem from "../components/IngredientListItem";
+import RecipeListItem from "../components/RecipeListItem";
 
 export default function Recipes() {
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
@@ -21,8 +21,8 @@ export default function Recipes() {
   return (
     <div>
       <ListContainer>
-        {displayRecipes?.map((ingredient: any) => (
-          <IngredientListItem key={ingredient._id} ingredient={ingredient} />
+        {displayRecipes?.map((recipe: any) => (
+          <RecipeListItem key={recipe._id} recipe={recipe} />
         ))}
       </ListContainer>
     </div>
