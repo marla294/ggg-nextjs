@@ -9,7 +9,7 @@ import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import { CenteredContainer } from "../../shoppingList/page";
 
-const SingleItemStyles = styled.div`
+export const SingleItemStyles = styled.div`
   padding: 0 10%;
 
   img {
