@@ -31,7 +31,7 @@ export default async ({id}: {id?: string | null | undefined}) => {
       .filter(recipe => recipe.user?.email === session?.login)
       .filter((recipe) => {
         if (id) {
-          return recipe.id === id;
+          return recipe?.id === id;
         } else {
           return true;
         }

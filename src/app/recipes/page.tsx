@@ -9,7 +9,7 @@ export default function Recipes() {
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
 
   const fetchRecipes = async () => {
-    const res = await getRecipes();
+    const res = await getRecipes({});
     const tempRecipes = JSON.parse(res as string);
     setDisplayRecipes(tempRecipes);
   };

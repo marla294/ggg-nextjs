@@ -37,6 +37,15 @@ export default function Page({ params }: { params: { id: string } }) {
           <div className="noPhoto">Needs photo 📸</div>
         )}
       </div>
+      <div>
+        <h3>{recipe?.name}</h3>
+        <div>{recipe?.description}</div>
+        {recipe?.recipeLink && (
+          <a target="_blank" href={recipe?.recipeLink}>
+            Website
+          </a>
+        )}
+      </div>
     </SingleItemStyles>
   );
 }
