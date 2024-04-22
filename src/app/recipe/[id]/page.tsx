@@ -3,6 +3,47 @@
 import { useEffect, useState } from "react";
 import getRecipes from "../../recipes/getRecipes";
 import { SingleItemStyles } from "../../ingredient/[id]/page";
+import styled from "styled-components";
+
+const ButtonDivStyles = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  width: 100%;
+  margin-top: 1rem;
+`;
+
+const EditButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--green);
+  color: black;
+  border: 1px solid var(--darkGreen);
+`;
+
+const AddToShoppingListButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--yellow);
+  color: black;
+  border: 1px solid var(--darkYellow);
+`;
+
+const DeleteRecipeButton = styled.button`
+  width: 200px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--orange);
+  color: black;
+  border: 1px solid var(--black);
+`;
 
 export default function Page({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<any>();
@@ -42,9 +83,16 @@ export default function Page({ params }: { params: { id: string } }) {
         <div>{recipe?.description}</div>
         {recipe?.recipeLink && (
           <a target="_blank" href={recipe?.recipeLink}>
-            Website
+            Recipe Link
           </a>
         )}
+        <ButtonDivStyles>
+          <EditButton>Edit Recipe</EditButton>
+          <AddToShoppingListButton>
+            Add To Shopping List
+          </AddToShoppingListButton>
+          <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
+        </ButtonDivStyles>
       </div>
     </SingleItemStyles>
   );
