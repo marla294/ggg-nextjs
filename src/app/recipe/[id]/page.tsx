@@ -70,30 +70,38 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [recipe]);
 
   return (
-    <SingleItemStyles>
+    <>
+      <SingleItemStyles>
+        <div>
+          {imageUrl ? (
+            <img src={imageUrl} alt={recipe?.photo?.altText || recipe?.name} />
+          ) : (
+            <div className="noPhoto">Needs photo 📸</div>
+          )}
+        </div>
+        <div>
+          <h3>{recipe?.name}</h3>
+          <div>{recipe?.description}</div>
+          {recipe?.recipeLink && (
+            <a target="_blank" href={recipe?.recipeLink}>
+              Recipe Link
+            </a>
+          )}
+          <ButtonDivStyles>
+            <EditButton>Edit Recipe</EditButton>
+            <AddToShoppingListButton>
+              Add To Shopping List
+            </AddToShoppingListButton>
+            <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
+          </ButtonDivStyles>
+        </div>
+      </SingleItemStyles>
       <div>
-        {imageUrl ? (
-          <img src={imageUrl} alt={recipe?.photo?.altText || recipe?.name} />
-        ) : (
-          <div className="noPhoto">Needs photo 📸</div>
-        )}
+        <h3>Recipe Ingredients</h3>
+        <AddToShoppingListButton>
+          Add ingredient to recipe
+        </AddToShoppingListButton>
       </div>
-      <div>
-        <h3>{recipe?.name}</h3>
-        <div>{recipe?.description}</div>
-        {recipe?.recipeLink && (
-          <a target="_blank" href={recipe?.recipeLink}>
-            Recipe Link
-          </a>
-        )}
-        <ButtonDivStyles>
-          <EditButton>Edit Recipe</EditButton>
-          <AddToShoppingListButton>
-            Add To Shopping List
-          </AddToShoppingListButton>
-          <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
-        </ButtonDivStyles>
-      </div>
-    </SingleItemStyles>
+    </>
   );
 }
