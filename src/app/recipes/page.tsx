@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import getRecipes from "./getRecipes";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import RecipeListItem from "../components/RecipeListItem";
-import { ListBarStyles } from "../shoppingList/page";
+import { ListBarStyles, SortByStyles, SortOption } from "../shoppingList/page";
 import styled from "styled-components";
 
 const AddButtonStyles = styled.button`
@@ -21,13 +21,29 @@ const AddButtonStyles = styled.button`
   }
 `;
 
+enum Sort {
+  alphabetical = "alphabetical",
+  type = "type",
+}
+
+const sortOptions: SortOption[] = [
+  { display: "Alphabetical", value: Sort.alphabetical },
+  { display: "Type", value: Sort.type },
+];
+
 export default function Recipes() {
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
+  const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
 
   const fetchRecipes = async () => {
     const res = await getRecipes({});
     const tempRecipes = JSON.parse(res as string);
     setDisplayRecipes(tempRecipes);
+  };
+
+  const handleChange = (e: any) => {
+    const val = e.target.value;
+    setSortBy(val);
   };
 
   useEffect(() => {
@@ -40,7 +56,7 @@ export default function Recipes() {
         <h3>Recipes</h3>
         <ListBarStyles>
           <AddButtonStyles type="button">Add</AddButtonStyles>
-          {/* <SortByStyles>
+          <SortByStyles>
             <label htmlFor="sortBy">Sort:</label>
             <select
               name="sortBy"
@@ -56,7 +72,7 @@ export default function Recipes() {
                 </option>
               ))}
             </select>
-          </SortByStyles> */}
+          </SortByStyles>
         </ListBarStyles>
       </BarContainer>
       <ListContainer>

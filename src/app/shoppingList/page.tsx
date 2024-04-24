@@ -38,7 +38,7 @@ export const ListBarStyles = styled.div`
   }
 `;
 
-const SortByStyles = styled.div`
+export const SortByStyles = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: minmax(3.5rem, auto) 1fr;
@@ -59,7 +59,7 @@ export const CenteredContainer = styled.div`
   justify-content: center;
 `;
 
-type SortOption = {
+export type SortOption = {
   display: string;
   value: string;
 };
