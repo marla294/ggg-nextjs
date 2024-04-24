@@ -23,7 +23,7 @@ const ClearButtonStyles = styled.button`
   }
 `;
 
-const ShoppingListBarStyles = styled.div`
+export const ListBarStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-gap: 0.5rem;
@@ -117,7 +117,7 @@ export default function ShoppingList() {
     <>
       <BarContainer>
         <h3>Shopping List</h3>
-        <ShoppingListBarStyles>
+        <ListBarStyles>
           <ClearButtonStyles
             type="button"
             onClick={async () => {
@@ -155,7 +155,7 @@ export default function ShoppingList() {
               ))}
             </select>
           </SortByStyles>
-        </ShoppingListBarStyles>
+        </ListBarStyles>
       </BarContainer>
       <ListContainer>
         {isLoading && (
