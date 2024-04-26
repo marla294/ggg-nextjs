@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import getRecipes from "../../recipes/getRecipes";
 import { SingleItemStyles } from "../../ingredient/[id]/page";
 import styled from "styled-components";
+import getRecipeItems from "../../recipes/getRecipeItems";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -47,6 +48,7 @@ const DeleteRecipeButton = styled.button`
 
 export default function Page({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<any>();
+  const [recipeItems, setRecipeItems] = useState<any>();
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const fetchRecipe = async () => {
@@ -54,6 +56,12 @@ export default function Page({ params }: { params: { id: string } }) {
     const tempRecipes = JSON.parse(res as string);
     setRecipe(tempRecipes[0]);
     // setLoading(false);
+  };
+
+  const fetchRecipeItems = async (recipeId: string) => {
+    const res = await getRecipeItems({ recipeId });
+    const tempRecipeItems = JSON.parse(res as string);
+    setRecipeItems(tempRecipeItems);
   };
 
   useEffect(() => {
@@ -66,6 +74,9 @@ export default function Page({ params }: { params: { id: string } }) {
     }
     if (recipe?.photo?.imageUrl) {
       setImageUrl(recipe?.photo?.imageUrl);
+    }
+    if (recipe?._id) {
+      fetchRecipeItems(recipe._id);
     }
   }, [recipe]);
 
@@ -101,6 +112,11 @@ export default function Page({ params }: { params: { id: string } }) {
         <AddToShoppingListButton>
           Add ingredient to recipe
         </AddToShoppingListButton>
+        <>
+          {recipeItems?.map((recipeItem: any) => (
+            <div>{recipeItem?.ingredient?.name}</div>
+          ))}
+        </>
       </div>
     </>
   );
