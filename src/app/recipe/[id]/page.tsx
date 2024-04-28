@@ -5,6 +5,7 @@ import getRecipes from "../../recipes/getRecipes";
 import { SingleItemStyles } from "../../ingredient/[id]/page";
 import styled from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
+import RecipeItem from "../../components/RecipeItem";
 
 export const ListItemStyles = styled.div`
   background: white;
@@ -156,7 +157,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </AddToShoppingListButton>
         <>
           {recipeItems?.map((recipeItem: any) => (
-            <ListItemStyles>{recipeItem?.ingredient?.name}</ListItemStyles>
+            <RecipeItem recipeItem={recipeItem} />
           ))}
         </>
       </div>
