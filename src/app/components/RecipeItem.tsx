@@ -76,7 +76,15 @@ const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details">{ingredient?.name}</div>
+      <div className="details">
+        <h4>{ingredient?.name}</h4>
+        <div>
+          <div>
+            Quantity: {recipeItem?.quantity / 10}{" "}
+            {ingredient?.units === "none" ? "" : ingredient?.units}
+          </div>
+        </div>
+      </div>
     </ListItemStyles>
   );
 };
