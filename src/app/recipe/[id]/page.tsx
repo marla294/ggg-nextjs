@@ -7,48 +7,6 @@ import styled from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
 
-export const ListItemStyles = styled.div`
-  background: white;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 10rem 5fr;
-  border: 1px solid var(--lightGray);
-  &:hover {
-    background: var(--lightGray);
-    cursor: pointer;
-  }
-
-  img {
-    padding: 1rem;
-    object-fit: cover;
-    height: 10rem;
-    min-width: 10rem;
-    width: 5rem;
-  }
-
-  .noPhoto {
-    padding: 1rem;
-    height: 10rem;
-    min-width: 10rem;
-    width: 5rem;
-    font-size: 4rem;
-    text-align: center;
-  }
-
-  .details {
-    width: 100%;
-    padding: 0.5rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-left: 2rem;
-    align-self: center;
-    justify-self: center;
-  }
-`;
-
 const ButtonDivStyles = styled.div`
   display: grid;
   grid-gap: 0.5rem;
@@ -87,6 +45,12 @@ const DeleteRecipeButton = styled.button`
   background: var(--orange);
   color: black;
   border: 1px solid var(--black);
+`;
+
+const RecipeItemContainer = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  margin-top: 10px;
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -155,11 +119,11 @@ export default function Page({ params }: { params: { id: string } }) {
         <AddToShoppingListButton>
           Add ingredient to recipe
         </AddToShoppingListButton>
-        <>
+        <RecipeItemContainer>
           {recipeItems?.map((recipeItem: any) => (
             <RecipeItem recipeItem={recipeItem} />
           ))}
-        </>
+        </RecipeItemContainer>
       </div>
     </>
   );
