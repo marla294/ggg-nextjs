@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export const ListItemStyles = styled(Link)`
+const ListItemStyles = styled(Link)`
   background: white;
   display: grid;
   grid-auto-flow: column;
@@ -47,31 +47,36 @@ export const ListItemStyles = styled(Link)`
 
 const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [ingredient, setIngredient] = useState<any>();
 
   useEffect(() => {
-    if (recipeItem?.ingredient?.photo?.image?._meta?.url) {
+    const { ingredient: ingredientTemp } = recipeItem;
+
+    if (ingredientTemp) {
+      setIngredient(ingredientTemp);
+    }
+
+    if (ingredientTemp?.photo?.image?._meta?.url) {
       setImageUrl(recipeItem?.ingredient?.photo?.image?._meta?.url);
     }
-    if (recipeItem?.ingredient?.photo?.imageUrl) {
+
+    if (ingredientTemp?.photo?.imageUrl) {
       setImageUrl(recipeItem?.ingredient?.photo?.imageUrl);
     }
   }, [recipeItem]);
 
   return (
-    <ListItemStyles href={`/ingredient/${recipeItem?.ingredient?._id}`}>
+    <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
       {imageUrl ? (
         <img
           src={imageUrl}
-          alt={
-            recipeItem?.ingredient?.photo?.altText ||
-            recipeItem?.ingredient?.name
-          }
+          alt={ingredient?.photo?.altText || ingredient?.name}
         />
       ) : (
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details">{recipeItem?.ingredient?.name}</div>
+      <div className="details">{ingredient?.name}</div>
     </ListItemStyles>
   );
 };
