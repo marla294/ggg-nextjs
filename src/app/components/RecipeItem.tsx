@@ -45,6 +45,19 @@ const ListItemStyles = styled(Link)`
   }
 `;
 
+const DeleteButton = styled.button`
+  @media (min-width: 768px) {
+    width: 200px;
+  }
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--orange);
+  color: var(--darkOrange);
+  border: 1px solid var(--darkOrange);
+`;
+
 const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [ingredient, setIngredient] = useState<any>();
@@ -85,6 +98,7 @@ const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
           </div>
         </div>
       </div>
+      <DeleteButton>Remove</DeleteButton>
     </ListItemStyles>
   );
 };
