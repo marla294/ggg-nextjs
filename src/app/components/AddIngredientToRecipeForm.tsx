@@ -15,6 +15,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
     <FormStyles>
       <h3>Add Ingredient To Recipe</h3>
       <IngredientsBarStyles>
+        <input />
         <input
           name="searchTerm"
           id="searchTerm"
