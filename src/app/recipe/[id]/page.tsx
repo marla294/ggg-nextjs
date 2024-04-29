@@ -6,6 +6,7 @@ import { SingleItemStyles } from "../../ingredient/[id]/page";
 import styled from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
+import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -116,9 +117,7 @@ export default function Page({ params }: { params: { id: string } }) {
       </SingleItemStyles>
       <div>
         <h3>Recipe Ingredients</h3>
-        <AddToShoppingListButton>
-          Add ingredient to recipe
-        </AddToShoppingListButton>
+        <AddIngredientToRecipeForm loading={false} />
         <RecipeItemContainer>
           {recipeItems?.map((recipeItem: any) => (
             <RecipeItem recipeItem={recipeItem} />

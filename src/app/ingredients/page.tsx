@@ -6,7 +6,7 @@ import styled from "styled-components";
 import useDebounce from "../hooks/useDebounce";
 import Link from "next/link";
 
-const IngredientsBarStyles = styled.div`
+export const IngredientsBarStyles = styled.div`
   display: grid;
   grid-gap: 0.5rem;
   font-size: 0.8rem;

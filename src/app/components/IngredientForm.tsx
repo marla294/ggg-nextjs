@@ -5,7 +5,7 @@ import aisles from "../lib/aisles";
 import homeAreas from "../lib/homeAreas";
 import { ThreeDots } from "react-loader-spinner";
 
-const FormStyles = styled.form`
+export const FormStyles = styled.form`
   box-shadow: var(--bs);
   padding: 2rem;
   font-size: 1.2rem;
