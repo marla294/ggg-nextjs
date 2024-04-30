@@ -2,8 +2,12 @@ import { useState } from "react";
 import { FormStyles } from "./IngredientForm";
 import { ThreeDots } from "react-loader-spinner";
 import { IngredientsBarStyles } from "../ingredients/page";
+import useForm from "../lib/useForm";
 
 const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
+  const { handleChange, inputs, setInputs } = useForm({
+    quantity: "",
+  });
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (e: any) => {
@@ -15,11 +19,19 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
     <FormStyles>
       <h3>Add Ingredient To Recipe</h3>
       <IngredientsBarStyles>
-        <input />
+        <input
+          required
+          type="text"
+          id="quantity"
+          name="quantity"
+          placeholder="Quantity"
+          value={inputs.quantity}
+          onChange={handleChange}
+        />
         <input
           name="searchTerm"
           id="searchTerm"
-          placeholder="Search..."
+          placeholder="Search for ingredient..."
           value={searchTerm}
           onChange={handleSearchChange}
         />
