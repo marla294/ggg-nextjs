@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormStyles } from "./IngredientForm";
 import { ThreeDots } from "react-loader-spinner";
 import { IngredientsBarStyles } from "../ingredients/page";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
 import getIngredients from "../ingredients/getIngredients";
+import useDebounce from "../hooks/useDebounce";
 
 const DropDown = styled.div`
   display: none;
@@ -60,7 +61,6 @@ const DropDownItem = styled.div`
 const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownIngredients, setDropdownIngredients] = useState(null);
-  const searchRef = useRef(null);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -75,6 +75,12 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
     const tempIngredients = JSON.parse(res as string);
     setDropdownIngredients(tempIngredients);
   };
+
+  const debouncedFetchIngredients = useDebounce(fetchIngredients, 200);
+
+  useEffect(() => {
+    debouncedFetchIngredients();
+  }, [searchTerm]);
 
   return (
     <FormStyles>
@@ -95,7 +101,6 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
           placeholder="Search for ingredient..."
           value={searchTerm}
           onChange={handleSearchChange}
-          ref={searchRef}
         />
       </IngredientsBarStyles>
       <button type="submit" className="submit">
