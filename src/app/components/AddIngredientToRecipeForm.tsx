@@ -60,7 +60,7 @@ const DropDownItem = styled.div`
 
 const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [dropdownIngredients, setDropdownIngredients] = useState(null);
+  const [dropdownIngredients, setDropdownIngredients] = useState<any[]>([]);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -102,6 +102,40 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
+        <DropDown className="open">
+          {dropdownIngredients?.length &&
+            dropdownIngredients.map((ing: any) => (
+              <DropDownItemCover
+                key={ing._id}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    // setIngredient(ing);
+                    setSearchTerm(ing.name);
+                    // setDropdownClosed(true);
+                  }
+                }}>
+                <DropDownItem
+                  key={ing.id}
+                  onClick={() => {
+                    // setIngredient(ing);
+                    setSearchTerm(ing.name);
+                    // setDropdownClosed(true);
+                  }}>
+                  {/* {ing?.photo?.image?.publicUrlTransformed ? (
+                    <img
+                      key={ing.id}
+                      src={ing?.photo?.image?.publicUrlTransformed}
+                      alt={ing?.photo?.altText || ing?.name}
+                    />
+                  ) : (
+                    <div className="noPhoto" />
+                  )} */}
+                  <div>{ing.name}</div>
+                </DropDownItem>
+              </DropDownItemCover>
+            ))}
+        </DropDown>
       </IngredientsBarStyles>
       <button type="submit" className="submit">
         {loading ? (
