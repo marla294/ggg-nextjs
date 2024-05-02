@@ -61,6 +61,7 @@ const DropDownItem = styled.div`
 const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownIngredients, setDropdownIngredients] = useState<any[]>([]);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -68,6 +69,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
   const handleSearchChange = (e: any) => {
     const val = e.target.value;
     setSearchTerm(val);
+    setDropdownOpen(true);
   };
 
   const fetchIngredients = async () => {
@@ -95,34 +97,38 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
           value={inputs.quantity}
           onChange={handleChange}
         />
-        <input
-          name="searchTerm"
-          id="searchTerm"
-          placeholder="Search for ingredient..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <DropDown className="open">
-          {dropdownIngredients?.length &&
-            dropdownIngredients.map((ing: any) => (
-              <DropDownItemCover
-                key={ing._id}
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    // setIngredient(ing);
-                    setSearchTerm(ing.name);
-                    // setDropdownClosed(true);
-                  }
-                }}>
-                <DropDownItem
-                  key={ing.id}
-                  onClick={() => {
-                    // setIngredient(ing);
-                    setSearchTerm(ing.name);
-                    // setDropdownClosed(true);
+        <div>
+          <input
+            name="searchTerm"
+            id="searchTerm"
+            placeholder="Search for ingredient..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <DropDown
+            className={
+              dropdownIngredients?.length && dropdownOpen ? "open" : ""
+            }>
+            {dropdownIngredients?.length &&
+              dropdownIngredients.map((ing: any) => (
+                <DropDownItemCover
+                  key={ing._id}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      // setIngredient(ing);
+                      setSearchTerm(ing.name);
+                      setDropdownOpen(false);
+                    }
                   }}>
-                  {/* {ing?.photo?.image?.publicUrlTransformed ? (
+                  <DropDownItem
+                    key={ing.id}
+                    onClick={() => {
+                      // setIngredient(ing);
+                      setSearchTerm(ing.name);
+                      setDropdownOpen(false);
+                    }}>
+                    {/* {ing?.photo?.image?.publicUrlTransformed ? (
                     <img
                       key={ing.id}
                       src={ing?.photo?.image?.publicUrlTransformed}
@@ -131,11 +137,12 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
                   ) : (
                     <div className="noPhoto" />
                   )} */}
-                  <div>{ing.name}</div>
-                </DropDownItem>
-              </DropDownItemCover>
-            ))}
-        </DropDown>
+                    <div>{ing.name}</div>
+                  </DropDownItem>
+                </DropDownItemCover>
+              ))}
+          </DropDown>
+        </div>
       </IngredientsBarStyles>
       <button type="submit" className="submit">
         {loading ? (
