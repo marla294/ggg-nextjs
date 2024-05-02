@@ -62,6 +62,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownIngredients, setDropdownIngredients] = useState<any[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [ingredient, setIngredient] = useState<any>();
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -116,7 +117,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      // setIngredient(ing);
+                      setIngredient(ing);
                       setSearchTerm(ing.name);
                       setDropdownOpen(false);
                     }
@@ -124,7 +125,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
                   <DropDownItem
                     key={ing.id}
                     onClick={() => {
-                      // setIngredient(ing);
+                      setIngredient(ing);
                       setSearchTerm(ing.name);
                       setDropdownOpen(false);
                     }}>
