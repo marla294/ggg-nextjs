@@ -85,8 +85,25 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
     debouncedFetchIngredients();
   }, [searchTerm]);
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    // setLoading(true);
+
+    // try {
+    //   await editIngredient({
+    //     id: params.id,
+    //     ...inputs,
+    //     photoId: img?._id,
+    //   });
+    //   setLoading(false);
+    //   router.push("/ingredients");
+    // } catch (e) {
+    //   console.error(e);
+    // }
+  };
+
   return (
-    <FormStyles>
+    <FormStyles onSubmit={handleSubmit}>
       <h3>Add Ingredient To Recipe</h3>
       <IngredientsBarStyles>
         <input
