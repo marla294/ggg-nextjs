@@ -6,6 +6,7 @@ import styled from "styled-components";
 import useForm from "../lib/useForm";
 import getIngredients from "../ingredients/getIngredients";
 import useDebounce from "../hooks/useDebounce";
+import addRecipeItem from "../recipe/[id]/addRecipeItem";
 
 const DropDown = styled.div`
   display: none;
@@ -89,17 +90,16 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
     e.preventDefault();
     // setLoading(true);
 
-    // try {
-    //   await editIngredient({
-    //     id: params.id,
-    //     ...inputs,
-    //     photoId: img?._id,
-    //   });
-    //   setLoading(false);
-    //   router.push("/ingredients");
-    // } catch (e) {
-    //   console.error(e);
-    // }
+    try {
+      await addRecipeItem({
+        quantity: inputs?.quantity,
+        ingredientId: ingredient?._id,
+        recipeId: 1,
+      });
+      // setLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

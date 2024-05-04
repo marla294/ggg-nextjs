@@ -5,7 +5,7 @@ import RecipeItem from "../../../../models/RecipeItem";
 import User from "../../../../models/User";
 import { getSession } from "../../../../services/authentication/cookie-session";
 
-export default async ({quantity, ingredientId, recipeId}: {quantity: number, ingredientId: any, recipeId: any}) => {
+export default async ({quantity, ingredientId, recipeId}: {quantity: any, ingredientId: any, recipeId: any}) => {
   try {
     await dbConnect();
 
