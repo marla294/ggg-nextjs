@@ -59,7 +59,13 @@ const DropDownItem = styled.div`
   }
 `;
 
-const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
+const AddIngredientToRecipeForm = ({
+  loading,
+  recipeId,
+}: {
+  loading: boolean;
+  recipeId: any;
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownIngredients, setDropdownIngredients] = useState<any[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -94,7 +100,7 @@ const AddIngredientToRecipeForm = ({ loading }: { loading: boolean }) => {
       await addRecipeItem({
         quantity: inputs?.quantity,
         ingredientId: ingredient?._id,
-        recipeId: 1,
+        recipeId,
       });
       // setLoading(false);
     } catch (e) {

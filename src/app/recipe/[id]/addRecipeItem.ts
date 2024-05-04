@@ -12,7 +12,7 @@ export default async ({quantity, ingredientId, recipeId}: {quantity: any, ingred
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const recipeItem = await RecipeItem.create([{quantity, user: new ObjectId(user._id), ingredient: new ObjectId(ingredientId), recipe: new ObjectId(recipeId)}]);
+    const recipeItem = await RecipeItem.create([{quantity: quantity * 10, user: new ObjectId(user._id), ingredient: new ObjectId(ingredientId), recipe: new ObjectId(recipeId)}]);
 
     return JSON.stringify(recipeItem);
   } catch (e) {
