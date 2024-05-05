@@ -59,17 +59,12 @@ const DropDownItem = styled.div`
   }
 `;
 
-const AddIngredientToRecipeForm = ({
-  loading,
-  recipeId,
-}: {
-  loading: boolean;
-  recipeId: any;
-}) => {
+const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownIngredients, setDropdownIngredients] = useState<any[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [ingredient, setIngredient] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -94,7 +89,7 @@ const AddIngredientToRecipeForm = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
 
     try {
       await addRecipeItem({
@@ -102,7 +97,7 @@ const AddIngredientToRecipeForm = ({
         ingredientId: ingredient?._id,
         recipeId,
       });
-      // setLoading(false);
+      setLoading(false);
     } catch (e) {
       console.error(e);
     }
@@ -152,15 +147,21 @@ const AddIngredientToRecipeForm = ({
                       setSearchTerm(ing.name);
                       setDropdownOpen(false);
                     }}>
-                    {/* {ing?.photo?.image?.publicUrlTransformed ? (
-                    <img
-                      key={ing.id}
-                      src={ing?.photo?.image?.publicUrlTransformed}
-                      alt={ing?.photo?.altText || ing?.name}
-                    />
-                  ) : (
-                    <div className="noPhoto" />
-                  )} */}
+                    {ing?.photo?.image?._meta?.url ? (
+                      <img
+                        key={ing.id}
+                        src={ing?.photo?.image?._meta?.url}
+                        alt={ing?.photo?.altText || ing?.name}
+                      />
+                    ) : ing?.photo?.imageUrl ? (
+                      <img
+                        key={ing.id}
+                        src={ing?.photo?.imageUrl}
+                        alt={ing?.photo?.altText || ing?.name}
+                      />
+                    ) : (
+                      <div className="noPhoto" />
+                    )}
                     <div>{ing.name}</div>
                   </DropDownItem>
                 </DropDownItemCover>

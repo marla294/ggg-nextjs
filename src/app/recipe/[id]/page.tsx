@@ -117,7 +117,7 @@ export default function Page({ params }: { params: { id: string } }) {
       </SingleItemStyles>
       <div>
         <h3>Recipe Ingredients</h3>
-        <AddIngredientToRecipeForm loading={false} recipeId={recipe?._id} />
+        <AddIngredientToRecipeForm recipeId={recipe?._id} />
         <RecipeItemContainer>
           {recipeItems?.map((recipeItem: any) => (
             <RecipeItem recipeItem={recipeItem} />
