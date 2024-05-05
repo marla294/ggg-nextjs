@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
 import { FormStyles } from "./IngredientForm";
 import { ThreeDots } from "react-loader-spinner";
-import { IngredientsBarStyles } from "../ingredients/page";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
 import getIngredients from "../ingredients/getIngredients";
 import useDebounce from "../hooks/useDebounce";
 import addRecipeItem from "../recipe/[id]/addRecipeItem";
+
+const AddIngredientFormStyles = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 1fr 16fr;
+  grid-gap: 0.5rem;
+  font-size: 0.8rem;
+
+  input,
+  select {
+    padding: 1rem;
+    border: 1px solid black;
+    font-size: 1.4rem;
+    height: 4rem;
+  }
+`;
 
 const DropDown = styled.div`
   display: none;
@@ -106,7 +120,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   return (
     <FormStyles onSubmit={handleSubmit}>
       <h3>Add Ingredient To Recipe</h3>
-      <IngredientsBarStyles>
+      <AddIngredientFormStyles>
         <input
           required
           type="text"
@@ -116,6 +130,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
           value={inputs.quantity}
           onChange={handleChange}
         />
+        <div>{ingredient?.units || ""}</div>
         <div>
           <input
             name="searchTerm"
@@ -168,7 +183,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
               ))}
           </DropDown>
         </div>
-      </IngredientsBarStyles>
+      </AddIngredientFormStyles>
       <button type="submit" className="submit">
         {loading ? (
           <ThreeDots
