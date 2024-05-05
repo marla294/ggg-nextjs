@@ -9,9 +9,10 @@ import addRecipeItem from "../recipe/[id]/addRecipeItem";
 
 const AddIngredientFormStyles = styled.div`
   display: grid;
-  grid-template-columns: 4fr 1fr 16fr;
+  grid-template-columns: minmax(40px, 4fr) minmax(30px, 1fr) minmax(300px, 16fr);
   grid-gap: 0.5rem;
-  font-size: 0.8rem;
+  align-items: center;
+  margin-bottom: 1rem;
 
   input,
   select {
