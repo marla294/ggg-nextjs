@@ -7,6 +7,7 @@ import styled from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
 import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
+import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToShoppingList";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -72,6 +73,15 @@ export default function Page({ params }: { params: { id: string } }) {
     setRecipeItems(tempRecipeItems);
   };
 
+  const addRecipeToShoppingList = async () => {
+    recipeItems?.forEach(async (item: any) => {
+      await addIngredientToShoppingList({
+        ingredientId: item?.ingredient?._id,
+        quantity: item?.quantity / 10,
+      });
+    });
+  };
+
   useEffect(() => {
     fetchRecipe();
   }, []);
@@ -108,7 +118,7 @@ export default function Page({ params }: { params: { id: string } }) {
           )}
           <ButtonDivStyles>
             <EditButton>Edit Recipe</EditButton>
-            <AddToShoppingListButton>
+            <AddToShoppingListButton onClick={addRecipeToShoppingList}>
               Add To Shopping List
             </AddToShoppingListButton>
             <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
