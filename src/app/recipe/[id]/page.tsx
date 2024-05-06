@@ -8,6 +8,7 @@ import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
 import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
 import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToShoppingList";
+import { ThreeDots } from "react-loader-spinner";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -59,6 +60,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<any>();
   const [recipeItems, setRecipeItems] = useState<any>();
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
+    useState<boolean>(false);
 
   const fetchRecipe = async () => {
     const res = await getRecipes({ id: params.id });
@@ -74,12 +77,12 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   const addRecipeToShoppingList = async () => {
-    recipeItems?.forEach(async (item: any) => {
+    for (const item of recipeItems) {
       await addIngredientToShoppingList({
         ingredientId: item?.ingredient?._id,
         quantity: item?.quantity / 10,
       });
-    });
+    }
   };
 
   useEffect(() => {
@@ -118,8 +121,29 @@ export default function Page({ params }: { params: { id: string } }) {
           )}
           <ButtonDivStyles>
             <EditButton>Edit Recipe</EditButton>
-            <AddToShoppingListButton onClick={addRecipeToShoppingList}>
-              Add To Shopping List
+            <AddToShoppingListButton
+              onClick={async () => {
+                setLoadingAddToShoppingList(true);
+                await addRecipeToShoppingList();
+                setLoadingAddToShoppingList(false);
+              }}>
+              {loadingAddToShoppingList ? (
+                <ThreeDots
+                  visible={true}
+                  height="15"
+                  width="40"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{
+                    display: "grid",
+                    justifyItems: "center",
+                  }}
+                  wrapperClass=""
+                />
+              ) : (
+                <>Add To Shopping List</>
+              )}
             </AddToShoppingListButton>
             <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
           </ButtonDivStyles>
