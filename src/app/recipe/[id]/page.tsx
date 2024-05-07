@@ -9,6 +9,7 @@ import RecipeItem from "../../components/RecipeItem";
 import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
 import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToShoppingList";
 import { ThreeDots } from "react-loader-spinner";
+import deleteRecipeItem from "./deleteRecipeItem";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -85,6 +86,17 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
+  const deleteItem = async (recipeItemId: any) => {
+    try {
+      await deleteRecipeItem({
+        recipeItemId,
+      });
+      await fetchRecipeItems(recipe._id);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     fetchRecipe();
   }, []);
@@ -154,7 +166,7 @@ export default function Page({ params }: { params: { id: string } }) {
         <AddIngredientToRecipeForm recipeId={recipe?._id} />
         <RecipeItemContainer>
           {recipeItems?.map((recipeItem: any) => (
-            <RecipeItem recipeItem={recipeItem} />
+            <RecipeItem recipeItem={recipeItem} deleteRecipeItem={deleteItem} />
           ))}
         </RecipeItemContainer>
       </div>
