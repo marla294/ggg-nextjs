@@ -84,6 +84,12 @@ const RecipeItem = ({
     }
   }, [recipeItem]);
 
+  const onDeleteRecipeItem = async () => {
+    if (confirm("Are you sure you want to delete this item from the recipe?")) {
+      await deleteRecipeItem(recipeItem?._id);
+    }
+  };
+
   return (
     <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
       {imageUrl ? (
@@ -104,9 +110,7 @@ const RecipeItem = ({
           </div>
         </div>
       </div>
-      <DeleteButton onClick={deleteRecipeItem(recipeItem?._id)}>
-        Remove
-      </DeleteButton>
+      <DeleteButton onClick={onDeleteRecipeItem}>Remove</DeleteButton>
     </ListItemStyles>
   );
 };
