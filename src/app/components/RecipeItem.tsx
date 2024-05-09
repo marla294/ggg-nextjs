@@ -2,8 +2,10 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import deleteRecipeItem from "../recipe/[id]/deleteRecipeItem";
 
-const ListItemStyles = styled(Link)`
+// const ListItemStyles = styled(Link)`
+const ListItemStyles = styled.div`
   background: white;
   display: grid;
   grid-auto-flow: column;
@@ -58,13 +60,7 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
-const RecipeItem = ({
-  recipeItem,
-  deleteRecipeItem,
-}: {
-  recipeItem: any;
-  deleteRecipeItem: any;
-}) => {
+const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [ingredient, setIngredient] = useState<any>();
 
@@ -85,13 +81,19 @@ const RecipeItem = ({
   }, [recipeItem]);
 
   const onDeleteRecipeItem = async () => {
-    if (confirm("Are you sure you want to delete this item from the recipe?")) {
-      await deleteRecipeItem(recipeItem?._id);
+    try {
+      await deleteRecipeItem({
+        recipeItemId: recipeItem?._id,
+      });
+      // await fetchRecipeItems(recipe._id);
+    } catch (e) {
+      console.error(e);
     }
   };
 
   return (
-    <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
+    // <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
+    <ListItemStyles>
       {imageUrl ? (
         <img
           src={imageUrl}

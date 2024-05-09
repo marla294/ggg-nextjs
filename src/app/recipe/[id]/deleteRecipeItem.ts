@@ -6,9 +6,14 @@ export default async ({recipeItemId}: {recipeItemId: any}) => {
   try {
     await dbConnect();
 
+    console.log({recipeItemId})
+
     const res = RecipeItem.findByIdAndDelete(recipeItemId);
 
-    return JSON.stringify(res);
+    console.log({res});
+
+    // return JSON.stringify(res);
+    return;
   } catch(e) {
     console.error(e);
   }
