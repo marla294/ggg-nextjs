@@ -12,6 +12,8 @@ export default async ({
 
     const res = await Ingredient.findByIdAndDelete(ingredientId);
 
+    console.log({res});
+
     return JSON.stringify(res);
 
   } catch (e) {
