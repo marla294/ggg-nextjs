@@ -81,12 +81,11 @@ const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
   }, [recipeItem]);
 
   const onDeleteRecipeItem = async () => {
-    console.log({ recipeItem });
     try {
       await deleteRecipeItem({
         recipeItemId: recipeItem?._id,
       });
-      // await fetchRecipeItems(recipe._id);
+      await fetchRecipeItems(recipe._id);
     } catch (e) {
       console.error(e);
     }
