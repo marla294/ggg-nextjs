@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import deleteRecipeItem from "../recipe/[id]/deleteRecipeItem";
 
-// const ListItemStyles = styled(Link)`
 const ListItemStyles = styled.div`
   background: white;
   display: grid;
@@ -98,7 +97,6 @@ const RecipeItem = ({
   };
 
   return (
-    // <ListItemStyles href={`/ingredient/${ingredient?._id}`}>
     <ListItemStyles>
       {imageUrl ? (
         <img
