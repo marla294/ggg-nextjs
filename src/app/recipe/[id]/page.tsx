@@ -154,7 +154,11 @@ export default function Page({ params }: { params: { id: string } }) {
         <AddIngredientToRecipeForm recipeId={recipe?._id} />
         <RecipeItemContainer>
           {recipeItems?.map((recipeItem: any) => (
-            <RecipeItem recipeItem={recipeItem} />
+            <RecipeItem
+              key={Math.random()}
+              recipeItem={recipeItem}
+              fetchRecipeItems={fetchRecipeItems}
+            />
           ))}
         </RecipeItemContainer>
       </div>

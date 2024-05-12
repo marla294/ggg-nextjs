@@ -60,7 +60,13 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
-const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
+const RecipeItem = ({
+  recipeItem,
+  fetchRecipeItems,
+}: {
+  recipeItem: any;
+  fetchRecipeItems: any;
+}) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [ingredient, setIngredient] = useState<any>();
 
@@ -85,7 +91,7 @@ const RecipeItem = ({ recipeItem }: { recipeItem: any }) => {
       await deleteRecipeItem({
         recipeItemId: recipeItem?._id,
       });
-      await fetchRecipeItems(recipe._id);
+      await fetchRecipeItems(recipeItem?.recipe?._id);
     } catch (e) {
       console.error(e);
     }
