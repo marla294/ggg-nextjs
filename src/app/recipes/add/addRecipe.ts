@@ -7,20 +7,18 @@ import { getSession } from "../../../../services/authentication/cookie-session";
 
 export default async ({
   name, 
-  store,
-  units,
-  aisle,
-  homeArea,
-  description,
+  recipeLink,
   photoId,
+  description,
+  type,
+  userId,
 }: {
     name?: string | null | undefined, 
-    store?: string | null | undefined, 
-    units?: string | null | undefined,
-    aisle?: string | null | undefined,
-    homeArea?: string | null | undefined,
-    description?: string | null | undefined,
+    recipeLink?: string | null | undefined, 
     photoId?: any,
+    description?: string | null | undefined,
+    type: string | null | undefined,
+    userId?: any
   }) => {
   try {
     await dbConnect();
