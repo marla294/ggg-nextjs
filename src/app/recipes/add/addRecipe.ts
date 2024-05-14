@@ -11,14 +11,12 @@ export default async ({
   photoId,
   description,
   type,
-  userId,
 }: {
     name?: string | null | undefined, 
     recipeLink?: string | null | undefined, 
     photoId?: any,
     description?: string | null | undefined,
     type: string | null | undefined,
-    userId?: any
   }) => {
   try {
     await dbConnect();
