@@ -1,9 +1,9 @@
 "use server";
 import { ObjectId } from "mongodb";
 import dbConnect from "../../../../lib/dbconnect";
-// import Ingredient from "../../../../models/Ingredient";
 import User from "../../../../models/User";
 import { getSession } from "../../../../services/authentication/cookie-session";
+import Recipe from "../../../../models/Recipe";
 
 export default async ({
   name, 
@@ -24,9 +24,9 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    // const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description, photo: new ObjectId(photoId)}]);
+    const recipe = await Recipe.create([{name, recipeLink, description, type, photo: new ObjectId(photoId), user: new ObjectId(user._id)}])
 
-    // return JSON.stringify(ingredient);
+    return JSON.stringify(recipe);
 
   } catch (e) {
     console.error(e);
