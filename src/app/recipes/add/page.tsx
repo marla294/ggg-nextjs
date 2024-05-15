@@ -41,13 +41,13 @@ export default function AddRecipe() {
 
     formData.append("upload_preset", "sickfits");
 
-    // const cloudinaryData = await fetch(
-    //   `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
-    //   {
-    //     method: "POST",
-    //     body: formData,
-    //   }
-    // ).then((r) => r.json());
+    const cloudinaryData = await fetch(
+      `https://api.cloudinary.com/v1_1/dczyzum8v/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then((r) => r.json());
 
     // const ingredientImageResult = await addIngredientImage({
     //   altText: cloudinaryData.original_filename,
