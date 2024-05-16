@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import stores from "../lib/stores";
-import units from "../lib/units";
-import aisles from "../lib/aisles";
+import recipeTypes from "../lib/recipeTypes";
 import homeAreas from "../lib/homeAreas";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -126,44 +124,27 @@ const RecipeForm = ({
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="store">
-        Store
-        <select
-          name="store"
-          id="store"
+      <label>
+        RecipeLink
+        <input
+          type="text"
+          id="recipeLink"
+          name="recipeLink"
+          placeholder="Recipe Link"
+          value={inputs.recipeLink}
           onChange={handleChange}
-          value={inputs.store}>
-          {stores.map((store) => (
-            <option value={store} key={store}>
-              {store}
-            </option>
-          ))}
-        </select>
+        />
       </label>
-      <label htmlFor="units">
-        Units
+      <label htmlFor="type">
+        Type
         <select
-          name="units"
-          id="units"
+          name="type"
+          id="type"
           onChange={handleChange}
-          value={inputs?.units}>
-          {units.map((unit) => (
-            <option value={unit} key={unit}>
-              {unit}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="aisle">
-        Aisle
-        <select
-          name="aisle"
-          id="aisle"
-          onChange={handleChange}
-          value={inputs.aisle}>
-          {aisles.map((aisle) => (
-            <option value={aisle} key={aisle}>
-              {aisle}
+          value={inputs.type}>
+          {recipeTypes.map((type) => (
+            <option value={type} key={type}>
+              {type}
             </option>
           ))}
         </select>
