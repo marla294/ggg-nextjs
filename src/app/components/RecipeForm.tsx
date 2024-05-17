@@ -91,7 +91,7 @@ const RecipeForm = ({
 }) => {
   return (
     <FormStyles onSubmit={handleSubmit}>
-      <h2>{formName ? formName : "Edit"} Ingredient</h2>
+      <h2>{formName ? formName : "Edit"} Recipe</h2>
       <label>
         Name<span className="required">&nbsp;*</span>
         <input
@@ -145,20 +145,6 @@ const RecipeForm = ({
           {recipeTypes.map((type) => (
             <option value={type} key={type}>
               {type}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="homeArea">
-        Home Area
-        <select
-          name="homeArea"
-          id="homeArea"
-          onChange={handleChange}
-          value={inputs.homeArea}>
-          {homeAreas.map((homeArea) => (
-            <option value={homeArea} key={homeArea}>
-              {homeArea}
             </option>
           ))}
         </select>

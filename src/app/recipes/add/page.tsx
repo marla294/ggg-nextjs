@@ -4,6 +4,7 @@ import { useState } from "react";
 // import addIngredientImage from "./addIngredientImage";
 import { useRouter } from "next/navigation";
 import useForm from "../../lib/useForm";
+import RecipeForm from "../../components/RecipeForm";
 // import IngredientForm from "../../components/IngredientForm";
 
 export default function AddRecipe() {
@@ -72,14 +73,14 @@ export default function AddRecipe() {
 
   return (
     <div>
-      {/* <IngredientForm
+      <RecipeForm
         handleChange={handleChange}
         inputs={inputs}
         handleImageChange={handleImageChange}
         handleSubmit={handleSubmit}
         loading={loading}
         formName={"Add"}
-      /> */}
+      />
     </div>
   );
 }
