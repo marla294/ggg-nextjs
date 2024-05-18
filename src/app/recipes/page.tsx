@@ -6,6 +6,7 @@ import { BarContainer, ListContainer } from "../ingredients/page";
 import RecipeListItem from "../components/RecipeListItem";
 import { ListBarStyles, SortByStyles, SortOption } from "../shoppingList/page";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const AddButtonStyles = styled.button`
   width: 8rem;
@@ -32,6 +33,7 @@ const sortOptions: SortOption[] = [
 ];
 
 export default function Recipes() {
+  const router = useRouter();
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
   const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
 
@@ -55,7 +57,13 @@ export default function Recipes() {
       <BarContainer>
         <h3>Recipes</h3>
         <ListBarStyles>
-          <AddButtonStyles type="button">Add</AddButtonStyles>
+          <AddButtonStyles
+            type="button"
+            onClick={() => {
+              router.push("/recipes/add");
+            }}>
+            Add
+          </AddButtonStyles>
           <SortByStyles>
             <label htmlFor="sortBy">Sort:</label>
             <select

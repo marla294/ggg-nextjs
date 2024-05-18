@@ -1,13 +1,10 @@
 "use client";
 import { useState } from "react";
-// import addIngredient from "./addIngredient";
-// import addIngredientImage from "./addIngredientImage";
 import { useRouter } from "next/navigation";
 import useForm from "../../lib/useForm";
 import RecipeForm from "../../components/RecipeForm";
 import addRecipeImage from "./addRecipeImage";
 import addRecipe from "./addRecipe";
-// import IngredientForm from "../../components/IngredientForm";
 
 export default function AddRecipe() {
   const router = useRouter();
