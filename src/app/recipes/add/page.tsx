@@ -5,17 +5,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useForm from "../../lib/useForm";
 import RecipeForm from "../../components/RecipeForm";
+import addRecipeImage from "./addRecipeImage";
+import addRecipe from "./addRecipe";
 // import IngredientForm from "../../components/IngredientForm";
 
 export default function AddRecipe() {
   const router = useRouter();
   const { handleChange, inputs } = useForm({
     name: "",
+    recipeLink: "",
     description: "",
-    store: "",
-    units: "",
-    aisle: "",
-    homeArea: "",
+    type: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -50,25 +50,23 @@ export default function AddRecipe() {
       }
     ).then((r) => r.json());
 
-    // const ingredientImageResult = await addIngredientImage({
-    //   altText: cloudinaryData.original_filename,
-    //   url: cloudinaryData.url,
-    // });
+    const recipeImageResult = await addRecipeImage({
+      altText: cloudinaryData.original_filename,
+      url: cloudinaryData.url,
+    });
 
-    // const [tempIngredientImage] = await JSON.parse(
-    //   ingredientImageResult as string
-    // );
+    const [tempRecipeImage] = await JSON.parse(recipeImageResult as string);
 
-    // try {
-    //   await addIngredient({
-    //     ...inputs,
-    //     photoId: tempIngredientImage?._id,
-    //   });
-    //   setLoading(false);
-    //   router.push("/ingredients");
-    // } catch (e) {
-    //   console.error(e);
-    // }
+    try {
+      await addRecipe({
+        ...inputs,
+        photoId: tempRecipeImage?._id,
+      });
+      setLoading(false);
+      router.push("/recipes");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
