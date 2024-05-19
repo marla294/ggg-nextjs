@@ -59,6 +59,19 @@ const DeleteButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
+const EditButton = styled.button`
+  @media (min-width: 768px) {
+    width: 200px;
+  }
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  background: var(--green);
+  color: var(--darkGreen);
+  border: 1px solid var(--darkGreen);
+`;
+
 const RecipeItem = ({
   recipeItem,
   fetchRecipeItems,
@@ -116,6 +129,12 @@ const RecipeItem = ({
           </div>
         </div>
       </div>
+      <EditButton
+        onClick={() => {
+          console.log("Edit Recipe Item Quantity");
+        }}>
+        Edit
+      </EditButton>
       <DeleteButton onClick={onDeleteRecipeItem}>Remove</DeleteButton>
     </ListItemStyles>
   );
