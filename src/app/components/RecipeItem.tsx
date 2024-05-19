@@ -84,6 +84,7 @@ const RecipeItem = ({
 
   useEffect(() => {
     const { ingredient: ingredientTemp } = recipeItem;
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     if (ingredientTemp) {
       setIngredient(ingredientTemp);
