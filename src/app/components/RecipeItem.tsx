@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import deleteRecipeItem from "../recipe/[id]/deleteRecipeItem";
+import useForm from "../lib/useForm";
+import editRecipeItem from "../recipe/[id]/editRecipeItem";
 
 const ListItemStyles = styled.div`
   background: white;
@@ -81,10 +83,13 @@ const RecipeItem = ({
 }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [ingredient, setIngredient] = useState<any>();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { handleChange, inputs, setInputs } = useForm({
+    quantity: "",
+  });
 
   useEffect(() => {
     const { ingredient: ingredientTemp } = recipeItem;
-    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     if (ingredientTemp) {
       setIngredient(ingredientTemp);
@@ -97,6 +102,10 @@ const RecipeItem = ({
     if (ingredientTemp?.photo?.imageUrl) {
       setImageUrl(recipeItem?.ingredient?.photo?.imageUrl);
     }
+
+    if (recipeItem?.quantity) {
+      setInputs({ ...inputs, quantity: recipeItem.quantity / 10 });
+    }
   }, [recipeItem]);
 
   const onDeleteRecipeItem = async () => {
@@ -105,6 +114,17 @@ const RecipeItem = ({
         recipeItemId: recipeItem?._id,
       });
       await fetchRecipeItems(recipeItem?.recipe?._id);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleChangeRecipeItemQuantity = async () => {
+    try {
+      await editRecipeItem({
+        id: recipeItem?._id,
+        quantity: inputs?.quantity,
+      });
     } catch (e) {
       console.error(e);
     }
@@ -124,15 +144,39 @@ const RecipeItem = ({
       <div className="details">
         <h4>{ingredient?.name}</h4>
         <div>
-          <div>
-            Quantity: {recipeItem?.quantity / 10}{" "}
-            {ingredient?.units === "none" ? "" : ingredient?.units}
-          </div>
+          {isEditing && (
+            <h4>
+              Quantity:{" "}
+              <input
+                required
+                type="text"
+                id="quantity"
+                name="quantity"
+                placeholder="Quantity"
+                value={inputs?.quantity}
+                onChange={handleChange}
+              />{" "}
+              {ingredient?.units === "none" ? "" : ingredient?.units}{" "}
+              <button
+                onClick={() => {
+                  handleChangeRecipeItemQuantity();
+                  setIsEditing(false);
+                }}>
+                Submit
+              </button>
+            </h4>
+          )}
+          {!isEditing && (
+            <div>
+              Quantity: {recipeItem?.quantity / 10}{" "}
+              {ingredient?.units === "none" ? "" : ingredient?.units}
+            </div>
+          )}
         </div>
       </div>
       <EditButton
         onClick={() => {
-          console.log("Edit Recipe Item Quantity");
+          setIsEditing(true);
         }}>
         Edit
       </EditButton>
