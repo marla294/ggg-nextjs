@@ -125,6 +125,7 @@ const RecipeItem = ({
         id: recipeItem?._id,
         quantity: inputs?.quantity,
       });
+      await fetchRecipeItems(recipeItem?.recipe?._id);
     } catch (e) {
       console.error(e);
     }
