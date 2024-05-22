@@ -9,6 +9,7 @@ import RecipeItem from "../../components/RecipeItem";
 import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
 import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToShoppingList";
 import { ThreeDots } from "react-loader-spinner";
+import deleteRecipe from "./deleteRecipe";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -145,7 +146,12 @@ export default function Page({ params }: { params: { id: string } }) {
                 <>Add To Shopping List</>
               )}
             </AddToShoppingListButton>
-            <DeleteRecipeButton>Delete Recipe</DeleteRecipeButton>
+            <DeleteRecipeButton
+              onClick={async () => {
+                await deleteRecipe({ recipeId: recipe?._id });
+              }}>
+              Delete Recipe
+            </DeleteRecipeButton>
           </ButtonDivStyles>
         </div>
       </SingleItemStyles>

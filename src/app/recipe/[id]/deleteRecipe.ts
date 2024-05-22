@@ -53,7 +53,6 @@ export default async ({recipeId}: {recipeId: any}) => {
       .exec();
 
     if (recipe) {
-      console.log('delete recipe image', {recipe});
       await RecipeImage.findByIdAndDelete(recipe[0].photo?._id);
     }
 
