@@ -10,6 +10,7 @@ import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeFor
 import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToShoppingList";
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
+import { useRouter } from "next/navigation";
 
 const ButtonDivStyles = styled.div`
   display: grid;
@@ -63,6 +64,9 @@ export default function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
     useState<boolean>(false);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const fetchRecipe = async () => {
     const res = await getRecipes({ id: params.id });
@@ -101,6 +105,18 @@ export default function Page({ params }: { params: { id: string } }) {
       fetchRecipeItems(recipe._id);
     }
   }, [recipe]);
+
+  const handleDeleteRecipe = async () => {
+    setDeleteLoading(true);
+
+    try {
+      await deleteRecipe({ recipeId: recipe?._id });
+      setDeleteLoading(false);
+      router.push("/recipes");
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -147,10 +163,26 @@ export default function Page({ params }: { params: { id: string } }) {
               )}
             </AddToShoppingListButton>
             <DeleteRecipeButton
-              onClick={async () => {
-                await deleteRecipe({ recipeId: recipe?._id });
+              onClick={() => {
+                handleDeleteRecipe();
               }}>
-              Delete Recipe
+              {deleteLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="13"
+                  width="40"
+                  color="#551d11"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{
+                    display: "grid",
+                    justifyItems: "center",
+                  }}
+                  wrapperClass=""
+                />
+              ) : (
+                "Delete Recipe"
+              )}
             </DeleteRecipeButton>
           </ButtonDivStyles>
         </div>
