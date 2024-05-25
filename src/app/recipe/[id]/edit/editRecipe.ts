@@ -1,7 +1,7 @@
 "use server";
 import { ObjectId } from "mongodb";
-import dbConnect from "../../../../lib/dbconnect";
-import Recipe from "../../../../models/Recipe";
+import dbConnect from "../../../../../lib/dbconnect";
+import Recipe from "../../../../../models/Recipe";
 
 export default async ({
   id,
