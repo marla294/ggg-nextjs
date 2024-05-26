@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import getIngredients from "../../../ingredients/getIngredients";
-// import editIngredient from "./editIngredient";
-import addIngredientImage from "../../../ingredients/add/addIngredientImage";
 import useForm from "../../../lib/useForm";
 import IngredientForm from "../../../components/IngredientForm";
+import getRecipes from "../../../recipes/getRecipes";
+import addRecipeImage from "../../../recipes/add/addRecipeImage";
+import editRecipe from "./editRecipe";
+import RecipeForm from "../../../components/RecipeForm";
 
 export default function EditRecipe({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -18,9 +19,9 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchRecipe = async () => {
-    const res = await getIngredients({ id: params.id });
-    const tempIngredients = JSON.parse(res as string);
-    setInputs({ ...inputs, ...tempIngredients[0] });
+    const res = await getRecipes({ id: params.id });
+    const tempRecipes = JSON.parse(res as string);
+    setInputs({ ...inputs, ...tempRecipes[0] });
   };
 
   useEffect(() => {
@@ -61,26 +62,24 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
         }
       ).then((r) => r.json());
 
-      const ingredientImageResult = await addIngredientImage({
+      const recipeImageResult = await addRecipeImage({
         altText: cloudinaryData.original_filename,
         url: cloudinaryData.url,
       });
 
-      const [tempIngredientImage] = await JSON.parse(
-        ingredientImageResult as string
-      );
+      const [tempRecipeImage] = await JSON.parse(recipeImageResult as string);
 
-      img = tempIngredientImage;
+      img = tempRecipeImage;
     }
 
     try {
-      await editIngredient({
+      await editRecipe({
         id: params.id,
         ...inputs,
         photoId: img?._id,
       });
       setLoading(false);
-      router.push("/ingredients");
+      router.push("/recipes");
     } catch (e) {
       console.error(e);
     }
@@ -88,7 +87,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <IngredientForm
+      <RecipeForm
         handleChange={handleChange}
         inputs={inputs}
         handleImageChange={handleImageChange}

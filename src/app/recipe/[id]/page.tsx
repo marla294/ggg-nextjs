@@ -145,7 +145,10 @@ export default function Page({ params }: { params: { id: string } }) {
                 </a>
               )}
               <ButtonDivStyles>
-                <EditButton>Edit Recipe</EditButton>
+                <EditButton
+                  onClick={() => router.push(`/recipe/${params.id}/edit`)}>
+                  Edit Recipe
+                </EditButton>
                 <AddToShoppingListButton
                   onClick={async () => {
                     setLoadingAddToShoppingList(true);
