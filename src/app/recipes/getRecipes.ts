@@ -4,8 +4,9 @@ import Recipe from "../../../models/Recipe";
 import RecipeImage from "../../../models/RecipeImage";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
+import groupArrayBy from "../lib/groupArrayBy";
 
-export default async ({id}: {id?: string | null | undefined}) => {
+export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: string | null | undefined}) => {
   try {
     await dbConnect();
 
@@ -36,7 +37,16 @@ export default async ({id}: {id?: string | null | undefined}) => {
           return true;
         }
       }).sort((a, b) => (a.name < b.name ? -1 : 1));
-      return JSON.stringify(recipesFiltered);
+
+      let recipeItemsSorted: Array<any> | null = null;
+
+      if (sortBy) {
+        recipeItemsSorted = sortBy === 'alphabetical' 
+        ? [['Alphabetical', recipesFiltered.sort((a, b) => (a?.name < b?.name ? -1 : 1))]] 
+        : groupArrayBy(recipesFiltered, sortBy);
+      }
+
+      return JSON.stringify(recipeItemsSorted || recipesFiltered);
     } else {
       return null;
     }
