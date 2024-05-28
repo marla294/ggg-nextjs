@@ -47,7 +47,7 @@ export const SortByStyles = styled.div`
   }
 `;
 
-const GroupingContainer = styled.div`
+export const GroupingContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
 `;

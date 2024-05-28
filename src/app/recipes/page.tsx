@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import getRecipes from "./getRecipes";
 import { BarContainer, ListContainer } from "../ingredients/page";
 import RecipeListItem from "../components/RecipeListItem";
-import { ListBarStyles, SortByStyles, SortOption } from "../shoppingList/page";
+import {
+  GroupingContainer,
+  ListBarStyles,
+  SortByStyles,
+  SortOption,
+} from "../shoppingList/page";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
@@ -84,9 +89,21 @@ export default function Recipes() {
         </ListBarStyles>
       </BarContainer>
       <ListContainer>
-        {displayRecipes?.map((recipe: any) => (
+        {/* {displayRecipes?.map((recipe: any) => (
           <RecipeListItem key={recipe._id} recipe={recipe} />
-        ))}
+        ))} */}
+        {displayRecipes?.map((grouping: any) => {
+          return (
+            <div key={grouping[0]}>
+              <h3>{grouping[0]}</h3>
+              <GroupingContainer>
+                {grouping[1]?.map((recipe: any) => {
+                  return <RecipeListItem key={recipe._id} recipe={recipe} />;
+                })}
+              </GroupingContainer>
+            </div>
+          );
+        })}
       </ListContainer>
     </>
   );
