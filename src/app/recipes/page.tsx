@@ -11,7 +11,8 @@ import {
   SortOption,
 } from "../shoppingList/page";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const AddButtonStyles = styled.button`
   width: 8rem;
@@ -38,12 +39,14 @@ const sortOptions: SortOption[] = [
 ];
 
 export default function Recipes() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const router = useRouter();
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
   const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
 
-  const fetchRecipes = async () => {
-    const res = await getRecipes({ sortBy });
+  const fetchRecipes = async (sort: string) => {
+    const res = await getRecipes({ sort });
     const tempRecipes = JSON.parse(res as string);
     setDisplayRecipes(tempRecipes);
   };
@@ -54,8 +57,20 @@ export default function Recipes() {
   };
 
   useEffect(() => {
-    fetchRecipes();
+    const params = new URLSearchParams((searchParams || "").toString());
+    let tempSort: any = null;
+    if (params.get("sortBy")) {
+      tempSort = params.get("sortBy") || Sort.alphabetical;
+      setSortBy(tempSort);
+    }
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams((searchParams || "").toString());
+    params.set("sortBy", sortBy);
+    router.push(pathname + "?" + params.toString());
+    fetchRecipes(sortBy);
+  }, [sortBy]);
 
   return (
     <>
@@ -89,9 +104,6 @@ export default function Recipes() {
         </ListBarStyles>
       </BarContainer>
       <ListContainer>
-        {/* {displayRecipes?.map((recipe: any) => (
-          <RecipeListItem key={recipe._id} recipe={recipe} />
-        ))} */}
         {displayRecipes?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
