@@ -46,7 +46,7 @@ export default function Recipes() {
   const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
 
   const fetchRecipes = async (sort: string) => {
-    const res = await getRecipes({ sort });
+    const res = await getRecipes({ sortBy: sort });
     const tempRecipes = JSON.parse(res as string);
     setDisplayRecipes(tempRecipes);
   };
