@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import getUser from "./getUser";
 import styled from "styled-components";
+import changePassword from "./changePassword";
 
 const Line = styled.div`
   display: grid;
@@ -99,7 +100,9 @@ export default function Page() {
     });
   };
 
-  const handleChangePassword = async () => {};
+  const handleChangePassword = async () => {
+    await changePassword({ email: user?.email, password: inputs?.password });
+  };
 
   useEffect(() => {
     fetchUser();
@@ -120,7 +123,7 @@ export default function Page() {
         method="POST"
         onSubmit={async (e) => {
           e.preventDefault();
-          // await handleChangePassword();
+          await handleChangePassword();
         }}>
         <fieldset>
           <h2>Change your password</h2>

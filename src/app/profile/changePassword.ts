@@ -12,7 +12,9 @@ export default async ({email, password}: {email: string, password: string}) => {
     const user = users[0];
 
     if (user) {
-      const encryptedPassword = await bcryptjs.encodeBase64(password, 60);
+      const encryptedPassword = await bcryptjs.hash(password, 60);
+
+      console.log({encryptedPassword});
 
       // const authResult = await bcryptjs.compare(password, user.password);
       // if (authResult) {
