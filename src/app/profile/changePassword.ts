@@ -12,9 +12,15 @@ export default async ({email, password}: {email: string, password: string}) => {
     const user = users[0];
 
     if (user) {
-      const encryptedPassword = await bcryptjs.hash(password, 60);
+      const encryptedPassword = await bcryptjs.hash(password, 10);
+      const isMatch = await bcryptjs.compare(password, encryptedPassword);
 
-      console.log({encryptedPassword});
+      if (isMatch) {
+        // set encrypted password
+        // reset session (maybe?)
+      } else {
+        // error
+      }
 
       // const authResult = await bcryptjs.compare(password, user.password);
       // if (authResult) {
