@@ -17,6 +17,10 @@ export default async ({email, password}: {email: string, password: string}) => {
 
       if (isMatch) {
         // set encrypted password
+        const filter = { _id: user._id};
+        let update = {password: encryptedPassword};
+        const updatedUser = await User.findOneAndUpdate(filter, update);
+        return JSON.stringify(updatedUser);
         // reset session (maybe?)
       } else {
         // error
