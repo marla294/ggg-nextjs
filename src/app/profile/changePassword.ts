@@ -12,11 +12,21 @@ export default async ({email, password}: {email: string, password: string}) => {
     const user = users[0];
 
     if (user) {
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$/;
+      const passesPasswordRules = pattern.test(password);
+
+      if (password.length < 8) {
+        return 'Password must be at least 8 characters';
+      }
+
+      if (!passesPasswordRules) {
+        return 'Password must have at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter';
+      }
+
       const encryptedPassword = await bcryptjs.hash(password, 10);
       const isMatch = await bcryptjs.compare(password, encryptedPassword);
 
       if (isMatch) {
-        // set encrypted password
         const filter = { _id: user._id};
         let update = {password: encryptedPassword};
         const updatedUser = await User.findOneAndUpdate(filter, update);

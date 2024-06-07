@@ -101,7 +101,11 @@ export default function Page() {
   };
 
   const handleChangePassword = async () => {
-    await changePassword({ email: user?.email, password: inputs?.password });
+    const res = await changePassword({
+      email: user?.email,
+      password: inputs?.password,
+    });
+    console.log({ res });
   };
 
   useEffect(() => {
