@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import getRecipes from "../../recipes/getRecipes";
-import { SingleItemStyles } from "../../ingredient/[id]/page";
 import styled from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
@@ -11,6 +10,34 @@ import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToSh
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
 import { useRouter } from "next/navigation";
+
+const SingleItemStyles = styled.div`
+  padding: 0 10%;
+
+  img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+  }
+  .noPhoto {
+    width: 100%;
+    height: 300px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    border: 1px dashed var(--black);
+  }
+
+  @media (min-width: 768px) {
+    padding: 0;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    max-width: var(--maxWidth);
+    align-items: top;
+    grid-gap: 5rem;
+  }
+`;
 
 const ButtonDivStyles = styled.div`
   display: grid;
