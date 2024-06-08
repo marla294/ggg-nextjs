@@ -2,17 +2,34 @@
 
 import { useEffect, useState } from "react";
 import getRecipes from "./getRecipes";
-import { BarContainer, ListContainer } from "../ingredients/page";
 import RecipeListItem from "../components/RecipeListItem";
-import {
-  GroupingContainer,
-  ListBarStyles,
-  SortByStyles,
-  SortOption,
-} from "../shoppingList/page";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+
+const ListBarStyles = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 0.5rem;
+  font-size: 0.8rem;
+
+  input,
+  select {
+    padding: 1rem;
+    border: 1px solid black;
+    font-size: 1.4rem;
+    height: 4rem;
+  }
+`;
+
+const SortByStyles = styled.div`
+  display: grid;
+  align-items: center;
+  grid-template-columns: minmax(3.5rem, auto) 1fr;
+  label {
+    font-size: 1.2rem;
+  }
+`;
 
 const AddButtonStyles = styled.button`
   width: 8rem;
@@ -26,6 +43,32 @@ const AddButtonStyles = styled.button`
     background: var(--darkGreen);
     color: white;
   }
+`;
+
+const GroupingContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+`;
+
+type SortOption = {
+  display: string;
+  value: string;
+};
+
+const BarContainer = styled.div`
+  position: fixed;
+  top: 4.45rem;
+  left: 0;
+  background-color: white !important;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+`;
+
+const ListContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  margin-top: 7rem;
 `;
 
 enum Sort {

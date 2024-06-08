@@ -6,7 +6,7 @@ import styled from "styled-components";
 import useDebounce from "../hooks/useDebounce";
 import Link from "next/link";
 
-export const IngredientsBarStyles = styled.div`
+const IngredientsBarStyles = styled.div`
   display: grid;
   grid-gap: 0.5rem;
   font-size: 0.8rem;
@@ -20,7 +20,7 @@ export const IngredientsBarStyles = styled.div`
   }
 `;
 
-export const BarContainer = styled.div`
+const BarContainer = styled.div`
   position: fixed;
   top: 4.45rem;
   left: 0;
@@ -30,7 +30,7 @@ export const BarContainer = styled.div`
   padding: 0 1rem;
 `;
 
-export const ListContainer = styled.div`
+const ListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
   margin-top: 7rem;

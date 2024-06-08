@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BarContainer, ListContainer } from "../ingredients/page";
 import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
@@ -23,7 +22,7 @@ const ClearButtonStyles = styled.button`
   }
 `;
 
-export const ListBarStyles = styled.div`
+const ListBarStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-gap: 0.5rem;
@@ -38,7 +37,7 @@ export const ListBarStyles = styled.div`
   }
 `;
 
-export const SortByStyles = styled.div`
+const SortByStyles = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: minmax(3.5rem, auto) 1fr;
@@ -47,19 +46,35 @@ export const SortByStyles = styled.div`
   }
 `;
 
-export const GroupingContainer = styled.div`
+const GroupingContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
 `;
 
-export const CenteredContainer = styled.div`
+const CenteredContainer = styled.div`
   height: 50vh;
   display: grid;
   align-items: center;
   justify-content: center;
 `;
 
-export type SortOption = {
+const BarContainer = styled.div`
+  position: fixed;
+  top: 4.45rem;
+  left: 0;
+  background-color: white !important;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+`;
+
+const ListContainer = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+  margin-top: 7rem;
+`;
+
+type SortOption = {
   display: string;
   value: string;
 };

@@ -7,7 +7,13 @@ import { useRouter } from "next/navigation";
 import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
-import { CenteredContainer } from "../../shoppingList/page";
+
+const CenteredContainer = styled.div`
+  height: 50vh;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+`;
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
