@@ -26,7 +26,7 @@ export default async ({
     await dbConnect();
 
     const filter = { _id: id};
-    let update = {name, store, units, aisle, homeArea, description};
+    let update: any = {name, store, units, aisle, homeArea, description};
 
     if (photoId) {
       update = {...update, photo: new ObjectId(photoId)}
