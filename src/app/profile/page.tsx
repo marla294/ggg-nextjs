@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import getUser from "./getUser";
 import styled from "styled-components";
 import changePassword from "./changePassword";
+import { useRouter } from "next/navigation";
+import signOut from "../lib/signout";
 
 const Line = styled.div`
   display: grid;
@@ -84,6 +86,7 @@ export default function Page() {
   const [user, setUser] = useState<any>();
   const [inputs, setInputs] = useState({ password: "" });
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const fetchUser = async () => {
     const res = await getUser();
@@ -101,11 +104,21 @@ export default function Page() {
   };
 
   const handleChangePassword = async () => {
+    setError(null);
+
     const res = await changePassword({
       email: user?.email,
       password: inputs?.password,
     });
-    console.log({ res });
+
+    if (res?.success) {
+      await signOut();
+      router.push("/login");
+    } else {
+      setError(
+        res?.error || "An error has occurred while resetting your password"
+      );
+    }
   };
 
   useEffect(() => {
