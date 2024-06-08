@@ -13,7 +13,7 @@ const LocalStateContext = createContext({
 const LocalStateProvider = LocalStateContext.Provider;
 
 const NavStateProvider = ({ children }: { children: any }) => {
-  const [navOpen, setNavOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState<any>(false);
   const pathname = usePathname();
 
   const closeNav = () => {
@@ -34,7 +34,13 @@ const NavStateProvider = ({ children }: { children: any }) => {
 
   return (
     <LocalStateProvider
-      value={{ navOpen, setNavOpen, closeNav, openNav, toggleNav }}>
+      value={{
+        navOpen,
+        setNavOpen: setNavOpen as any,
+        closeNav,
+        openNav,
+        toggleNav,
+      }}>
       {children}
     </LocalStateProvider>
   );
