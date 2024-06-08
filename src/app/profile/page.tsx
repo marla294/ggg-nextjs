@@ -138,7 +138,7 @@ export default function Page() {
       </Line>
       <FormStyles
         method="POST"
-        onSubmit={async (e) => {
+        onSubmit={async (e: any) => {
           e.preventDefault();
           await handleChangePassword();
         }}>

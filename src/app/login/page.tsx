@@ -113,7 +113,7 @@ export default function Login() {
   return (
     <FormStyles
       method="POST"
-      onSubmit={async (e) => {
+      onSubmit={async (e: any) => {
         e.preventDefault();
         await handleSignIn();
       }}>
