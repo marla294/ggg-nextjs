@@ -210,7 +210,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
                 <DropDownItemCover
                   key={ing._id}
                   tabIndex={0}
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: any) => {
                     if (e.key === "Enter") {
                       setIngredient(ing);
                       setSearchTerm(ing.name);
