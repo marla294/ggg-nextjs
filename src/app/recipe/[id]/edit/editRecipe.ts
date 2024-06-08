@@ -22,7 +22,7 @@ export default async ({
     await dbConnect();
 
     const filter = { _id: id};
-    let update = {name, type, recipeLink, description};
+    let update: any = {name, type, recipeLink, description};
 
     if (photoId) {
       update = {...update, photo: new ObjectId(photoId)}
