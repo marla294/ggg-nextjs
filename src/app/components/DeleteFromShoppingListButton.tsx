@@ -36,7 +36,6 @@ export default function DeleteFromShoppingListButton({
         shoppingListItemId: shoppingListItem?._id,
       });
       setDeleteLoading(false);
-      router.push("/shoppingList");
     } catch (e) {
       console.error(e);
     }
