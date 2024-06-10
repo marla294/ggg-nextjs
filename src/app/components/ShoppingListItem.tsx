@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeleteFromShoppingListButton from "./DeleteFromShoppingListButton";
 
-const ListItemStyles = styled(Link)`
+const ListItemStyles = styled.div`
   background: white;
   display: grid;
   grid-auto-flow: column;
@@ -67,7 +67,7 @@ const ShoppingListItem = ({
   }, [ingredient]);
 
   return (
-    <ListItemStyles href={`/shoppingList/${shoppingListItemId}`}>
+    <ListItemStyles>
       {imageUrl ? (
         <img
           src={imageUrl}
@@ -77,13 +77,13 @@ const ShoppingListItem = ({
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details">
+      <Link className="details" href={`/shoppingList/${shoppingListItemId}`}>
         <h5>{ingredient?.name}</h5>
         <h6>
           Amount: {quantity / 10}{" "}
           {ingredient?.units === "none" ? "" : ingredient?.units}
         </h6>
-      </div>
+      </Link>
       <DeleteFromShoppingListButton
         shoppingListItem={{ _id: shoppingListItemId }}
         isInList={true}
