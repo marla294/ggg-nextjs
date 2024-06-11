@@ -97,7 +97,7 @@ export default function ShoppingList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
+  const [sortBy, setSortBy] = useState<any>(Sort.alphabetical);
 
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
@@ -112,7 +112,8 @@ export default function ShoppingList() {
 
   const handleChange = (e: any) => {
     const val = e.target.value;
-    setSortBy(val);
+    const sort = (Sort as any)[val];
+    setSortBy(sort);
   };
 
   useEffect(() => {
