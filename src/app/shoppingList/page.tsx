@@ -98,17 +98,19 @@ export default function ShoppingList() {
   const router = useRouter();
   const pathname = usePathname();
   const [sortBy, setSortBy] = useState<any>(Sort.alphabetical);
+  const [data, setData] = useState<any>();
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
-    return JSON.parse(res as string);
+    setData(JSON.parse(res as string));
   };
 
-  const { data, error, isLoading } = useSWR(
-    { sortBy },
-    fetchShoppingListItems,
-    { refreshInterval: 1000 }
-  );
+  // const { data, error, isLoading } = useSWR(
+  //   { sortBy },
+  //   fetchShoppingListItems,
+  //   { refreshInterval: 1000 }
+  // );
 
   const handleChange = (e: any) => {
     const val = e.target.value;
@@ -125,8 +127,11 @@ export default function ShoppingList() {
 
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
-    params.set("sortBy", sortBy);
-    router.push(pathname + "?" + params.toString());
+    if (sortBy) {
+      params.set("sortBy", sortBy);
+      router.push(pathname + "?" + params.toString());
+      fetchShoppingListItems();
+    }
   }, [sortBy]);
 
   return (
@@ -165,7 +170,7 @@ export default function ShoppingList() {
                 <option
                   value={option.value}
                   id={option.value}
-                  key={Math.random()}>
+                  key={option.value}>
                   {option.display}
                 </option>
               ))}
@@ -191,7 +196,7 @@ export default function ShoppingList() {
             />
           </CenteredContainer>
         )}
-        {error && <CenteredContainer>An error has occurred</CenteredContainer>}
+        {/* {error && <CenteredContainer>An error has occurred</CenteredContainer>} */}
         {data?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
