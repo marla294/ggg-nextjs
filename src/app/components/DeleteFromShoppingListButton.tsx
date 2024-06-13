@@ -21,9 +21,11 @@ const DeleteButton = styled.button`
 export default function DeleteFromShoppingListButton({
   shoppingListItem,
   isInList,
+  fetchShoppingListItems,
 }: {
   shoppingListItem: any;
   isInList: boolean;
+  fetchShoppingListItems?: any;
 }) {
   const router = useRouter();
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
@@ -35,6 +37,9 @@ export default function DeleteFromShoppingListButton({
       await deleteShoppingListItem({
         shoppingListItemId: shoppingListItem?._id,
       });
+      if (fetchShoppingListItems) {
+        await fetchShoppingListItems();
+      }
       setDeleteLoading(false);
     } catch (e) {
       console.error(e);

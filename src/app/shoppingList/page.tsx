@@ -210,6 +210,7 @@ export default function ShoppingList() {
                       ingredient={ingredient}
                       quantity={shoppingListItem?.quantity}
                       shoppingListItemId={shoppingListItem?._id}
+                      fetchShoppingListItems={fetchShoppingListItems}
                     />
                   );
                 })}

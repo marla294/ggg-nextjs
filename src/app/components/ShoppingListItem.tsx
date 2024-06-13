@@ -50,10 +50,12 @@ const ShoppingListItem = ({
   ingredient,
   quantity,
   shoppingListItemId,
+  fetchShoppingListItems,
 }: {
   ingredient: any;
   quantity?: any;
   shoppingListItemId?: any;
+  fetchShoppingListItems?: any;
 }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
