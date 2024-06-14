@@ -89,6 +89,7 @@ const ShoppingListItem = ({
       <DeleteFromShoppingListButton
         shoppingListItem={{ _id: shoppingListItemId }}
         isInList={true}
+        fetchShoppingListItems={fetchShoppingListItems}
       />
     </ListItemStyles>
   );

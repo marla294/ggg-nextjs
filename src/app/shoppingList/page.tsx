@@ -102,8 +102,10 @@ export default function ShoppingList() {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const fetchShoppingListItems = async () => {
+    setIsLoading(true);
     const res = await getShoppingListItems({ sortBy });
     setData(JSON.parse(res as string));
+    setIsLoading(false);
   };
 
   // const { data, error, isLoading } = useSWR(
