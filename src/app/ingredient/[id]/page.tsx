@@ -222,7 +222,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       ingredientId: params.id,
                       quantity,
                     });
-                    router.push(`/shoppingList`);
+                    router.push(`/ingredients`);
                   }}>
                   Add &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To Shopping
                   List
