@@ -62,7 +62,7 @@ const AddToShoppingListButtonWrapper = styled.div`
 const AddToShoppingListInput = styled.input`
   position: relative;
   width: 25px;
-  margin-left: 54px;
+  margin-left: 47px;
   z-index: 100000;
 `;
 
@@ -76,7 +76,6 @@ const AddToShoppingListButton = styled.button`
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
   background: var(--yellow);
   color: black;
   border: 1px solid var(--darkYellow);
