@@ -5,7 +5,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useState } from "react";
 
 const EditButton = styled.button`
-  width: 200px;
+  width: 300px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
