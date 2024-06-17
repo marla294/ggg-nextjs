@@ -15,8 +15,8 @@ const IngredientsBarStyles = styled.div`
   select {
     padding: 1rem;
     border: 1px solid black;
-    font-size: 1.4rem;
-    height: 4rem;
+    font-size: 1rem;
+    height: 2rem;
   }
 `;
 
@@ -39,12 +39,12 @@ const ListContainer = styled.div`
 const IngredientsHeaderContainer = styled.div`
   display: grid;
   grid-auto-flow: column;
-  width: 250px;
+  width: 280px;
   align-items: center;
 `;
 
 const AddIngredientLinkText = styled.div`
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: var(--green);
   &:hover {
     text-decoration: underline;
