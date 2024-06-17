@@ -48,7 +48,6 @@ const DeleteButton = styled.button`
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
   background: var(--orange);
   color: var(--darkOrange);
   border: 1px solid var(--darkOrange);
@@ -62,8 +61,10 @@ const AddToShoppingListButtonWrapper = styled.div`
 const AddToShoppingListInput = styled.input`
   position: relative;
   width: 25px;
-  margin-left: 90px;
+  margin-left: 98px;
+  top: 4px;
   z-index: 100000;
+  font-size: 1rem;
 `;
 
 const AddToShoppingListButton = styled.button`
@@ -73,8 +74,8 @@ const AddToShoppingListButton = styled.button`
   bottom: 0;
   left: 0;
   width: 300px;
-  font-size: 1.1rem;
   transition: 0.2s;
+  height: 37.84px;
   margin: 0 !important;
   padding: 0.7rem 1rem;
   background: var(--yellow);
