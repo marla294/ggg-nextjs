@@ -10,7 +10,7 @@ const ListItemStyles = styled.div`
   background: white;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 10rem 5fr;
+  grid-template-columns: 5rem 5fr;
   border: 1px solid var(--lightGray);
   &:hover {
     background: var(--lightGray);
@@ -20,17 +20,17 @@ const ListItemStyles = styled.div`
   img {
     padding: 1rem;
     object-fit: cover;
-    height: 10rem;
-    min-width: 10rem;
+    height: 5rem;
+    min-width: 5rem;
     width: 5rem;
   }
 
   .noPhoto {
     padding: 1rem;
-    height: 10rem;
-    min-width: 10rem;
+    height: 5rem;
+    min-width: 5rem;
     width: 5rem;
-    font-size: 4rem;
+    font-size: 1.5rem;
     text-align: center;
   }
 
@@ -42,7 +42,6 @@ const ListItemStyles = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-left: 2rem;
     align-self: center;
     justify-self: center;
   }
