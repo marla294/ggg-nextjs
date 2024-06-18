@@ -33,7 +33,7 @@ const BarContainer = styled.div`
 const ListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
-  margin-top: 7rem;
+  margin-top: 4rem;
 `;
 
 const IngredientsHeaderContainer = styled.div`
