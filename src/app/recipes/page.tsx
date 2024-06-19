@@ -10,15 +10,15 @@ import { useSearchParams } from "next/navigation";
 const ListBarStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
-  grid-gap: 0.5rem;
+  grid-gap: 0.3rem;
   font-size: 0.8rem;
 
   input,
   select {
     padding: 1rem;
     border: 1px solid black;
-    font-size: 1.4rem;
-    height: 4rem;
+    font-size: 1rem;
+    height: 2rem;
   }
 `;
 
@@ -27,15 +27,15 @@ const SortByStyles = styled.div`
   align-items: center;
   grid-template-columns: minmax(3.5rem, auto) 1fr;
   label {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 
 const AddButtonStyles = styled.button`
-  width: 8rem;
+  width: 5rem;
   margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1.1rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
   background: var(--green);
   color: black;
   border: 1px solid var(--darkGreen);
@@ -68,7 +68,7 @@ const BarContainer = styled.div`
 const ListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
-  margin-top: 7rem;
+  margin-top: 4rem;
 `;
 
 enum Sort {
