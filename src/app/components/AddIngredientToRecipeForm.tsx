@@ -79,8 +79,8 @@ const AddIngredientFormStyles = styled.div`
   select {
     padding: 1rem;
     border: 1px solid black;
-    font-size: 1.4rem;
-    height: 4rem;
+    font-size: 1rem;
+    height: 2rem;
   }
 `;
 
@@ -100,34 +100,24 @@ const DropDown = styled.div`
 const DropDownItemCover = styled.div`
   background-color: white;
   transition: all 0.1s;
-  :hover {
-    padding-left: 0.3rem;
-    background-color: yellow;
-  }
-  :focus {
-    outline: none;
-    padding-left: 0.3rem;
-    background-color: yellow;
-  }
 `;
 
 const DropDownItem = styled.div`
   border-bottom: 1px solid var(--lightGray);
   background: white;
   display: grid;
-  grid-template-columns: 4rem auto;
-  grid-gap: 1rem;
+  grid-template-columns: 2rem auto;
+  grid-gap: 0.5rem;
   align-items: center;
-  height: 4rem;
   cursor: pointer;
   img {
-    width: 4rem;
-    max-height: 3.9rem;
+    width: 2rem;
+    max-height: 2rem;
     object-fit: cover;
     padding: 0.5rem;
   }
   .noPhoto {
-    width: 4rem;
+    width: 2rem;
     height: 100%;
   }
   :hover {
