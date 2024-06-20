@@ -76,8 +76,8 @@ const AddIngredientFormStyles = styled.div`
   margin-bottom: 1rem;
   font-size: 1rem;
 
-  @media (max-width: 2000px) {
-    align-items: center;
+  @media (max-width: 768px) {
+    display: block;
   }
 
   label {
