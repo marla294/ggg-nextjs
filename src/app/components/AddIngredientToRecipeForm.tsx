@@ -72,8 +72,17 @@ const AddIngredientFormStyles = styled.div`
   display: grid;
   grid-template-columns: minmax(40px, 4fr) minmax(30px, 1fr) minmax(300px, 16fr);
   grid-gap: 0.5rem;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: 1rem;
+  font-size: 1rem;
+
+  @media (max-width: 2000px) {
+    align-items: center;
+  }
+
+  label {
+    font-size: 0.7rem;
+  }
 
   input,
   select {
@@ -182,7 +191,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
           value={inputs.quantity}
           onChange={handleChange}
         />
-        <div>{ingredient?.units || ""}</div>
+        <label>{ingredient?.units || ""}</label>
         <div>
           <input
             name="searchTerm"
