@@ -96,6 +96,8 @@ const AddIngredientFormStyles = styled.div`
 const QuantityContainer = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
+  grid-gap: 5px;
+  align-items: center;
 `;
 
 const DropDown = styled.div`
