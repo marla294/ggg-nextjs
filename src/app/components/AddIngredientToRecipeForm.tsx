@@ -70,7 +70,7 @@ const FormStyles = styled.form`
 
 const AddIngredientFormStyles = styled.div`
   display: grid;
-  grid-template-columns: minmax(40px, 4fr) minmax(30px, 1fr) minmax(300px, 16fr);
+  grid-template-columns: minmax(40px, 4fr) minmax(300px, 16fr);
   grid-gap: 0.5rem;
   align-items: stretch;
   margin-bottom: 1rem;
@@ -91,6 +91,11 @@ const AddIngredientFormStyles = styled.div`
     font-size: 1rem;
     height: 2rem;
   }
+`;
+
+const QuantityContainer = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 `;
 
 const DropDown = styled.div`
@@ -182,16 +187,19 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
     <FormStyles onSubmit={handleSubmit}>
       <h3>Add Ingredient To Recipe</h3>
       <AddIngredientFormStyles>
-        <input
-          required
-          type="text"
-          id="quantity"
-          name="quantity"
-          placeholder="Quantity"
-          value={inputs.quantity}
-          onChange={handleChange}
-        />
-        <label>{ingredient?.units || ""}</label>
+        <QuantityContainer>
+          <input
+            required
+            type="text"
+            id="quantity"
+            name="quantity"
+            placeholder="Quantity"
+            value={inputs.quantity}
+            onChange={handleChange}
+          />
+          <label>{ingredient?.units || ""}</label>
+        </QuantityContainer>
+
         <div>
           <input
             name="searchTerm"
