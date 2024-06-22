@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
@@ -147,6 +147,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
+  const dropdownRef = useRef(null);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -168,6 +169,20 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   useEffect(() => {
     debouncedFetchIngredients();
   }, [searchTerm]);
+
+  useEffect(() => {
+    const handleDocumentClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("mouseDown", handleDocumentClick);
+    };
+  }, [dropdownOpen]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -211,6 +226,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
             onChange={handleSearchChange}
           />
           <DropDown
+            ref={dropdownRef}
             className={
               dropdownIngredients?.length && dropdownOpen ? "open" : ""
             }>
