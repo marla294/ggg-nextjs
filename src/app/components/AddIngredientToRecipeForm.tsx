@@ -147,8 +147,8 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const dropdownRef = useRef(null);
-  const { handleChange, inputs, setInputs } = useForm({
+  const dropdownRef = useRef<any>(null);
+  const { handleChange, inputs } = useForm({
     quantity: "",
   });
 
