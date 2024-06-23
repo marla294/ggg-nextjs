@@ -100,6 +100,12 @@ const QuantityContainer = styled.div`
   align-items: center;
 `;
 
+const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+`;
+
 const DropDown = styled.div`
   display: none;
   position: absolute;
@@ -148,7 +154,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   const [ingredient, setIngredient] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const dropdownRef = useRef<any>(null);
-  const { handleChange, inputs } = useForm({
+  const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
 
@@ -271,25 +277,38 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
           </DropDown>
         </div>
       </AddIngredientFormStyles>
-      <button type="submit" className="submit">
-        {loading ? (
-          <ThreeDots
-            visible={true}
-            height="15"
-            width="40"
-            color="#4fa94d"
-            radius="9"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{
-              display: "grid",
-              justifyItems: "center",
-            }}
-            wrapperClass=""
-          />
-        ) : (
-          <>Submit</>
-        )}
-      </button>
+      <ButtonContainer>
+        <button type="submit" className="submit">
+          {loading ? (
+            <ThreeDots
+              visible={true}
+              height="15"
+              width="40"
+              color="#4fa94d"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{
+                display: "grid",
+                justifyItems: "center",
+              }}
+              wrapperClass=""
+            />
+          ) : (
+            <>Submit</>
+          )}
+        </button>
+        <button
+          type="button"
+          className="clear"
+          onClick={() => {
+            setIngredient(null);
+            setSearchTerm("");
+            setInputs({ ...inputs, quantity: "" });
+            setDropdownOpen(false);
+          }}>
+          Clear
+        </button>
+      </ButtonContainer>
     </FormStyles>
   );
 };
