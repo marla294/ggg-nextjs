@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import deleteRecipeItem from "../recipe/[id]/deleteRecipeItem";
 import useForm from "../lib/useForm";
 import editRecipeItem from "../recipe/[id]/editRecipeItem";
@@ -69,6 +69,7 @@ const RecipeItem = ({
   const [imageUrl, setImageUrl] = useState<string>("");
   const [ingredient, setIngredient] = useState<any>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const recipeItemRef = useRef<any>(null);
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
@@ -92,6 +93,23 @@ const RecipeItem = ({
       setInputs({ ...inputs, quantity: recipeItem.quantity / 10 });
     }
   }, [recipeItem]);
+
+  useEffect(() => {
+    const handleDocumentClick = (event: any) => {
+      if (
+        recipeItemRef.current &&
+        !recipeItemRef.current.contains(event.target)
+      ) {
+        setIsEditing(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("mouseDown", handleDocumentClick);
+    };
+  }, [isEditing]);
 
   const onDeleteRecipeItem = async () => {
     try {
@@ -130,7 +148,7 @@ const RecipeItem = ({
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details">
+      <div className="details" ref={recipeItemRef}>
         <h4>{ingredient?.name}</h4>
         <div>
           {isEditing && (
