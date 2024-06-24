@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import getRecipes from "../../recipes/getRecipes";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import RecipeItem from "../../components/RecipeItem";
 import AddIngredientToRecipeForm from "../../components/AddIngredientToRecipeForm";
@@ -46,33 +46,29 @@ const ButtonDivStyles = styled.div`
   margin-top: 1rem;
 `;
 
-const EditButton = styled.button`
+const sharedButtonStyles = css`
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
   font-size: 1rem;
-  background: var(--green);
   color: black;
+`;
+
+const EditButton = styled.button`
+  ${sharedButtonStyles}
+  background: var(--green);
   border: 1px solid var(--darkGreen);
 `;
 
 const AddToShoppingListButton = styled.button`
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
+  ${sharedButtonStyles}
   background: var(--yellow);
-  color: black;
   border: 1px solid var(--darkYellow);
 `;
 
 const DeleteRecipeButton = styled.button`
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
+  ${sharedButtonStyles}
   background: var(--orange);
-  color: black;
   border: 1px solid var(--black);
 `;
 
