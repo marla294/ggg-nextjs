@@ -208,7 +208,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
 
   return (
     <FormStyles onSubmit={handleSubmit}>
-      <h3>Add Ingredient To Recipe</h3>
+      <h4>Add Ingredient To Recipe</h4>
       <AddIngredientFormStyles>
         <QuantityContainer>
           <input
