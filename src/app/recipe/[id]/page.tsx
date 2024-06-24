@@ -47,33 +47,30 @@ const ButtonDivStyles = styled.div`
 `;
 
 const EditButton = styled.button`
-  width: 200px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background: var(--green);
   color: black;
   border: 1px solid var(--darkGreen);
 `;
 
 const AddToShoppingListButton = styled.button`
-  width: 200px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background: var(--yellow);
   color: black;
   border: 1px solid var(--darkYellow);
 `;
 
 const DeleteRecipeButton = styled.button`
-  width: 200px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background: var(--orange);
   color: black;
   border: 1px solid var(--black);
