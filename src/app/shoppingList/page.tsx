@@ -26,14 +26,14 @@ const ListBarStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
 
   input,
   select {
     padding: 1rem;
     border: 1px solid black;
-    font-size: 1.4rem;
-    height: 4rem;
+    font-size: 1rem;
+    height: 2rem;
   }
 `;
 
@@ -42,7 +42,7 @@ const SortByStyles = styled.div`
   align-items: center;
   grid-template-columns: minmax(3.5rem, auto) 1fr;
   label {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 
