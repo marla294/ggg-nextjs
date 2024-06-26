@@ -9,6 +9,7 @@ const DeleteButton = styled.button`
   @media (min-width: 768px) {
     width: 200px;
   }
+  width: 100px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
