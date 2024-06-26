@@ -11,8 +11,8 @@ import useSWR from "swr";
 const ClearButtonStyles = styled.button`
   width: 8rem;
   margin: 0 !important;
-  padding: 0.7rem 1rem;
-  font-size: 1.1rem;
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
   background: var(--yellow);
   color: var(--darkYellow);
   border: 1px solid var(--darkYellow);
@@ -40,7 +40,7 @@ const ListBarStyles = styled.div`
 const SortByStyles = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: minmax(3.5rem, auto) 1fr;
+  grid-template-columns: minmax(2.5rem, auto) 1fr;
   label {
     font-size: 1rem;
   }
