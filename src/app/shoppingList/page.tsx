@@ -71,7 +71,7 @@ const BarContainer = styled.div`
 const ListContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
-  margin-top: 7rem;
+  margin-top: 4rem;
 `;
 
 type SortOption = {
@@ -199,27 +199,28 @@ export default function ShoppingList() {
           </CenteredContainer>
         )}
         {/* {error && <CenteredContainer>An error has occurred</CenteredContainer>} */}
-        {data?.map((grouping: any) => {
-          return (
-            <div key={grouping[0]}>
-              <h3>{grouping[0]}</h3>
-              <GroupingContainer>
-                {grouping[1]?.map((shoppingListItem: any) => {
-                  const { ingredient } = shoppingListItem;
-                  return (
-                    <ShoppingListItem
-                      key={ingredient._id}
-                      ingredient={ingredient}
-                      quantity={shoppingListItem?.quantity}
-                      shoppingListItemId={shoppingListItem?._id}
-                      fetchShoppingListItems={fetchShoppingListItems}
-                    />
-                  );
-                })}
-              </GroupingContainer>
-            </div>
-          );
-        })}
+        {!isLoading &&
+          data?.map((grouping: any) => {
+            return (
+              <div key={grouping[0]}>
+                <h3>{grouping[0]}</h3>
+                <GroupingContainer>
+                  {grouping[1]?.map((shoppingListItem: any) => {
+                    const { ingredient } = shoppingListItem;
+                    return (
+                      <ShoppingListItem
+                        key={ingredient._id}
+                        ingredient={ingredient}
+                        quantity={shoppingListItem?.quantity}
+                        shoppingListItemId={shoppingListItem?._id}
+                        fetchShoppingListItems={fetchShoppingListItems}
+                      />
+                    );
+                  })}
+                </GroupingContainer>
+              </div>
+            );
+          })}
       </ListContainer>
     </>
   );
