@@ -4,6 +4,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useNav } from "../lib/navState";
+import { useEffect, useRef } from "react";
 
 const NavStyles = styled.div`
   position: fixed;
@@ -34,6 +35,7 @@ const InnerNavStyles = styled.div`
 
 export default function Nav({ signOut }: { signOut: any }) {
   const { navOpen, closeNav } = useNav();
+  const dropdownRef = useRef<any>(null);
 
   const clickHandler = () => {
     closeNav();
@@ -43,8 +45,22 @@ export default function Nav({ signOut }: { signOut: any }) {
     signOut();
   };
 
+  useEffect(() => {
+    const handleDocumentClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeNav();
+      }
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("mouseDown", handleDocumentClick);
+    };
+  }, [navOpen]);
+
   return (
-    <NavStyles className={navOpen ? "open" : ""}>
+    <NavStyles ref={dropdownRef} className={navOpen ? "open" : ""}>
       <InnerNavStyles>
         <Link href="/ingredients" legacyBehavior>
           <a onClick={clickHandler}>Ingredients</a>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import Nav from "./Nav";
 import { useNav } from "../lib/navState";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
 
 const Logo = styled.h1`
   font-size: 2rem;
@@ -102,34 +101,19 @@ export default function Header({
   children: React.ReactNode;
   signOut: any;
 }) {
-  const { navOpen, toggleNav, closeNav } = useNav();
+  const { navOpen, toggleNav } = useNav();
   const router = useRouter();
-  const dropdownRef = useRef<any>(null);
 
   const handleSignout = async () => {
     await signOut();
     router.push("/login");
   };
 
-  useEffect(() => {
-    const handleDocumentClick = (event: any) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        closeNav();
-      }
-    };
-
-    document.addEventListener("mousedown", handleDocumentClick);
-
-    return () => {
-      document.removeEventListener("mouseDown", handleDocumentClick);
-    };
-  }, [navOpen]);
-
   return (
     <>
-      <HeaderStyles ref={dropdownRef}>
+      <HeaderStyles>
         <Logo>
-          <Link href="/">Go Get Ur Groceries</Link>
+          <Link href="/shoppingList">Go Get Ur Groceries</Link>
         </Logo>
         <NavStyles>
           <div
