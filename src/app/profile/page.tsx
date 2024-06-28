@@ -13,9 +13,8 @@ const Line = styled.div`
 `;
 
 const FormStyles = styled.form`
-  box-shadow: var(--bs);
   padding: 2rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   label {
     display: block;
     font-weight: 450;
@@ -27,7 +26,7 @@ const FormStyles = styled.form`
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 0.25rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: 1px solid black;
     &:focus {
       outline: 0;
@@ -40,7 +39,7 @@ const FormStyles = styled.form`
   button {
     width: auto;
     padding: 0.7rem 1rem;
-    margin: 1.5rem 1rem 0.5rem 0;
+    margin: 1rem 1rem 0.5rem 0;
     transition: 0.2s;
   }
 
