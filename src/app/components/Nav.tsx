@@ -33,7 +33,13 @@ const InnerNavStyles = styled.div`
   }
 `;
 
-export default function Nav({ signOut }: { signOut: any }) {
+export default function Nav({
+  signOut,
+  closeButtonRef,
+}: {
+  signOut: any;
+  closeButtonRef: any;
+}) {
   const { navOpen, closeNav } = useNav();
   const dropdownRef = useRef<any>(null);
 
@@ -47,6 +53,12 @@ export default function Nav({ signOut }: { signOut: any }) {
 
   useEffect(() => {
     const handleDocumentClick = (event: any) => {
+      if (
+        closeButtonRef.current &&
+        closeButtonRef.current.contains(event.target)
+      ) {
+        return;
+      }
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeNav();
       }

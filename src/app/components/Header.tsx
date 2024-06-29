@@ -4,6 +4,7 @@ import Link from "next/link";
 import Nav from "./Nav";
 import { useNav } from "../lib/navState";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 const Logo = styled.h1`
   font-size: 2rem;
@@ -103,6 +104,7 @@ export default function Header({
 }) {
   const { navOpen, toggleNav } = useNav();
   const router = useRouter();
+  const closeButtonRef = useRef<any>(null);
 
   const handleSignout = async () => {
     await signOut();
@@ -118,14 +120,15 @@ export default function Header({
         <NavStyles>
           <div
             className={navOpen ? "mobile-nav-button open" : "mobile-nav-button"}
-            onClick={toggleNav}>
+            onClick={toggleNav}
+            ref={closeButtonRef}>
             <span className="line line1" />
             <span className="line line2" />
             <span className="line line3" />
           </div>
         </NavStyles>
       </HeaderStyles>
-      <Nav signOut={handleSignout} />
+      <Nav signOut={handleSignout} closeButtonRef={closeButtonRef} />
       <Container>{children}</Container>
     </>
   );
