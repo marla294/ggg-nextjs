@@ -6,7 +6,6 @@ import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 import { ThreeDots } from "react-loader-spinner";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import useSWR from "swr";
 
 const ClearButtonStyles = styled.button`
   width: 8rem;
@@ -166,13 +165,14 @@ export default function ShoppingList() {
             <select
               name="sortBy"
               id="sortBy"
-              value={sortBy}
+              value={"homeArea"}
               onChange={handleChange}>
-              {sortOptions.map((option) => (
+              {sortOptions.map((option, index) => (
                 <option
                   value={option.value}
                   id={option.value}
-                  key={option.value}>
+                  key={index}
+                  label={option.display}>
                   {option.display}
                 </option>
               ))}
