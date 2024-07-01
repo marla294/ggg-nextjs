@@ -86,7 +86,7 @@ export default function Recipes() {
   const pathname = usePathname();
   const router = useRouter();
   const [displayRecipes, setDisplayRecipes] = useState<any>(null);
-  const [sortBy, setSortBy] = useState<string>(Sort.alphabetical);
+  const [sortBy, setSortBy] = useState<string>(Sort.type);
 
   const fetchRecipes = async (sort: string) => {
     const res = await getRecipes({ sortBy: sort });
