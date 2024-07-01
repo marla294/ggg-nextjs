@@ -147,6 +147,7 @@ export default function Recipes() {
         </ListBarStyles>
       </BarContainer>
       <ListContainer>
+        <div>Sort: {sortBy}</div>
         {displayRecipes?.map((grouping: any) => {
           return (
             <div key={grouping[0]}>
