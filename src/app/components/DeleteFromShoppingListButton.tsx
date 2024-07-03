@@ -6,14 +6,9 @@ import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
 
 const DeleteButton = styled.button`
-  @media (min-width: 768px) {
-    width: 200px;
-  }
-  width: 100px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
-  font-size: 1.1rem;
   background: var(--orange);
   color: var(--darkOrange);
   border: 1px solid var(--darkOrange);
@@ -52,7 +47,8 @@ export default function DeleteFromShoppingListButton({
       type="button"
       onClick={() => {
         handleDelete();
-      }}>
+      }}
+      style={!isInList ? { width: "300px" } : {}}>
       {deleteLoading ? (
         <ThreeDots
           visible={true}
