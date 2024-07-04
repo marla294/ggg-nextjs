@@ -42,6 +42,17 @@ const ButtonContainer = styled.div`
   grid-gap: 1rem;
 `;
 
+const EditButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+`;
+
+const AmountContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -118,28 +129,38 @@ export default function Page({ params }: { params: { id: string } }) {
               </h4>
             )}
             {isEditing && (
-              <h4>
-                Amount:{" "}
-                <input
-                  required
-                  type="text"
-                  id="quantity"
-                  name="quantity"
-                  placeholder="Quantity"
-                  value={inputs?.quantity}
-                  onChange={handleChange}
-                />{" "}
-                {shoppingListItem?.ingredient?.units === "none"
-                  ? ""
-                  : shoppingListItem?.ingredient?.units}{" "}
-                <button
-                  onClick={() => {
-                    handleSubmit();
-                    setIsEditing(false);
-                  }}>
-                  Submit
-                </button>
-              </h4>
+              <AmountContainer>
+                <h4>
+                  Amount:{" "}
+                  <input
+                    required
+                    type="text"
+                    id="quantity"
+                    name="quantity"
+                    placeholder="Quantity"
+                    value={inputs?.quantity}
+                    onChange={handleChange}
+                  />{" "}
+                  {shoppingListItem?.ingredient?.units === "none"
+                    ? ""
+                    : shoppingListItem?.ingredient?.units}{" "}
+                </h4>
+                <EditButtonContainer>
+                  <button
+                    onClick={() => {
+                      handleSubmit();
+                      setIsEditing(false);
+                    }}>
+                    Submit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsEditing(false);
+                    }}>
+                    &times;
+                  </button>
+                </EditButtonContainer>
+              </AmountContainer>
             )}
             <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
             <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
