@@ -114,24 +114,10 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
-            {!isEditing && (
+            <AmountContainer>
               <h4>
-                Amount: {inputs?.quantity ? inputs?.quantity : 0}{" "}
-                {shoppingListItem?.ingredient?.units === "none"
-                  ? ""
-                  : shoppingListItem?.ingredient?.units}{" "}
-                <button
-                  onClick={() => {
-                    setIsEditing(true);
-                  }}>
-                  Edit
-                </button>
-              </h4>
-            )}
-            {isEditing && (
-              <AmountContainer>
-                <h4>
-                  Amount:{" "}
+                Amount:{" "}
+                {isEditing ? (
                   <input
                     required
                     type="text"
@@ -140,11 +126,25 @@ export default function Page({ params }: { params: { id: string } }) {
                     placeholder="Quantity"
                     value={inputs?.quantity}
                     onChange={handleChange}
-                  />{" "}
-                  {shoppingListItem?.ingredient?.units === "none"
-                    ? ""
-                    : shoppingListItem?.ingredient?.units}{" "}
-                </h4>
+                  />
+                ) : inputs?.quantity ? (
+                  inputs?.quantity
+                ) : (
+                  0
+                )}{" "}
+                {shoppingListItem?.ingredient?.units === "none"
+                  ? ""
+                  : shoppingListItem?.ingredient?.units}{" "}
+              </h4>
+              {!isEditing && (
+                <button
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}>
+                  Edit
+                </button>
+              )}
+              {isEditing && (
                 <EditButtonContainer>
                   <button
                     onClick={() => {
@@ -160,8 +160,8 @@ export default function Page({ params }: { params: { id: string } }) {
                     &times;
                   </button>
                 </EditButtonContainer>
-              </AmountContainer>
-            )}
+              )}
+            </AmountContainer>
             <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
             <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
