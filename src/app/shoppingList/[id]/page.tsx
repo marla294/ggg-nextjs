@@ -50,7 +50,9 @@ const EditButtonContainer = styled.div`
 
 const AmountContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 170px auto;
+  grid-gap: 10px;
+  width: 300px;
 `;
 
 const EditInput = styled.input`
@@ -146,7 +148,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   onClick={() => {
                     setIsEditing(true);
                   }}>
-                  Edit
+                  Edit Amount
                 </button>
               )}
               {isEditing && (
