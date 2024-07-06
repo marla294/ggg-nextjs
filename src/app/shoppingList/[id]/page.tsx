@@ -60,6 +60,24 @@ const EditInput = styled.input`
   font-size: 1rem;
 `;
 
+const EditAmountButton = styled.button`
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.5rem 1rem;
+  background: var(--green);
+  color: black;
+  border: 1px solid var(--darkGreen);
+`;
+
+const SubmitAmountButton = styled.button`
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.5rem 1rem;
+  background: var(--green);
+  color: black;
+  border: 1px solid var(--darkGreen);
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -144,22 +162,22 @@ export default function Page({ params }: { params: { id: string } }) {
                   : shoppingListItem?.ingredient?.units}{" "}
               </h4>
               {!isEditing && (
-                <button
+                <EditAmountButton
                   onClick={() => {
                     setIsEditing(true);
                   }}>
                   Edit Amount
-                </button>
+                </EditAmountButton>
               )}
               {isEditing && (
                 <EditButtonContainer>
-                  <button
+                  <SubmitAmountButton
                     onClick={() => {
                       handleSubmit();
                       setIsEditing(false);
                     }}>
                     Submit
-                  </button>
+                  </SubmitAmountButton>
                   <button
                     onClick={() => {
                       setIsEditing(false);
