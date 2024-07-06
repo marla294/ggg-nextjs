@@ -53,6 +53,11 @@ const AmountContainer = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
+const EditInput = styled.input`
+  width: 50px;
+  font-size: 1rem;
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -118,7 +123,7 @@ export default function Page({ params }: { params: { id: string } }) {
               <h4>
                 Amount:{" "}
                 {isEditing ? (
-                  <input
+                  <EditInput
                     required
                     type="text"
                     id="quantity"
