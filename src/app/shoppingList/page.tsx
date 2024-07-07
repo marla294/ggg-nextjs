@@ -165,7 +165,7 @@ export default function ShoppingList() {
             <select
               name="sortBy"
               id="sortBy"
-              value={"homeArea"}
+              value={sortBy}
               onChange={handleChange}>
               {sortOptions.map((option, index) => (
                 <option
