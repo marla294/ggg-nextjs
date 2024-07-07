@@ -96,7 +96,7 @@ export default function ShoppingList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [sortBy, setSortBy] = useState<any>(Sort.alphabetical);
+  const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
@@ -122,7 +122,7 @@ export default function ShoppingList() {
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
     if (params.get("sortBy")) {
-      setSortBy(params.get("sortBy") || Sort.alphabetical);
+      setSortBy(params.get("sortBy") || Sort.homeArea);
     }
   }, []);
 
