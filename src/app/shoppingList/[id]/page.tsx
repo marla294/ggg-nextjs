@@ -78,6 +78,15 @@ const SubmitAmountButton = styled.button`
   border: 1px solid var(--darkGreen);
 `;
 
+const CancelEditAmountButton = styled.button`
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.5rem 1rem;
+  background: var(--orange);
+  color: var(--darkOrange);
+  border: 1px solid var(--darkOrange);
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -178,12 +187,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     }}>
                     Submit
                   </SubmitAmountButton>
-                  <button
+                  <CancelEditAmountButton
                     onClick={() => {
                       setIsEditing(false);
                     }}>
                     &times;
-                  </button>
+                  </CancelEditAmountButton>
                 </EditButtonContainer>
               )}
             </AmountContainer>
@@ -192,11 +201,11 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
             <div>Store: {shoppingListItem?.ingredient?.store}</div>
             <ButtonContainer>
+              <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
               <DeleteFromShoppingListButton
                 shoppingListItem={shoppingListItem}
                 isInList={false}
               />
-              <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
             </ButtonContainer>
           </div>
         </SingleItemStyles>
