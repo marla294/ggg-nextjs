@@ -3,6 +3,7 @@ import getStores from "./getStores";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import StoreListItem from "../components/StoreListItem";
 
 const ListContainer = styled.div`
   display: grid;
@@ -48,7 +49,7 @@ export default function Store() {
       </HeaderContainer>
 
       <ListContainer>
-        {stores?.map((store: any) => <div key={store._id}>{store.name}</div>)}
+        {stores?.map((store: any) => <StoreListItem store={store} />)}
       </ListContainer>
     </div>
   );

@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
@@ -23,7 +22,6 @@ export default function DeleteFromShoppingListButton({
   isInList: boolean;
   fetchShoppingListItems?: any;
 }) {
-  const router = useRouter();
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const handleDelete = async () => {
