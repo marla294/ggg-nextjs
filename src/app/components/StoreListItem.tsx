@@ -3,7 +3,13 @@
 import { useState } from "react";
 import deleteStore from "../stores/deleteStore";
 
-const StoreListItem = ({ store }: { store: any }) => {
+const StoreListItem = ({
+  store,
+  fetchStores,
+}: {
+  store: any;
+  fetchStores: any;
+}) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -13,9 +19,9 @@ const StoreListItem = ({ store }: { store: any }) => {
       await deleteStore({
         storeId: store._id,
       });
-      // if (fetchShoppingListItems) {
-      //   await fetchShoppingListItems();
-      // }
+      if (fetchStores) {
+        await fetchStores();
+      }
       setDeleteLoading(false);
     } catch (e) {
       console.error(e);

@@ -49,7 +49,9 @@ export default function Store() {
       </HeaderContainer>
 
       <ListContainer>
-        {stores?.map((store: any) => <StoreListItem store={store} />)}
+        {stores?.map((store: any) => (
+          <StoreListItem store={store} fetchStores={fetchStores} />
+        ))}
       </ListContainer>
     </div>
   );
