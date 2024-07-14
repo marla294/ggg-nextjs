@@ -1,6 +1,7 @@
 "use server";
 import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
+import Store from "../../../models/Store";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
@@ -24,6 +25,12 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
           model: IngredientImage,
         },
       ])
+      // .populate([
+      //   {
+      //     path: "store",
+      //     model: Store,
+      //   },
+      // ])
       .exec();
 
     if (ingredients) {
