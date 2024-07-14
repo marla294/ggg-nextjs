@@ -6,13 +6,13 @@ import User from "../../../../models/User";
 import { getSession } from "../../../../services/authentication/cookie-session";
 
 export default async ({
-  name, 
-  store,
+  name,
   units,
   aisle,
   homeArea,
   description,
   photoId,
+  storeId,
 }: {
     name?: string | null | undefined, 
     store?: string | null | undefined, 
@@ -21,6 +21,7 @@ export default async ({
     homeArea?: string | null | undefined,
     description?: string | null | undefined,
     photoId?: any,
+    storeId?: any,
   }) => {
   try {
     await dbConnect();
@@ -28,7 +29,7 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store, units, aisle, homeArea, description, photo: new ObjectId(photoId)}]);
+    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store: new ObjectId(storeId), units, aisle, homeArea, description, photo: new ObjectId(photoId)}]);
 
     return JSON.stringify(ingredient);
 
