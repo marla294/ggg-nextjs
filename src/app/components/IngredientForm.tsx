@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import stores from "../lib/stores";
 import units from "../lib/units";
 import aisles from "../lib/aisles";
 import homeAreas from "../lib/homeAreas";
 import { ThreeDots } from "react-loader-spinner";
+import { useEffect, useState } from "react";
+import getStores from "../stores/getStores";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -91,6 +92,18 @@ const IngredientForm = ({
   handleImageChange: any;
   formName: string;
 }) => {
+  const [stores, setStores] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      const tempStores = await getStores();
+      const parsedStores = await JSON.parse(tempStores as string);
+      setStores(parsedStores);
+    };
+
+    fetchStores();
+  }, []);
+
   return (
     <FormStyles onSubmit={handleSubmit}>
       <h2>{formName ? formName : "Edit"} Ingredient</h2>
@@ -133,9 +146,9 @@ const IngredientForm = ({
           id="store"
           onChange={handleChange}
           value={inputs.store}>
-          {stores.map((store) => (
-            <option value={store} key={store}>
-              {store}
+          {stores?.map((store: any) => (
+            <option value={store?.name} key={store?._id}>
+              {store?.name}
             </option>
           ))}
         </select>
