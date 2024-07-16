@@ -25,12 +25,12 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
           model: IngredientImage,
         },
       ])
-      // .populate([
-      //   {
-      //     path: "store",
-      //     model: Store,
-      //   },
-      // ])
+      .populate([
+        {
+          path: "store",
+          model: Store,
+        },
+      ])
       .exec();
 
     if (ingredients) {

@@ -5,28 +5,28 @@ import Ingredient from "../../../../../models/Ingredient";
 
 export default async ({
   id,
-  name, 
-  store,
+  name,
   units,
   aisle,
   homeArea,
   description,
   photoId,
+  storeId,
 }: {
     id: string,
     name?: string | null | undefined, 
-    store?: string | null | undefined, 
     units?: string | null | undefined,
     aisle?: string | null | undefined,
     homeArea?: string | null | undefined,
     description?: string | null | undefined,
     photoId?: any,
+    storeId?: any,
   }) => {
   try {
     await dbConnect();
 
     const filter = { _id: id};
-    let update: any = {name, store, units, aisle, homeArea, description};
+    let update: any = {name, store: new ObjectId(storeId), units, aisle, homeArea, description};
 
     if (photoId) {
       update = {...update, photo: new ObjectId(photoId)}

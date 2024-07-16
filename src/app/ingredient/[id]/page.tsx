@@ -179,7 +179,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>Aisle: {ingredient?.aisle}</div>
             <div>Home Area: {ingredient?.homeArea}</div>
             <div>Units: {ingredient?.units}</div>
-            <div>Store: {ingredient?.store}</div>
+            <div>Store: {ingredient?.store?.name || ingredient?.store}</div>
             <ButtonContainer>
               <DeleteButton
                 type="button"

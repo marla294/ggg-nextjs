@@ -142,12 +142,12 @@ const IngredientForm = ({
       <label htmlFor="store">
         Store
         <select
-          name="store"
-          id="store"
+          name="storeId"
+          id="storeId"
           onChange={handleChange}
-          value={inputs.store}>
+          value={inputs.storeId}>
           {stores?.map((store: any) => (
-            <option value={store?.name} key={store?._id}>
+            <option value={store?._id} key={store?._id}>
               {store?.name}
             </option>
           ))}

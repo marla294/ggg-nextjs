@@ -12,7 +12,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
   const { handleChange, inputs, setInputs } = useForm({
     name: "",
     description: "",
-    store: "",
+    storeId: "",
     units: "",
     aisle: "",
     homeArea: "",
@@ -22,7 +22,11 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
     const tempIngredients = JSON.parse(res as string);
-    setInputs({ ...inputs, ...tempIngredients[0] });
+    setInputs({
+      ...inputs,
+      ...tempIngredients[0],
+      storeId: tempIngredients[0]?.store?._id,
+    });
   };
 
   useEffect(() => {

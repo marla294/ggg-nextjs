@@ -15,7 +15,6 @@ export default async ({
   storeId,
 }: {
     name?: string | null | undefined, 
-    store?: string | null | undefined, 
     units?: string | null | undefined,
     aisle?: string | null | undefined,
     homeArea?: string | null | undefined,
