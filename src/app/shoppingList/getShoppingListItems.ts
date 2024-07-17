@@ -2,6 +2,7 @@
 import dbConnect from "../../../lib/dbconnect";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
+import Store from "../../../models/Store";
 import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
@@ -24,10 +25,13 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         {
           path: "ingredient",
           model: Ingredient,
-          populate: {
+          populate: [{
             path: "photo",
             model: IngredientImage,
-          }
+          }, {
+            path: "store",
+            model: Store,
+          }]
         },
       ])
       .exec();
