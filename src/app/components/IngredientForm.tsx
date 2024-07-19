@@ -145,7 +145,10 @@ const IngredientForm = ({
           name="storeId"
           id="storeId"
           onChange={handleChange}
-          value={inputs.storeId}>
+          value={inputs.storeId || 1}>
+          <option value={1} key={1}>
+            Uncategorized
+          </option>
           {stores?.map((store: any) => (
             <option value={store?._id} key={store?._id}>
               {store?.name}
