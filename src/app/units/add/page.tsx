@@ -93,7 +93,7 @@ export default function AddIngredient() {
         ...inputs,
       });
       setLoading(false);
-      router.push("/stores");
+      router.push("/units");
     } catch (e) {
       console.error(e);
     }
