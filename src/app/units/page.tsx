@@ -3,7 +3,7 @@ import getUnits from "./getUnits";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-// import StoreListItem from "../components/StoreListItem";
+import UnitListItem from "../components/UnitListItem";
 
 const ListContainer = styled.div`
   display: grid;
@@ -50,8 +50,7 @@ export default function Units() {
 
       <ListContainer>
         {units?.map((unit: any) => (
-          <div>{unit?.name}</div>
-          // <StoreListItem store={store} fetchStores={fetchStores} />
+          <UnitListItem unit={unit} fetchUnits={fetchUnits} />
         ))}
       </ListContainer>
     </div>
