@@ -3,7 +3,7 @@ import getRecipeTypes from "./getRecipeTypes";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-// import StoreListItem from "../components/StoreListItem";
+import RecipeTypeListItem from "../components/RecipeTypeListItem";
 
 const ListContainer = styled.div`
   display: grid;
@@ -50,8 +50,10 @@ export default function RecipeTypes() {
 
       <ListContainer>
         {recipeTypes?.map((recipeType: any) => (
-          <div key={recipeType?._id}>{recipeType?.name}</div>
-          // <StoreListItem store={store} fetchStores={fetchRecipeTypes} />
+          <RecipeTypeListItem
+            recipeType={recipeType}
+            fetchRecipeTypes={fetchRecipeTypes}
+          />
         ))}
       </ListContainer>
     </div>
