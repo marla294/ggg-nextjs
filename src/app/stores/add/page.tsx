@@ -77,7 +77,7 @@ const LoadingContainer = styled.div`
   grid-gap: 2rem;
 `;
 
-export default function AddIngredient() {
+export default function AddStore() {
   const router = useRouter();
   const { handleChange, inputs } = useForm({
     name: "",

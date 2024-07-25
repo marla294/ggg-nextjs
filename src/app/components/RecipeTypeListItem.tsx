@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-// import deleteStore from "../stores/deleteStore";
+import deleteRecipeType from "../recipeTypes/deleteRecipeType";
 
 const RecipeTypeListItem = ({
   recipeType,
@@ -16,9 +16,9 @@ const RecipeTypeListItem = ({
     setDeleteLoading(true);
 
     try {
-      // await deleteStore({
-      //   storeId: store._id,
-      // });
+      await deleteRecipeType({
+        recipeTypeId: recipeType._id,
+      });
       if (fetchRecipeTypes) {
         await fetchRecipeTypes();
       }
