@@ -43,7 +43,7 @@ export default function RecipeTypes() {
     <div>
       <HeaderContainer>
         <h3>Recipe Types</h3>
-        <Link href="stores/add">
+        <Link href="recipeTypes/add">
           <AddRecipeTypeLinkText>+ Add RecipeType</AddRecipeTypeLinkText>
         </Link>
       </HeaderContainer>
