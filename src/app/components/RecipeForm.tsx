@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import recipeTypes from "../lib/recipeTypes";
+// import recipeTypes from "../lib/recipeTypes";
 import { ThreeDots } from "react-loader-spinner";
+import { useEffect, useState } from "react";
+import getRecipeTypes from "../recipeTypes/getRecipeTypes";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -88,6 +90,18 @@ const RecipeForm = ({
   handleImageChange: any;
   formName: string;
 }) => {
+  const [recipeTypes, setRecipeTypes] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchRecipeTypes = async () => {
+      const tempRecipeTypes = await getRecipeTypes();
+      const parsedRecipeTypes = await JSON.parse(tempRecipeTypes as string);
+      setRecipeTypes(parsedRecipeTypes);
+    };
+
+    fetchRecipeTypes();
+  }, []);
+
   return (
     <FormStyles onSubmit={handleSubmit}>
       <h2>{formName ? formName : "Edit"} Recipe</h2>
@@ -141,9 +155,9 @@ const RecipeForm = ({
           id="type"
           onChange={handleChange}
           value={inputs.type}>
-          {recipeTypes.map((type) => (
-            <option value={type} key={type}>
-              {type}
+          {recipeTypes?.map((type: any) => (
+            <option value={type?.name} key={type?._id}>
+              {type?.name}
             </option>
           ))}
         </select>
