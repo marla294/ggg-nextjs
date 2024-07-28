@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import recipeTypes from "../lib/recipeTypes";
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 import getRecipeTypes from "../recipeTypes/getRecipeTypes";
@@ -154,7 +153,10 @@ const RecipeForm = ({
           name="type"
           id="type"
           onChange={handleChange}
-          value={inputs.type}>
+          value={inputs.type || 1}>
+          <option value={1} key={1}>
+            Uncategorized
+          </option>
           {recipeTypes?.map((type: any) => (
             <option value={type?.name} key={type?._id}>
               {type?.name}
