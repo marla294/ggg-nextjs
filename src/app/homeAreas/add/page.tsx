@@ -93,7 +93,7 @@ export default function AddHomeArea() {
         ...inputs,
       });
       setLoading(false);
-      router.push("/stores");
+      router.push("/homeAreas");
     } catch (e) {
       console.error(e);
     }
