@@ -3,6 +3,7 @@ import getHomeAreas from "./getHomeAreas";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import HomeAreaListItem from "../components/HomeAreaListItem";
 // import StoreListItem from "../components/StoreListItem";
 
 const ListContainer = styled.div`
@@ -50,13 +51,11 @@ export default function HomeArea() {
 
       <ListContainer>
         {homeAreas?.map((homeArea: any) => (
-          <div id={homeArea?._id} key={homeArea?._id}>
-            {homeArea?.name}
-          </div>
+          <HomeAreaListItem
+            homeArea={homeArea}
+            fetchHomeAreas={fetchHomeAreas}
+          />
         ))}
-        {/* {homeAreas?.map((homeArea: any) => (
-          <StoreListItem store={homeArea} fetchStores={fetchHomeAreas} />
-        ))} */}
       </ListContainer>
     </div>
   );
