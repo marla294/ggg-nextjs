@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import units from "../lib/units";
 import aisles from "../lib/aisles";
-import homeAreas from "../lib/homeAreas";
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 import getStores from "../stores/getStores";
+import getHomeAreas from "../homeAreas/getHomeAreas";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -93,6 +93,7 @@ const IngredientForm = ({
   formName: string;
 }) => {
   const [stores, setStores] = useState<any>(null);
+  const [homeAreas, setHomeAreas] = useState<any>(null);
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -100,8 +101,14 @@ const IngredientForm = ({
       const parsedStores = await JSON.parse(tempStores as string);
       setStores(parsedStores);
     };
+    const fetchHomeAreas = async () => {
+      const tempHomeAreas = await getHomeAreas();
+      const parsedHomeAreas = await JSON.parse(tempHomeAreas as string);
+      setHomeAreas(parsedHomeAreas);
+    };
 
     fetchStores();
+    fetchHomeAreas();
   }, []);
 
   return (
@@ -190,10 +197,13 @@ const IngredientForm = ({
           name="homeArea"
           id="homeArea"
           onChange={handleChange}
-          value={inputs.homeArea}>
-          {homeAreas.map((homeArea) => (
-            <option value={homeArea} key={homeArea}>
-              {homeArea}
+          value={inputs.homeAreaId || 1}>
+          <option value={1} key={1}>
+            Uncategorized
+          </option>
+          {homeAreas?.map((homeArea: any) => (
+            <option value={homeArea?._id} key={homeArea?._id}>
+              {homeArea?.name}
             </option>
           ))}
         </select>
