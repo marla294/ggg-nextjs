@@ -2,7 +2,7 @@
 import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import Store from "../../../models/Store";
-import HomeArea from "../../../models/HomeArea";
+// import HomeArea from "../../../models/HomeArea";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
