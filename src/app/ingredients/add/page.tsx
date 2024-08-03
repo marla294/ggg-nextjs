@@ -11,10 +11,10 @@ export default function AddIngredient() {
   const { handleChange, inputs } = useForm({
     name: "",
     description: "",
-    store: "",
+    storeId: "",
     units: "",
     aisle: "",
-    homeArea: "",
+    homeAreaId: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
 

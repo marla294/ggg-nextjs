@@ -146,7 +146,7 @@ const IngredientForm = ({
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="store">
+      <label htmlFor="storeId">
         Store
         <select
           name="storeId"
@@ -191,11 +191,11 @@ const IngredientForm = ({
           ))}
         </select>
       </label>
-      <label htmlFor="homeArea">
+      <label htmlFor="homeAreaId">
         Home Area
         <select
-          name="homeArea"
-          id="homeArea"
+          name="homeAreaId"
+          id="homeAreaId"
           onChange={handleChange}
           value={inputs.homeAreaId || 1}>
           <option value={1} key={1}>

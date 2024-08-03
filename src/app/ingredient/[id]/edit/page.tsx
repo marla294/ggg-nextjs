@@ -15,7 +15,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
     storeId: "",
     units: "",
     aisle: "",
-    homeArea: "",
+    homeAreaId: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
 

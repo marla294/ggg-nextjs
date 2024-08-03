@@ -177,7 +177,9 @@ export default function Page({ params }: { params: { id: string } }) {
           <div>
             <h3>{ingredient?.name}</h3>
             <div>Aisle: {ingredient?.aisle}</div>
-            <div>Home Area: {ingredient?.homeArea}</div>
+            <div>
+              Home Area: {ingredient?.homeArea?.name || ingredient?.homeArea}
+            </div>
             <div>Units: {ingredient?.units}</div>
             <div>Store: {ingredient?.store?.name || ingredient?.store}</div>
             <ButtonContainer>
