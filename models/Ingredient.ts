@@ -7,17 +7,18 @@ const ingredientSchema = new Schema({
   description: {
     type: String,
   },
-  // store: {
-  //   type: String,
-  // },
   units: {
     type: String,
   },
   aisle: {
     type: String,
   },
+  // homeArea: {
+  //   type: String,
+  // },
   homeArea: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'HomeArea'
   },
   store: {
     type: Schema.Types.ObjectId,

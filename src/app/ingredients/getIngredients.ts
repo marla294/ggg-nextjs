@@ -2,7 +2,7 @@
 import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import Store from "../../../models/Store";
-// import HomeArea from "../../../models/HomeArea";
+import HomeArea from "../../../models/HomeArea";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
@@ -32,12 +32,12 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
           model: Store,
         },
       ])
-      // .populate([
-      //   {
-      //     path: "homeArea",
-      //     model: HomeArea,
-      //   },
-      // ])
+      .populate([
+        {
+          path: "homeArea",
+          model: HomeArea,
+        },
+      ])
       .exec();
 
       console.log({ingredients});
