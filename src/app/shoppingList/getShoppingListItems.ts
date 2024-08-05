@@ -3,6 +3,7 @@ import dbConnect from "../../../lib/dbconnect";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import Store from "../../../models/Store";
+import HomeArea from "../../../models/HomeArea";
 import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
@@ -31,6 +32,9 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
           }, {
             path: "store",
             model: Store,
+          }, {
+            path: "homeArea",
+            model: HomeArea,
           }]
         },
       ])
