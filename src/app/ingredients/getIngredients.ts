@@ -40,8 +40,6 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
       ])
       .exec();
 
-      console.log({ingredients});
-
     if (ingredients) {
       const ingredientsFiltered = ingredients
         .filter((ingredient) => ingredient.user?.email === session?.login)

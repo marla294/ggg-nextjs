@@ -22,10 +22,12 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
     const tempIngredients = JSON.parse(res as string);
+    const tempIngredient = tempIngredients[0];
     setInputs({
       ...inputs,
-      ...tempIngredients[0],
-      storeId: tempIngredients[0]?.store?._id,
+      ...tempIngredient,
+      storeId: tempIngredient?.store?._id,
+      homeAreaId: tempIngredient?.homeArea?._id,
     });
   };
 
