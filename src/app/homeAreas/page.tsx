@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import HomeAreaListItem from "../components/HomeAreaListItem";
-// import StoreListItem from "../components/StoreListItem";
 
 const ListContainer = styled.div`
   display: grid;
@@ -19,7 +18,7 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
-const AddStoreLinkText = styled.div`
+const AddHomeAreaLinkText = styled.div`
   font-size: 1rem;
   color: var(--green);
   &:hover {
@@ -45,7 +44,7 @@ export default function HomeArea() {
       <HeaderContainer>
         <h3>Home Areas</h3>
         <Link href="homeAreas/add">
-          <AddStoreLinkText>+ Add Home Area</AddStoreLinkText>
+          <AddHomeAreaLinkText>+ Add Home Area</AddHomeAreaLinkText>
         </Link>
       </HeaderContainer>
 
