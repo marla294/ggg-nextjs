@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import getAisles from "./getAisles";
-// import HomeAreaListItem from "../components/HomeAreaListItem";
+import AisleListItem from "../components/AisleListItem";
 
 const ListContainer = styled.div`
   display: grid;
@@ -50,11 +50,7 @@ export default function Aisles() {
 
       <ListContainer>
         {aisles?.map((aisle: any) => (
-          <div>{aisle?.name}</div>
-          // <HomeAreaListItem
-          //   homeArea={homeArea}
-          //   fetchHomeAreas={fetchHomeAreas}
-          // />
+          <AisleListItem aisle={aisle} fetchAisles={fetchAisles} />
         ))}
       </ListContainer>
     </div>
