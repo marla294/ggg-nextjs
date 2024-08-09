@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-// import deleteRecipeType from "../recipeTypes/deleteRecipeType";
+import deleteAisle from "../aisles/deleteAisle";
 
 const AisleListItem = ({
   aisle,
@@ -12,28 +12,28 @@ const AisleListItem = ({
 }) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  // const handleDelete = async () => {
-  //   setDeleteLoading(true);
+  const handleDelete = async () => {
+    setDeleteLoading(true);
 
-  //   try {
-  //     await deleteService({
-  //       recipeTypeId: service._id,
-  //     });
-  //     if (fetchService) {
-  //       await fetchService();
-  //     }
-  //     setDeleteLoading(false);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
+    try {
+      await deleteAisle({
+        aisleId: aisle._id,
+      });
+      if (fetchAisles) {
+        await fetchAisles();
+      }
+      setDeleteLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div key={aisle?._id}>
       <button
         type="button"
         onClick={() => {
-          // handleDelete();
+          handleDelete();
         }}>
         &times;
       </button>
