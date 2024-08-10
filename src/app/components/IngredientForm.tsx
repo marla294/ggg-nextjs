@@ -5,6 +5,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 import getStores from "../stores/getStores";
 import getHomeAreas from "../homeAreas/getHomeAreas";
+import getAisles from "../aisles/getAisles";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -94,6 +95,7 @@ const IngredientForm = ({
 }) => {
   const [stores, setStores] = useState<any>(null);
   const [homeAreas, setHomeAreas] = useState<any>(null);
+  const [aisles, setAisles] = useState<any>(null);
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -106,9 +108,15 @@ const IngredientForm = ({
       const parsedHomeAreas = await JSON.parse(tempHomeAreas as string);
       setHomeAreas(parsedHomeAreas);
     };
+    const fetchAisles = async () => {
+      const tempAisles = await getAisles();
+      const parsedAisles = await JSON.parse(tempAisles as string);
+      setAisles(parsedAisles);
+    };
 
     fetchStores();
     fetchHomeAreas();
+    fetchAisles();
   }, []);
 
   return (
