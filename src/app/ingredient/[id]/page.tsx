@@ -176,7 +176,7 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{ingredient?.name}</h3>
-            <div>Aisle: {ingredient?.aisle}</div>
+            <div>Aisle: {ingredient?.aisle?.name || ingredient?.aisle}</div>
             <div>
               Home Area: {ingredient?.homeArea?.name || ingredient?.homeArea}
             </div>

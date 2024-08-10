@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import units from "../lib/units";
-import aisles from "../lib/aisles";
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 import getStores from "../stores/getStores";
@@ -185,16 +184,16 @@ const IngredientForm = ({
           ))}
         </select>
       </label>
-      <label htmlFor="aisle">
+      <label htmlFor="aisleId">
         Aisle
         <select
-          name="aisle"
-          id="aisle"
+          name="aisleId"
+          id="aisleId"
           onChange={handleChange}
-          value={inputs.aisle}>
-          {aisles.map((aisle) => (
-            <option value={aisle} key={aisle}>
-              {aisle}
+          value={inputs.aisleId || 1}>
+          {aisles?.map((aisle: any) => (
+            <option value={aisle?._id} key={aisle?._id}>
+              {aisle?.name}
             </option>
           ))}
         </select>

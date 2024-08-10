@@ -14,7 +14,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
     description: "",
     storeId: "",
     units: "",
-    aisle: "",
+    aisleId: "",
     homeAreaId: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,6 +28,7 @@ export default function EditIngredient({ params }: { params: { id: string } }) {
       ...tempIngredient,
       storeId: tempIngredient?.store?._id,
       homeAreaId: tempIngredient?.homeArea?._id,
+      aisleId: tempIngredient?.aisle?._id,
     });
   };
 

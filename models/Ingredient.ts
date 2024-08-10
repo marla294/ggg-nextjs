@@ -11,11 +11,9 @@ const ingredientSchema = new Schema({
     type: String,
   },
   aisle: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Aisle'
   },
-  // homeArea: {
-  //   type: String,
-  // },
   homeArea: {
     type: Schema.Types.ObjectId,
     ref: 'HomeArea'

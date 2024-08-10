@@ -7,26 +7,26 @@ export default async ({
   id,
   name,
   units,
-  aisle,
   description,
   photoId,
   storeId,
   homeAreaId,
+  aisleId
 }: {
     id: string,
     name?: string | null | undefined, 
     units?: string | null | undefined,
-    aisle?: string | null | undefined,
     description?: string | null | undefined,
     photoId?: any,
     storeId?: any,
     homeAreaId?: any,
+    aisleId?: any,
   }) => {
   try {
     await dbConnect();
 
     const filter = { _id: id};
-    let update: any = {name, store: new ObjectId(storeId), units, aisle, homeArea: new ObjectId(homeAreaId), description};
+    let update: any = {name, store: new ObjectId(storeId), units, aisle: new ObjectId(aisleId), homeArea: new ObjectId(homeAreaId), description};
 
     if (photoId) {
       update = {...update, photo: new ObjectId(photoId)}

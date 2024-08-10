@@ -6,6 +6,7 @@ import HomeArea from "../../../models/HomeArea";
 import Ingredient from "../../../models/Ingredient";
 import IngredientImage from "../../../models/IngredientImage";
 import { getSession } from "../../../services/authentication/cookie-session";
+import Aisle from "../../../models/Aisle";
 
 export default async ({name, id}: {name?: string | null | undefined, id?: string | null | undefined}) => {
   try {
@@ -36,6 +37,12 @@ export default async ({name, id}: {name?: string | null | undefined, id?: string
         {
           path: "homeArea",
           model: HomeArea,
+        },
+      ])
+      .populate([
+        {
+          path: "aisle",
+          model: Aisle,
         },
       ])
       .exec();
