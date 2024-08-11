@@ -196,8 +196,16 @@ export default function Page({ params }: { params: { id: string } }) {
                 </EditButtonContainer>
               )}
             </AmountContainer>
-            <div>Aisle: {shoppingListItem?.ingredient?.aisle}</div>
-            <div>Home Area: {shoppingListItem?.ingredient?.homeArea}</div>
+            <div>
+              Aisle:{" "}
+              {shoppingListItem?.ingredient?.aisle?.name ||
+                shoppingListItem?.ingredient?.aisle}
+            </div>
+            <div>
+              Home Area:{" "}
+              {shoppingListItem?.ingredient?.homeArea?.name ||
+                shoppingListItem?.ingredient?.homeArea}
+            </div>
             <div>Units: {shoppingListItem?.ingredient?.units}</div>
             <div>
               Store:{" "}
