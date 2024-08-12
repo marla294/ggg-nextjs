@@ -191,6 +191,9 @@ const IngredientForm = ({
           id="aisleId"
           onChange={handleChange}
           value={inputs.aisleId || 1}>
+          <option value={1} key={1}>
+            Uncategorized
+          </option>
           {aisles?.map((aisle: any) => (
             <option value={aisle?._id} key={aisle?._id}>
               {aisle?.name}
