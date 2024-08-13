@@ -13,7 +13,7 @@ export default function AddIngredient() {
     description: "",
     storeId: "",
     units: "",
-    aisle: "",
+    aisleId: "",
     homeAreaId: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
