@@ -45,6 +45,7 @@ const SingleItemStyles = styled.div`
 
 const DeleteButton = styled.button`
   width: 300px;
+  height: 40px;
   transition: 0.2s;
   margin: 0 !important;
   padding: 0.7rem 1rem;
@@ -75,7 +76,7 @@ const AddToShoppingListButton = styled.button`
   left: 0;
   width: 300px;
   transition: 0.2s;
-  height: 37.84px;
+  height: 40px;
   margin: 0 !important;
   padding: 0.7rem 1rem;
   background: var(--yellow);

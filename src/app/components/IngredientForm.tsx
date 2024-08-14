@@ -33,7 +33,7 @@ const FormStyles = styled.form`
   }
   button {
     width: auto;
-    padding: 0.7rem 1rem;
+    height: 40px;
     transition: 0.2s;
   }
 
