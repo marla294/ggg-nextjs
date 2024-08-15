@@ -3,13 +3,10 @@ import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from "react-loader-spinner";
 import { useState } from "react";
+import ButtonStyles from "./styles/ButtonStyles";
 
 const EditButton = styled.button`
-  width: 300px;
-  height: 40px;
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
+  ${ButtonStyles}
   background: var(--green);
   color: black;
   border: 1px solid var(--darkGreen);

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import {css} from 'styled-components';
 
-const ButtonStyles = styled.button`
+const ButtonStyles = css`
   width: 300px;
   height: 40px;
   transition: 0.2s;

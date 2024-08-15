@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
+import ButtonStyles from "../../components/styles/ButtonStyles";
 
 const CenteredContainer = styled.div`
   height: 50vh;
@@ -44,11 +45,7 @@ const SingleItemStyles = styled.div`
 `;
 
 const DeleteButton = styled.button`
-  width: 300px;
-  height: 40px;
-  transition: 0.2s;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
+  ${ButtonStyles}
   background: var(--orange);
   color: var(--darkOrange);
   border: 1px solid var(--darkOrange);
@@ -74,11 +71,7 @@ const AddToShoppingListButton = styled.button`
   right: 0;
   bottom: 0;
   left: 0;
-  width: 300px;
-  transition: 0.2s;
-  height: 40px;
-  margin: 0 !important;
-  padding: 0.7rem 1rem;
+  ${ButtonStyles}
   background: var(--yellow);
   color: black;
   border: 1px solid var(--darkYellow);
