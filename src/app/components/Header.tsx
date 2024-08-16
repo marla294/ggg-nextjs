@@ -27,7 +27,7 @@ const HeaderStyles = styled.header`
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.5rem solid var(--purple);
-  z-index: 1;
+  z-index: 2;
 `;
 
 const NavStyles = styled.nav`
@@ -50,7 +50,7 @@ const NavStyles = styled.nav`
     display: block;
     height: 1.3rem;
     width: 1.6rem;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

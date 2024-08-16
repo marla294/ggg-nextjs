@@ -61,7 +61,7 @@ const AddToShoppingListInput = styled.input`
   width: 25px;
   margin-left: 98px;
   top: 4px;
-  z-index: 100000;
+  z-index: 1;
   font-size: 1rem;
 `;
 

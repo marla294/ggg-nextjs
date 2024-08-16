@@ -25,6 +25,7 @@ const InnerNavStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   font-size: 1.1rem;
+  z-index: 3;
 
   a {
     padding: 1.5rem 2.5rem;
