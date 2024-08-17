@@ -7,7 +7,7 @@ import RecipeItem from "../../../models/RecipeItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async ({recipeId}: {recipeId: string}) => {
+export default async ({recipeId}: {recipeId?: string}) => {
   try {
     await dbConnect();
 
@@ -41,7 +41,13 @@ export default async ({recipeId}: {recipeId: string}) => {
     if (recipeItems) {
       const recipeItemsFiltered = recipeItems
       .filter(recipeItem => recipeItem.user?.email === session?.login)
-      .filter(recipeItem => recipeItem.recipe?.id === recipeId)
+      .filter(recipeItem => {
+        if (recipeId && recipeId !== '') {
+          return recipeItem.recipe?.id === recipeId;
+        } else {
+          return true;
+        }
+      })
       .sort((a, b) => (a.name < b.name ? -1 : 1));
       return JSON.stringify(recipeItemsFiltered);
     } else {
