@@ -3,10 +3,12 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
-import ButtonStyles from "./styles/ButtonStyles";
 
 const DeleteButton = styled.button`
-  ${ButtonStyles}
+  height: 40px;
+  transition: 0.2s;
+  margin: 0 !important;
+  padding: 0.7rem 1rem;
   background: var(--orange);
   color: var(--darkOrange);
   border: 1px solid var(--darkOrange);
