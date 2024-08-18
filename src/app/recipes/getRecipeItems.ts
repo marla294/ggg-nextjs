@@ -7,7 +7,7 @@ import RecipeItem from "../../../models/RecipeItem";
 import User from "../../../models/User";
 import { getSession } from "../../../services/authentication/cookie-session";
 
-export default async ({recipeId}: {recipeId?: string}) => {
+export default async ({recipeId, ingredientId}: {recipeId?: string, ingredientId?: string}) => {
   try {
     await dbConnect();
 
@@ -44,6 +44,13 @@ export default async ({recipeId}: {recipeId?: string}) => {
       .filter(recipeItem => {
         if (recipeId && recipeId !== '') {
           return recipeItem.recipe?.id === recipeId;
+        } else {
+          return true;
+        }
+      })
+      .filter(recipeItem => {
+        if (ingredientId && ingredientId !== '') {
+          return recipeItem.ingredient?.id === ingredientId;
         } else {
           return true;
         }
