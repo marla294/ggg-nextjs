@@ -8,6 +8,7 @@ import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import ButtonStyles from "../../components/styles/ButtonStyles";
+import getRecipeItems from "../../recipes/getRecipeItems";
 
 const CenteredContainer = styled.div`
   height: 50vh;
@@ -97,12 +98,24 @@ export default function Page({ params }: { params: { id: string } }) {
   const [addToShoppingListLoading, setAddToShoppingListLoading] =
     useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
+  const [recipes, setRecipes] = useState<any>();
 
   const fetchIngredient = async () => {
     const res = await getIngredients({ id: params.id });
     const tempIngredients = JSON.parse(res as string);
     setIngredient(tempIngredients[0]);
     setLoading(false);
+  };
+
+  const fetchRecipes = async () => {
+    if (ingredient) {
+      const res = await getRecipeItems({ ingredientId: ingredient?._id });
+      const tempRecipeItems = JSON.parse(res as string);
+      const tempRecipes = tempRecipeItems.map(
+        (recipeItem: any) => recipeItem?.recipe?.name
+      );
+      setRecipes(tempRecipes);
+    }
   };
 
   const handleDelete = async () => {
@@ -135,6 +148,7 @@ export default function Page({ params }: { params: { id: string } }) {
     if (ingredient?.photo?.imageUrl) {
       setImageUrl(ingredient?.photo?.imageUrl);
     }
+    fetchRecipes();
   }, [ingredient]);
 
   return (
@@ -176,6 +190,7 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
             <div>Units: {ingredient?.units}</div>
             <div>Store: {ingredient?.store?.name || ingredient?.store}</div>
+            <div>Recipes: {recipes?.join(", ") || "none"}</div>
             <ButtonContainer>
               <DeleteButton
                 type="button"
