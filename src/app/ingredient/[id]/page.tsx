@@ -17,6 +17,10 @@ const CenteredContainer = styled.div`
   justify-content: center;
 `;
 
+const InlineBlockContainer = styled.div`
+  display: inline-block;
+`;
+
 const SingleItemStyles = styled.div`
   padding: 0 10%;
 
@@ -95,6 +99,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [recipesLoading, setRecipesLoading] = useState<boolean>(true);
   const [addToShoppingListLoading, setAddToShoppingListLoading] =
     useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
@@ -115,6 +120,7 @@ export default function Page({ params }: { params: { id: string } }) {
         (recipeItem: any) => recipeItem?.recipe?.name
       );
       setRecipes(tempRecipes);
+      setRecipesLoading(false);
     }
   };
 
@@ -190,7 +196,23 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
             <div>Units: {ingredient?.units}</div>
             <div>Store: {ingredient?.store?.name || ingredient?.store}</div>
-            <div>Recipes: {recipes?.join(", ") || "none"}</div>
+            <div>
+              Recipes:{" "}
+              {recipesLoading ? (
+                <InlineBlockContainer>
+                  <ThreeDots
+                    visible={true}
+                    height="13"
+                    width="40"
+                    color="#551d11"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                  />
+                </InlineBlockContainer>
+              ) : (
+                recipes?.join(", ") || "none"
+              )}
+            </div>
             <ButtonContainer>
               <DeleteButton
                 type="button"
