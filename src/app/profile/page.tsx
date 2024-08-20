@@ -5,6 +5,7 @@ import styled from "styled-components";
 import changePassword from "./changePassword";
 import { useRouter } from "next/navigation";
 import signOut from "../lib/signout";
+import Link from "next/link";
 
 const Line = styled.div`
   display: grid;
@@ -81,6 +82,12 @@ const Error = styled.div`
   margin-bottom: 10px;
 `;
 
+const Links = styled.div`
+  a {
+    display: block;
+  }
+`;
+
 export default function Page() {
   const [user, setUser] = useState<any>();
   const [inputs, setInputs] = useState({ password: "" });
@@ -135,6 +142,27 @@ export default function Page() {
         <h4>Email: </h4>
         <span>{user?.email}</span>
       </Line>
+      <h2>Manage</h2>
+      <div>
+        <Link href="/aisles" legacyBehavior>
+          <a>Aisles</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/homeAreas" legacyBehavior>
+          <a>Home Areas</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/recipeTypes" legacyBehavior>
+          <a>Recipe Types</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/stores" legacyBehavior>
+          <a>Stores</a>
+        </Link>
+      </div>
       <FormStyles
         method="POST"
         onSubmit={async (e: any) => {
