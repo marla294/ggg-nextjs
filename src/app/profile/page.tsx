@@ -6,6 +6,7 @@ import changePassword from "./changePassword";
 import { useRouter } from "next/navigation";
 import signOut from "../lib/signout";
 import Link from "next/link";
+import CreateAccountForm from "../components/CreateAccountForm";
 
 const Line = styled.div`
   display: grid;
@@ -189,44 +190,7 @@ export default function Page() {
           </button>
         </fieldset>
       </FormStyles>
-      <FormStyles
-        method="POST"
-        onSubmit={async (e: any) => {
-          e.preventDefault();
-          await handleChangePassword();
-        }}>
-        <fieldset>
-          <h2>Create account (for someone else)</h2>
-          {error && <Error>{error}</Error>}
-          <label htmlFor="email">
-            Email<span className="required">&nbsp;*</span>
-            <input
-              required
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={inputs.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="password">
-            Password<span className="required">&nbsp;*</span>
-            <input
-              required
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              value={inputs.password}
-              onChange={handleChange}
-            />
-          </label>
-          <button type="submit" className="submit">
-            Create Account
-          </button>
-        </fieldset>
-      </FormStyles>
+      <CreateAccountForm />
     </div>
   );
 }

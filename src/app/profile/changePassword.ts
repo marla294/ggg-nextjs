@@ -14,8 +14,6 @@ export default async ({email, password}: {email: string, password: string}) => {
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$/;
       const passesPasswordRules = pattern.test(password);
 
-      console.log({passesPasswordRules});
-
       if (password.length < 8) {
         return {success: false, error: 'Password must be at least 8 characters'};
       }
