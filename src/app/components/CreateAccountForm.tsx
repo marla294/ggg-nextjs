@@ -79,12 +79,27 @@ const CreateAccountForm = () => {
     password: "",
   });
 
+  const handleSubmit = async () => {
+    // setLoading(true);
+
+    try {
+      // await addAisle({
+      //   ...inputs,
+      // });
+      // setLoading(false);
+      // router.push("/aisles");
+    } catch (e) {
+      console.error(e);
+      setError(e as string);
+    }
+  };
+
   return (
     <FormStyles
       method="POST"
       onSubmit={async (e: any) => {
         e.preventDefault();
-        // await handleChangePassword();
+        await handleSubmit();
       }}>
       <fieldset>
         <h2>Create account (for someone else)</h2>
