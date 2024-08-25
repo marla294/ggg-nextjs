@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
+import createAccount from "../profile/createAccount";
 
 const FormStyles = styled.form`
   padding: 2rem;
@@ -88,6 +89,7 @@ const CreateAccountForm = () => {
       // });
       // setLoading(false);
       // router.push("/aisles");
+      await createAccount({ ...inputs });
     } catch (e) {
       console.error(e);
       setError(e as string);

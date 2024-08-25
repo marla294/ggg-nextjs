@@ -26,12 +26,12 @@ export default async ({email, password}: {email: string, password: string}) => {
       const isMatch = await bcryptjs.compare(password, encryptedPassword);
 
       if (isMatch) {
-        // const filter = { _id: user._id};
-        // let update = {password: encryptedPassword};
-        // await User.findOneAndUpdate(filter, update);
-        // return {
-        //   success: true
-        // };
+        try {
+          await User.create({email, password});
+          return {success: true};
+        } catch {
+          return {success: false, error: 'Unexpected error while creating user'};
+        }
       } else {
         return {success: false, error: 'Unexpected error while creating user'};
       }
