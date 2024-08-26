@@ -78,6 +78,7 @@ const CreateAccountForm = () => {
   const { handleChange, inputs } = useForm({
     email: "",
     password: "",
+    name: "Marla",
   });
 
   const handleSubmit = async () => {

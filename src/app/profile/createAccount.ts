@@ -3,7 +3,7 @@ import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import bcryptjs from 'bcryptjs';
 
-export default async ({email, password}: {email: string, password: string}) => {
+export default async ({email, password}: {email: string, password: string, name: string}) => {
   try {
     await dbConnect();
 
@@ -27,9 +27,10 @@ export default async ({email, password}: {email: string, password: string}) => {
 
       if (isMatch) {
         try {
-          await User.create({email, password});
+          await User.create([{email, password: encryptedPassword}]);
           return {success: true};
-        } catch {
+        } catch (e) {
+          console.error(e);
           return {success: false, error: 'Unexpected error while creating user'};
         }
       } else {
