@@ -75,22 +75,20 @@ const Error = styled.div`
 
 const CreateAccountForm = () => {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const { handleChange, inputs } = useForm({
     email: "",
     password: "",
-    name: "Marla",
+    name: "",
   });
 
   const handleSubmit = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     try {
-      // await addAisle({
-      //   ...inputs,
-      // });
-      // setLoading(false);
-      // router.push("/aisles");
       await createAccount({ ...inputs });
+      // router.push("/aisles");
+      setLoading(false);
     } catch (e) {
       console.error(e);
       setError(e as string);
@@ -107,6 +105,18 @@ const CreateAccountForm = () => {
       <fieldset>
         <h2>Create account (for someone else)</h2>
         {error && <Error>{error}</Error>}
+        <label htmlFor="name">
+          Name<span className="required">&nbsp;*</span>
+          <input
+            required
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </label>
         <label htmlFor="email">
           Email<span className="required">&nbsp;*</span>
           <input
