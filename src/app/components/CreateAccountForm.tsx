@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
 import createAccount from "../profile/createAccount";
+import { ThreeDots } from "react-loader-spinner";
 
 const FormStyles = styled.form`
   padding: 2rem;
@@ -39,6 +40,7 @@ const FormStyles = styled.form`
     background: var(--lime);
     color: var(--darkGreen);
     border: 1px solid var(--darkGreen);
+    height: 40px;
     &:hover {
       background: var(--darkGreen);
       color: white;
@@ -73,6 +75,15 @@ const Error = styled.div`
   margin-bottom: 10px;
 `;
 
+const LoadingContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 500px;
+  align-items: center;
+  margin-top: 1rem;
+  grid-gap: 2rem;
+`;
+
 const CreateAccountForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -87,7 +98,6 @@ const CreateAccountForm = () => {
 
     try {
       await createAccount({ ...inputs });
-      // router.push("/aisles");
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -141,9 +151,27 @@ const CreateAccountForm = () => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit" className="submit">
-          Create Account
-        </button>
+        <LoadingContainer>
+          <button type="submit" className="submit">
+            {loading ? (
+              <ThreeDots
+                visible={true}
+                height="16"
+                width="40"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{
+                  display: "grid",
+                  justifyItems: "center",
+                }}
+                wrapperClass=""
+              />
+            ) : (
+              <>Create Account</>
+            )}
+          </button>
+        </LoadingContainer>
       </fieldset>
     </FormStyles>
   );
