@@ -27,7 +27,13 @@ export default async ({email, password, name}: {email: string, password: string,
 
       if (isMatch) {
         try {
-          await User.create([{name, email, password: encryptedPassword}]);
+          const today = new Date();
+          const yyyy = today.getFullYear();
+          let mm = String(today.getMonth() + 1).padStart(2, '0');
+          let dd = String(today.getDate()).padStart(2, '0');
+          const joinDate = `${mm}/${dd}/${yyyy}`;
+
+          await User.create([{name, email, joinDate, password: encryptedPassword}]);
           return {success: true};
         } catch (e) {
           console.error(e);
