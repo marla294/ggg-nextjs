@@ -4,6 +4,7 @@ import styled from "styled-components";
 import useForm from "../lib/useForm";
 import createAccount from "../profile/createAccount";
 import { ThreeDots } from "react-loader-spinner";
+import Recaptcha from "../components/Recaptcha";
 
 const FormStyles = styled.form`
   padding: 2rem;
@@ -105,6 +106,10 @@ const CreateAccountForm = () => {
     }
   };
 
+  const handleRecaptchaVerify = (token: string) => {
+    console.log("reCaptcha Token:", token);
+  };
+
   return (
     <FormStyles
       method="POST"
@@ -151,6 +156,7 @@ const CreateAccountForm = () => {
             onChange={handleChange}
           />
         </label>
+        <Recaptcha onVerify={handleRecaptchaVerify} />
         <LoadingContainer>
           <button type="submit" className="submit">
             {loading ? (
