@@ -85,7 +85,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.PUBLIC_RECAPTCHA_SITE_KEY || ""}>
+        reCaptchaKey={process.env.PUBLIC_RECAPTCHA_SITE_KEY || ""}
+        scriptProps={{
+          async: false,
+          defer: true,
+          appendTo: "body",
+        }}>
         <NavStateProvider>
           <GlobalStyles />
           <body>
