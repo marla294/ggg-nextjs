@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 interface RecaptchaProps {
@@ -7,6 +8,10 @@ interface RecaptchaProps {
 
 const Recaptcha = ({ onVerify }: RecaptchaProps) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleChange = () => {
+    console.log("used recaptcha");
+  };
 
   useEffect(() => {
     const verifyCallback = async () => {
@@ -19,7 +24,13 @@ const Recaptcha = ({ onVerify }: RecaptchaProps) => {
     verifyCallback();
   }, [executeRecaptcha, onVerify]);
 
-  return null;
+  return (
+    <ReCAPTCHA
+      onChange={handleChange}
+      sitekey="6LdFsDIqAAAAAFWDiiY2B-1e-xYdVXrNGb7jUqIb"
+      size="invisible"
+    />
+  );
 };
 
 export default Recaptcha;
