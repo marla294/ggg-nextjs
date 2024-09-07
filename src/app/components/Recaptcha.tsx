@@ -24,13 +24,7 @@ const Recaptcha = ({ onVerify }: RecaptchaProps) => {
     verifyCallback();
   }, [executeRecaptcha, onVerify]);
 
-  return (
-    <ReCAPTCHA
-      onChange={handleChange}
-      sitekey="6LdFsDIqAAAAAFWDiiY2B-1e-xYdVXrNGb7jUqIb"
-      size="invisible"
-    />
-  );
+  return null;
 };
 
 export default Recaptcha;

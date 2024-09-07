@@ -85,7 +85,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.PUBLIC_RECAPTCHA_SITE_KEY || ""}
+        // reCaptchaKey={process.env.PUBLIC_RECAPTCHA_SITE_KEY || ""}
+        reCaptchaKey="6LdFsDIqAAAAAFWDiiY2B-1e-xYdVXrNGb7jUqIb"
         scriptProps={{
           async: false,
           defer: true,
