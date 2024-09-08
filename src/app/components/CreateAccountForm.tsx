@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import useForm from "../lib/useForm";
 import createAccount from "../profile/createAccount";
@@ -106,7 +106,7 @@ const CreateAccountForm = () => {
     }
   };
 
-  const handleRecaptchaVerify = (token: string) => {
+  const handleRecaptchaVerify = (token: string | null) => {
     console.log("reCaptcha Token:", token);
   };
 

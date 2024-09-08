@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 interface RecaptchaProps {
@@ -8,10 +7,6 @@ interface RecaptchaProps {
 
 const Recaptcha = ({ onVerify }: RecaptchaProps) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const handleChange = () => {
-    console.log("used recaptcha");
-  };
 
   useEffect(() => {
     const verifyCallback = async () => {
