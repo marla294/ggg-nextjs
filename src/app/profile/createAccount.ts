@@ -3,7 +3,8 @@ import dbConnect from "../../../lib/dbconnect";
 import User from "../../../models/User";
 import bcryptjs from 'bcryptjs';
 
-export default async ({email, password, name}: {email: string, password: string, name: string}) => {
+export default async ({email, password, name, token}: {email: string, password: string, name: string, token: any}) => {
+  console.log({token});
   try {
     await dbConnect();
 

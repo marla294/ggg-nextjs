@@ -88,6 +88,7 @@ const LoadingContainer = styled.div`
 const CreateAccountForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string>("");
   const { handleChange, inputs } = useForm({
     email: "",
     password: "",
@@ -98,7 +99,7 @@ const CreateAccountForm = () => {
     setLoading(true);
 
     try {
-      await createAccount({ ...inputs });
+      await createAccount({ ...inputs, token });
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -106,8 +107,10 @@ const CreateAccountForm = () => {
     }
   };
 
-  const handleRecaptchaVerify = (token: string | null) => {
-    console.log("reCaptcha Token:", token);
+  const handleRecaptchaVerify = (t: string | null) => {
+    if (t && !token) {
+      setToken(t);
+    }
   };
 
   return (
