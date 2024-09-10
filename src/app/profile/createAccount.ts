@@ -4,9 +4,15 @@ import User from "../../../models/User";
 import bcryptjs from 'bcryptjs';
 
 export default async ({email, password, name, token}: {email: string, password: string, name: string, token: any}) => {
-  console.log({token});
+
   try {
     await dbConnect();
+
+    if (token) {
+      const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`);
+      const data = await response.json();
+      console.log({data});
+    }
 
     const users = await User.find({email}).exec();
     const user = users[0];
