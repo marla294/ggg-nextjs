@@ -11,7 +11,11 @@ export default async ({email, password, name, token}: {email: string, password: 
     if (token) {
       const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`);
       const data = await response.json();
-      console.log({data});
+      if (!data.success) {
+        return {success: false, error: 'Unexpected error while creating user'};
+      }
+    } else {
+      return {success: false, error: 'Unexpected error while creating user'};
     }
 
     const users = await User.find({email}).exec();
