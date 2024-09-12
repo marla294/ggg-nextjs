@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 import { NavStateProvider } from "./lib/navState";
 import Header from "./components/Header";
 import signOut from "./lib/signout";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -84,21 +83,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <GoogleReCaptchaProvider
-        // reCaptchaKey={process.env.PUBLIC_RECAPTCHA_SITE_KEY || ""}
-        reCaptchaKey="6LdFsDIqAAAAAFWDiiY2B-1e-xYdVXrNGb7jUqIb"
-        scriptProps={{
-          async: false,
-          defer: true,
-          appendTo: "body",
-        }}>
-        <NavStateProvider>
-          <GlobalStyles />
-          <body>
-            <Header signOut={signOut}>{children}</Header>
-          </body>
-        </NavStateProvider>
-      </GoogleReCaptchaProvider>
+      <NavStateProvider>
+        <GlobalStyles />
+        <body>
+          <Header signOut={signOut}>{children}</Header>
+        </body>
+      </NavStateProvider>
     </html>
   );
 }
