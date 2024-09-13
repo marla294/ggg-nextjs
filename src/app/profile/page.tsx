@@ -190,7 +190,7 @@ export default function Page() {
           </button>
         </fieldset>
       </FormStyles>
-      <CreateAccountForm />
+      <CreateAccountForm title={"Create Account (for someone else)"} />
     </div>
   );
 }

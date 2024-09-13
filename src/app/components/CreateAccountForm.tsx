@@ -86,7 +86,7 @@ const LoadingContainer = styled.div`
   grid-gap: 2rem;
 `;
 
-const CreateAccountForm = () => {
+const CreateAccountForm = ({ title }: { title: string }) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [token, setToken] = useState<string>("");
@@ -130,7 +130,7 @@ const CreateAccountForm = () => {
           await handleSubmit();
         }}>
         <fieldset>
-          <h2>Create account (for someone else)</h2>
+          <h2>{title}</h2>
           {error && <Error>{error}</Error>}
           <label htmlFor="name">
             Name<span className="required">&nbsp;*</span>
