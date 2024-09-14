@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import signin from "./signin";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -74,6 +75,11 @@ const Error = styled.div`
   margin-bottom: 10px;
 `;
 
+const CreateAccount = styled(Link)`
+  font-size: 24px;
+  text-decoration: underline;
+`;
+
 export default function Login() {
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
@@ -111,43 +117,46 @@ export default function Login() {
   };
 
   return (
-    <FormStyles
-      method="POST"
-      onSubmit={async (e: any) => {
-        e.preventDefault();
-        await handleSignIn();
-      }}>
-      <fieldset>
-        <h2>Sign into your account</h2>
-        {error && <Error>{error}</Error>}
-        <label htmlFor="email">
-          Email<span className="required">&nbsp;*</span>
-          <input
-            required
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            value={inputs.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="password">
-          Password<span className="required">&nbsp;*</span>
-          <input
-            required
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            value={inputs.password}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit" className="submit">
-          Sign In
-        </button>
-      </fieldset>
-    </FormStyles>
+    <>
+      <FormStyles
+        method="POST"
+        onSubmit={async (e: any) => {
+          e.preventDefault();
+          await handleSignIn();
+        }}>
+        <fieldset>
+          <h2>Sign into your account</h2>
+          {error && <Error>{error}</Error>}
+          <label htmlFor="email">
+            Email<span className="required">&nbsp;*</span>
+            <input
+              required
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={inputs.email}
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="password">
+            Password<span className="required">&nbsp;*</span>
+            <input
+              required
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={inputs.password}
+              onChange={handleChange}
+            />
+          </label>
+          <button type="submit" className="submit">
+            Sign In
+          </button>
+        </fieldset>
+      </FormStyles>
+      <CreateAccount href="/createAccount">Create Account</CreateAccount>
+    </>
   );
 }
