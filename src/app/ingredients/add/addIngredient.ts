@@ -28,7 +28,33 @@ export default async ({
     const session = await getSession();
     const [user] = await User.find({email: session?.login});
 
-    const ingredient = await Ingredient.create([{name, user: new ObjectId(user._id), store: new ObjectId(storeId), units, aisle: new ObjectId(aisleId), homeArea: new ObjectId(homeAreaId), description, photo: new ObjectId(photoId)}]);
+    let ingredientInput: any = {name, user: new ObjectId(user._id)};
+
+    if (storeId) {
+      ingredientInput = {...ingredientInput, store: new ObjectId(storeId)};
+    }
+
+    if (units) {
+      ingredientInput = {...ingredientInput, units};
+    }
+
+    if (aisleId) {
+      ingredientInput = {...ingredientInput, aisle: new ObjectId(aisleId)};
+    }
+
+    if (homeAreaId) {
+      ingredientInput = {...ingredientInput, homeArea: new ObjectId(homeAreaId)};
+    }
+
+    if (description) {
+      ingredientInput = {...ingredientInput, description};
+    }
+
+    if (photoId) {
+      ingredientInput = {...ingredientInput, photo: new ObjectId(photoId)};
+    }
+
+    const ingredient = await Ingredient.create([ingredientInput]);
 
     return JSON.stringify(ingredient);
 
