@@ -52,6 +52,7 @@ const sharedButtonStyles = css`
   padding: 0.7rem 1rem;
   font-size: 1rem;
   color: black;
+  height: 42.84px;
 `;
 
 const EditButton = styled.button`

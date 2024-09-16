@@ -10,13 +10,14 @@ export default function groupArrayBy(arr: any[] = [], groupBy: any, subProperty?
   
   const grouping = arr.reduce((groupingObject: any, currentVal: any) => {
     let current = currentVal;
+
     if (subProperty) {
       current = currentVal[subProperty];
     }
 
     // Get value of current object property to group on
     let currentGroup = current[groupBy];
-    
+
     if (!currentGroup) {
       groupingObject['uncategorized'] = [
         ...(groupingObject['uncategorized'] || []),
