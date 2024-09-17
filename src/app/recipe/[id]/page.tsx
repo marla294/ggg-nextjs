@@ -85,6 +85,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
     useState<boolean>(false);
+  const [addedToShoppingList, setAddedToShoppingList] =
+    useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [recipeLoading, setRecipeLoading] = useState<boolean>(true);
 
@@ -173,8 +175,10 @@ export default function Page({ params }: { params: { id: string } }) {
                 <AddToShoppingListButton
                   onClick={async () => {
                     setLoadingAddToShoppingList(true);
+                    setAddedToShoppingList(false);
                     await addRecipeToShoppingList();
                     setLoadingAddToShoppingList(false);
+                    setAddedToShoppingList(true);
                   }}>
                   {loadingAddToShoppingList ? (
                     <ThreeDots
@@ -217,6 +221,10 @@ export default function Page({ params }: { params: { id: string } }) {
                   )}
                 </DeleteRecipeButton>
               </ButtonDivStyles>
+              {loadingAddToShoppingList && (
+                <div>Adding to shopping list...</div>
+              )}
+              {addedToShoppingList && <div>Added to shopping list!</div>}
             </div>
           </SingleItemStyles>
           <div>

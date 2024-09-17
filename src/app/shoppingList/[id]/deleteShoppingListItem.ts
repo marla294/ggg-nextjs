@@ -10,6 +10,7 @@ export default async ({
   try {
     await dbConnect();
 
+    
     const res = await ShoppingListItem.findByIdAndDelete(shoppingListItemId);
 
     return JSON.stringify(res);
