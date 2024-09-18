@@ -11,6 +11,10 @@ const shoppingListItemSchema = new Schema({
   ingredient: {
     type: Schema.Types.ObjectId,
     ref: 'Ingredient'
+  },
+  recipe: {
+    type: Schema.Types.ObjectId,
+    ref: 'Recipe'
   }
 });
 
