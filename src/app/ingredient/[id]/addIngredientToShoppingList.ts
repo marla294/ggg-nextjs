@@ -8,10 +8,12 @@ import User from "../../../../models/User";
 
 export default async ({
   ingredientId,
-  quantity
+  quantity,
+  recipeId,
 }: {
   ingredientId: string,
-  quantity?: number
+  quantity?: number,
+  recipeId?: string
   }) => {
   try {
     await dbConnect();

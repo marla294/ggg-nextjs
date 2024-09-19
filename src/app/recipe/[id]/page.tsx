@@ -110,6 +110,7 @@ export default function Page({ params }: { params: { id: string } }) {
       await addIngredientToShoppingList({
         ingredientId: item?.ingredient?._id,
         quantity: item?.quantity / 10,
+        recipeId: params?.id,
       });
     }
   };
