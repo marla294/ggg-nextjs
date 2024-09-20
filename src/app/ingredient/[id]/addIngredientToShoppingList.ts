@@ -22,10 +22,16 @@ export default async ({
     const [user] = await User.find({email: session?.login});
     const filter = { _id: ingredientId};
     const [ingredient] = await Ingredient.find(filter);
-    const [existingShoppingListItem] = await ShoppingListItem.find({ingredient: new ObjectId(ingredient._id)});
+    const [existingShoppingListItem] = recipeId ? await ShoppingListItem.find({ingredient: new ObjectId(ingredient._id), recipe: new ObjectId(recipeId)}) : await ShoppingListItem.find({ingredient: new ObjectId(ingredient._id)});
 
     if (!!!existingShoppingListItem) {
-      const shoppingListItem = await ShoppingListItem.create([{user: new ObjectId(user._id), quantity: (quantity || 1) * 10, ingredient: new ObjectId(ingredient._id)}]);
+      let item: any = {user: new ObjectId(user._id), quantity: (quantity || 1) * 10, ingredient: new ObjectId(ingredient._id)};
+
+      if (recipeId) {
+        item = {...item, recipeId: new ObjectId(recipeId)};
+      }
+
+      const shoppingListItem = await ShoppingListItem.create([item]);
       return JSON.stringify(shoppingListItem);
     } else {
       existingShoppingListItem.quantity = existingShoppingListItem.quantity + (quantity || 1) * 10;
