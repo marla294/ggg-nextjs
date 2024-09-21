@@ -28,7 +28,7 @@ export default async ({
       let item: any = {user: new ObjectId(user._id), quantity: (quantity || 1) * 10, ingredient: new ObjectId(ingredient._id)};
 
       if (recipeId) {
-        item = {...item, recipeId: new ObjectId(recipeId)};
+        item = {...item, recipe: new ObjectId(recipeId)};
       }
 
       const shoppingListItem = await ShoppingListItem.create([item]);
