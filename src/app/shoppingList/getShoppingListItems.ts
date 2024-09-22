@@ -58,9 +58,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         return JSON.stringify(shoppingListItemsFiltered);
       }
 
-      const shoppingListItemsRecipeGrouped = shoppingListItemsFiltered.reduce((groupingObject: any, currentVal: any) => {
-        
-      })
+      // const shoppingListItemsRecipeGrouped = shoppingListItemsFiltered.reduce((groupingObject: any, currentVal: any) => {
+
+      //   return groupingObject;
+      // })
 
       const shoppingListItemsSorted = sortBy === 'alphabetical' 
         ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
