@@ -43,10 +43,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
           }]
         },
       ])
-      .populate([{
-        path: 'Recipe',
-        model: Recipe
-      }])
+      // .populate([{
+      //   path: 'Recipe',
+      //   model: Recipe
+      // }])
       .exec();
 
     if (shoppingListItems) {
