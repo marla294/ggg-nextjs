@@ -7,6 +7,7 @@ import HomeArea from "../../../models/HomeArea";
 import Aisle from "../../../models/Aisle";
 import ShoppingListItem from "../../../models/ShoppingListItem";
 import User from "../../../models/User";
+import Recipe from "../../../models/Recipe";
 import { getSession } from "../../../services/authentication/cookie-session";
 import groupArrayBy from "../lib/groupArrayBy";
 
@@ -42,6 +43,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
           }]
         },
       ])
+      .populate([{
+        path: 'Recipe',
+        model: Recipe
+      }])
       .exec();
 
     if (shoppingListItems) {
@@ -52,6 +57,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
       if (id) {
         return JSON.stringify(shoppingListItemsFiltered);
       }
+
+      const shoppingListItemsRecipeGrouped = shoppingListItemsFiltered.reduce((groupingObject: any, currentVal: any) => {
+        
+      })
 
       const shoppingListItemsSorted = sortBy === 'alphabetical' 
         ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
