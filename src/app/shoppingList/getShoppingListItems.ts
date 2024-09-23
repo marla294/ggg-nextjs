@@ -43,10 +43,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
           }]
         },
       ])
-      // .populate([{
-      //   path: 'Recipe',
-      //   model: Recipe
-      // }])
+      .populate([{
+        path: 'recipe',
+        model: Recipe
+      }])
       .exec();
 
     if (shoppingListItems) {
@@ -58,8 +58,15 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         return JSON.stringify(shoppingListItemsFiltered);
       }
 
-      // const shoppingListItemsRecipeGrouped = shoppingListItemsFiltered.reduce((groupingObject: any, currentVal: any) => {
+      // const shoppingListItemsRecipeGrouping = shoppingListItemsFiltered.reduce((grouping: any, currentVal: any) => {
+      //   console.log({grouping, currentVal});
+      //   const groupingArray = Object.entries(grouping);
 
+      //   const groupingObject = groupingArray.map(entry => {
+          
+      //     return entry;
+      //   });
+        
       //   return groupingObject;
       // })
 
