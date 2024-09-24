@@ -59,16 +59,26 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
       }
 
       // const shoppingListItemsRecipeGrouping = shoppingListItemsFiltered.reduce((grouping: any, currentVal: any) => {
-      //   console.log({grouping, currentVal});
-      //   const groupingArray = Object.entries(grouping);
-
-      //   const groupingObject = groupingArray.map(entry => {
-          
-      //     return entry;
+      //   let findMember = grouping?.find((val: any) => {
+      //     return val?.ingredient?._id === currentVal?.ingredient?._id
       //   });
+
+      //   let groupingArray: any[] = [];
+
+      //   if (findMember) {
+      //     groupingArray = grouping.map((val: any) => {
+      //       if (val?.ingredient?._id === currentVal?.ingredient?._id) {
+      //         return {...val, quantity: val?.quantity + currentVal?.quantity};
+      //       } else {
+      //         return val;
+      //       }
+      //     });
+      //   } else {
+      //     groupingArray = [...grouping, currentVal];
+      //   }
         
-      //   return groupingObject;
-      // })
+      //   return groupingArray;
+      // }, []);
 
       const shoppingListItemsSorted = sortBy === 'alphabetical' 
         ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
