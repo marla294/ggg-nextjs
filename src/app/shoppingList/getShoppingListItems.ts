@@ -58,31 +58,34 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         return JSON.stringify(shoppingListItemsFiltered);
       }
 
-      // const shoppingListItemsRecipeGrouping = shoppingListItemsFiltered.reduce((grouping: any, currentVal: any) => {
-      //   let findMember = grouping?.find((val: any) => {
-      //     return val?.ingredient?._id === currentVal?.ingredient?._id
-      //   });
+      const shoppingListItemsRecipeGrouping = shoppingListItemsFiltered.reduce((grouping: any, currentVal: any) => {
+        let findMember = grouping?.find((val: any) => {
+          if (val?.ingredient && currentVal?.ingredient) {
+            return val?.ingredient._id === currentVal?.ingredient._id
+          } else {
+            return false;
+          }
+        });
 
-      //   let groupingArray: any[] = [];
+        let groupingArray: any[] = [];
 
-      //   if (findMember) {
-      //     groupingArray = grouping.map((val: any) => {
-      //       if (val?.ingredient?._id === currentVal?.ingredient?._id) {
-      //         return {...val, quantity: val?.quantity + currentVal?.quantity};
-      //       } else {
-      //         return val;
-      //       }
-      //     });
-      //   } else {
-      //     groupingArray = [...grouping, currentVal];
-      //   }
+        if (findMember) {
+          groupingArray = grouping.map((val: any) => {
+            if (val?.ingredient._id === currentVal?.ingredient._id) {
+              val.quantity = val?.quantity + currentVal?.quantity;
+            }
+            return val;
+          });
+        } else {
+          groupingArray = [...grouping, currentVal];
+        }
         
-      //   return groupingArray;
-      // }, []);
+        return groupingArray;
+      }, []);
 
       const shoppingListItemsSorted = sortBy === 'alphabetical' 
-        ? [['Alphabetical', shoppingListItemsFiltered.sort((a, b) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
-        : groupArrayBy(shoppingListItemsFiltered, sortBy, 'ingredient');
+        ? [['Alphabetical', shoppingListItemsRecipeGrouping.sort((a: any, b: any) => (a?.ingredient?.name < b?.ingredient?.name ? -1 : 1))]] 
+        : groupArrayBy(shoppingListItemsRecipeGrouping as any, sortBy, 'ingredient');
 
       return JSON.stringify(shoppingListItemsSorted);
     } else {
