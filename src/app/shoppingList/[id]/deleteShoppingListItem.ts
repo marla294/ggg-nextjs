@@ -3,15 +3,22 @@ import dbConnect from "../../../../lib/dbconnect";
 import ShoppingListItem from "../../../../models/ShoppingListItem";
 
 export default async ({
-  shoppingListItemId
+  shoppingListItemId,
+  ingredientId,
 }: {
-  shoppingListItemId: any,
+  shoppingListItemId?: any,
+  ingredientId?: any
   }) => {
   try {
     await dbConnect();
 
-    
-    const res = await ShoppingListItem.findByIdAndDelete(shoppingListItemId);
+    let res: any;
+
+    if (shoppingListItemId) {
+      res = await ShoppingListItem.findByIdAndDelete(shoppingListItemId);
+    } else if (ingredientId) {
+      // delete all shopping list items associated with the same ingredient id here
+    }
 
     return JSON.stringify(res);
 
