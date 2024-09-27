@@ -29,7 +29,7 @@ export default function DeleteFromShoppingListButton({
 
     try {
       await deleteShoppingListItem({
-        shoppingListItemId: shoppingListItem?._id,
+        ingredientId: shoppingListItem?.ingredient?._id,
       });
       if (fetchShoppingListItems) {
         await fetchShoppingListItems();

@@ -86,7 +86,7 @@ const ShoppingListItem = ({
         </h6>
       </Link>
       <DeleteFromShoppingListButton
-        shoppingListItem={{ _id: shoppingListItemId }}
+        shoppingListItem={{ _id: shoppingListItemId, ingredient }}
         isInList={true}
         fetchShoppingListItems={fetchShoppingListItems}
       />

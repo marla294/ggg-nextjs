@@ -18,6 +18,7 @@ export default async ({
       res = await ShoppingListItem.findByIdAndDelete(shoppingListItemId);
     } else if (ingredientId) {
       // delete all shopping list items associated with the same ingredient id here
+      res = await ShoppingListItem.deleteMany({ingredient: new Object(ingredientId)});
     }
 
     return JSON.stringify(res);
