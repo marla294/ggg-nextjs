@@ -58,6 +58,12 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
         return JSON.stringify(shoppingListItemsFiltered);
       }
 
+      if (sortBy === 'recipe') {
+        const shoppingListItemsSorted = groupArrayBy(shoppingListItemsFiltered as any, sortBy);
+        return JSON.stringify(shoppingListItemsSorted);
+      }
+
+      // Taking recipe out of shoppingListItems
       const shoppingListItemsRecipeGrouping = shoppingListItemsFiltered.reduce((grouping: any, currentVal: any) => {
         let findMember = grouping?.find((val: any) => {
           if (val?.ingredient && currentVal?.ingredient) {

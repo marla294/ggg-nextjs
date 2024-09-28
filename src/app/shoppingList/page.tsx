@@ -83,6 +83,7 @@ enum Sort {
   aisle = "aisle",
   homeArea = "homeArea",
   store = "store",
+  recipe = "recipe",
 }
 
 const sortOptions: SortOption[] = [
@@ -90,6 +91,7 @@ const sortOptions: SortOption[] = [
   { display: "Aisle", value: Sort.aisle },
   { display: "Home area", value: Sort.homeArea },
   { display: "Store", value: Sort.store },
+  { display: "Recipe", value: Sort.recipe },
 ];
 
 export default function ShoppingList() {
