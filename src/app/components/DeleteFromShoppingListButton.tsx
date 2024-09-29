@@ -17,10 +17,12 @@ export default function DeleteFromShoppingListButton({
   shoppingListItem,
   isInList,
   fetchShoppingListItems,
+  sortBy,
 }: {
   shoppingListItem: any;
   isInList: boolean;
   fetchShoppingListItems?: any;
+  sortBy?: any;
 }) {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
@@ -28,9 +30,16 @@ export default function DeleteFromShoppingListButton({
     setDeleteLoading(true);
 
     try {
-      await deleteShoppingListItem({
-        ingredientId: shoppingListItem?.ingredient?._id,
-      });
+      if (sortBy === "recipe") {
+        await deleteShoppingListItem({
+          // ingredientId: shoppingListItem?.ingredient?._id,
+          shoppingListItemId: shoppingListItem?._id,
+        });
+      } else {
+        await deleteShoppingListItem({
+          ingredientId: shoppingListItem?.ingredient?._id,
+        });
+      }
       if (fetchShoppingListItems) {
         await fetchShoppingListItems();
       }

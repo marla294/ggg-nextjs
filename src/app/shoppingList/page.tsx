@@ -216,6 +216,7 @@ export default function ShoppingList() {
                         quantity={shoppingListItem?.quantity}
                         shoppingListItemId={shoppingListItem?._id}
                         fetchShoppingListItems={fetchShoppingListItems}
+                        sortBy={sortBy}
                       />
                     );
                   })}

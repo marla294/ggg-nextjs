@@ -50,11 +50,13 @@ const ShoppingListItem = ({
   quantity,
   shoppingListItemId,
   fetchShoppingListItems,
+  sortBy,
 }: {
   ingredient: any;
   quantity?: any;
   shoppingListItemId?: any;
   fetchShoppingListItems?: any;
+  sortBy?: any;
 }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
@@ -89,6 +91,7 @@ const ShoppingListItem = ({
         shoppingListItem={{ _id: shoppingListItemId, ingredient }}
         isInList={true}
         fetchShoppingListItems={fetchShoppingListItems}
+        sortBy={sortBy}
       />
     </ListItemStyles>
   );
