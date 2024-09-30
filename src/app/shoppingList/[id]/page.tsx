@@ -212,6 +212,7 @@ export default function Page({ params }: { params: { id: string } }) {
               {shoppingListItem?.ingredient?.store?.name ||
                 shoppingListItem?.ingredient?.store}
             </div>
+            <div>Recipe(s): {shoppingListItem?.recipe?.name || ""}</div>
             <ButtonContainer>
               <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
               <DeleteFromShoppingListButton
