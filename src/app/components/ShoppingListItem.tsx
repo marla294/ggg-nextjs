@@ -80,7 +80,9 @@ const ShoppingListItem = ({
         <div className="noPhoto">🛒</div>
       )}
 
-      <Link className="details" href={`/shoppingList/${shoppingListItemId}`}>
+      <Link
+        className="details"
+        href={`/shoppingList/${sortBy === "recipe" ? shoppingListItemId : ingredient?._id}?sortBy=${sortBy}`}>
         <h5>{ingredient?.name}</h5>
         <h6>
           Amount: {quantity / 10}{" "}

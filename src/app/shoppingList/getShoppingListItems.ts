@@ -53,7 +53,7 @@ export default async ({id, sortBy, ingredientId}: {id?: string | null | undefine
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
         .filter((shoppingListItem) => id ? shoppingListItem.id === id : true)
-        .filter((shoppingListItem) => ingredientId ? shoppingListItem.ingredient?._id === ingredientId : true);
+        .filter((shoppingListItem) => ingredientId ? shoppingListItem.ingredient?.id === ingredientId : true);
 
       if (id || ingredientId) {
         return JSON.stringify(shoppingListItemsFiltered);

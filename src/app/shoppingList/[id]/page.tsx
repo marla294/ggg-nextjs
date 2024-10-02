@@ -6,6 +6,7 @@ import editShoppingListItem from "./editShoppingListItem";
 import useForm from "../../lib/useForm";
 import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
 import EditIngredientButton from "../../components/EditIngredientButton";
+import { useSearchParams } from "next/navigation";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -95,10 +96,22 @@ export default function Page({ params }: { params: { id: string } }) {
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
+  const searchParams = useSearchParams();
+  const sortBy = searchParams?.get("sortBy");
 
   const fetchShoppingListItem = async () => {
-    const res = await getShoppingListItems({ id: params.id });
+    let filterShoppingListItems: any;
+    if (sortBy === "recipe") {
+      filterShoppingListItems = { id: params.id };
+    } else {
+      filterShoppingListItems = { ingredientId: params.id };
+    }
+
+    const res = await getShoppingListItems(filterShoppingListItems);
     const tempShoppingListItems = JSON.parse(res as string);
+
+    console.log({ tempShoppingListItems });
+
     setShoppingListItem(tempShoppingListItems[0]);
     setInputs({ ...inputs, quantity: tempShoppingListItems[0]?.quantity / 10 });
     setLoading(false);
