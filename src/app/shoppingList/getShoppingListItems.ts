@@ -11,7 +11,7 @@ import Recipe from "../../../models/Recipe";
 import { getSession } from "../../../services/authentication/cookie-session";
 import groupArrayBy from "../lib/groupArrayBy";
 
-export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: string | null | undefined}) => {
+export default async ({id, sortBy, ingredientId}: {id?: string | null | undefined, sortBy?: string | null | undefined, ingredientId?: string | null | undefined}) => {
   try {
     await dbConnect();
 
@@ -52,9 +52,10 @@ export default async ({id, sortBy}: {id?: string | null | undefined, sortBy?: st
     if (shoppingListItems) {
       const shoppingListItemsFiltered = shoppingListItems
         .filter((shoppingListItem) => shoppingListItem.user?.email === session?.login)
-        .filter((shoppingListItem) => id ? shoppingListItem.id === id : true);
+        .filter((shoppingListItem) => id ? shoppingListItem.id === id : true)
+        .filter((shoppingListItem) => ingredientId ? shoppingListItem.ingredient?._id === ingredientId : true);
 
-      if (id) {
+      if (id || ingredientId) {
         return JSON.stringify(shoppingListItemsFiltered);
       }
 
