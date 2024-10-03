@@ -90,6 +90,7 @@ const CancelEditAmountButton = styled.button`
 
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
+  const [shoppingListItems, setShoppingListItems] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -110,9 +111,8 @@ export default function Page({ params }: { params: { id: string } }) {
     const res = await getShoppingListItems(filterShoppingListItems);
     const tempShoppingListItems = JSON.parse(res as string);
 
-    console.log({ tempShoppingListItems });
-
     setShoppingListItem(tempShoppingListItems[0]);
+    setShoppingListItems(tempShoppingListItems);
     setInputs({ ...inputs, quantity: tempShoppingListItems[0]?.quantity / 10 });
     setLoading(false);
   };
@@ -161,54 +161,57 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
-            <AmountContainer>
-              <h4>
-                Amount:{" "}
-                {isEditing ? (
-                  <EditInput
-                    required
-                    type="text"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="Quantity"
-                    value={inputs?.quantity}
-                    onChange={handleChange}
-                  />
-                ) : inputs?.quantity ? (
-                  inputs?.quantity
-                ) : (
-                  0
-                )}{" "}
-                {shoppingListItem?.ingredient?.units === "none"
-                  ? ""
-                  : shoppingListItem?.ingredient?.units}{" "}
-              </h4>
-              {!isEditing && (
-                <EditAmountButton
-                  onClick={() => {
-                    setIsEditing(true);
-                  }}>
-                  Edit Amount
-                </EditAmountButton>
-              )}
-              {isEditing && (
-                <EditButtonContainer>
-                  <SubmitAmountButton
+            {shoppingListItems?.map((item: any) => (
+              <AmountContainer>
+                <h4>
+                  Amount:{" "}
+                  {isEditing ? (
+                    <EditInput
+                      required
+                      type="text"
+                      id="quantity"
+                      name="quantity"
+                      placeholder="Quantity"
+                      value={item?.quantity}
+                      onChange={handleChange}
+                    />
+                  ) : item?.quantity ? (
+                    item?.quantity / 10
+                  ) : (
+                    0
+                  )}{" "}
+                  {shoppingListItem?.ingredient?.units === "none"
+                    ? ""
+                    : shoppingListItem?.ingredient?.units}{" "}
+                </h4>
+                {!isEditing && (
+                  <EditAmountButton
                     onClick={() => {
-                      handleSubmit();
-                      setIsEditing(false);
+                      setIsEditing(true);
                     }}>
-                    Submit
-                  </SubmitAmountButton>
-                  <CancelEditAmountButton
-                    onClick={() => {
-                      setIsEditing(false);
-                    }}>
-                    &times;
-                  </CancelEditAmountButton>
-                </EditButtonContainer>
-              )}
-            </AmountContainer>
+                    Edit Amount
+                  </EditAmountButton>
+                )}
+                {isEditing && (
+                  <EditButtonContainer>
+                    <SubmitAmountButton
+                      onClick={() => {
+                        handleSubmit();
+                        setIsEditing(false);
+                      }}>
+                      Submit
+                    </SubmitAmountButton>
+                    <CancelEditAmountButton
+                      onClick={() => {
+                        setIsEditing(false);
+                      }}>
+                      &times;
+                    </CancelEditAmountButton>
+                  </EditButtonContainer>
+                )}
+              </AmountContainer>
+            ))}
+
             <div>
               Aisle:{" "}
               {shoppingListItem?.ingredient?.aisle?.name ||
