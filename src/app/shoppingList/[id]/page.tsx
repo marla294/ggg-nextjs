@@ -88,6 +88,10 @@ const CancelEditAmountButton = styled.button`
   border: 1px solid var(--darkOrange);
 `;
 
+const RecipeContainer = styled.div`
+  margin-bottom: 5px;
+`;
+
 export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItem, setShoppingListItem] = useState<any>();
   const [shoppingListItems, setShoppingListItems] = useState<any>();
@@ -162,54 +166,57 @@ export default function Page({ params }: { params: { id: string } }) {
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
             {shoppingListItems?.map((item: any) => (
-              <AmountContainer>
-                <h4>
-                  Amount:{" "}
-                  {isEditing ? (
-                    <EditInput
-                      required
-                      type="text"
-                      id="quantity"
-                      name="quantity"
-                      placeholder="Quantity"
-                      value={item?.quantity}
-                      onChange={handleChange}
-                    />
-                  ) : item?.quantity ? (
-                    item?.quantity / 10
-                  ) : (
-                    0
-                  )}{" "}
-                  {shoppingListItem?.ingredient?.units === "none"
-                    ? ""
-                    : shoppingListItem?.ingredient?.units}{" "}
-                </h4>
-                {!isEditing && (
-                  <EditAmountButton
-                    onClick={() => {
-                      setIsEditing(true);
-                    }}>
-                    Edit Amount
-                  </EditAmountButton>
-                )}
-                {isEditing && (
-                  <EditButtonContainer>
-                    <SubmitAmountButton
+              <RecipeContainer>
+                <div>{item?.recipe?.name}</div>
+                <AmountContainer>
+                  <h4>
+                    Amount:{" "}
+                    {isEditing ? (
+                      <EditInput
+                        required
+                        type="text"
+                        id="quantity"
+                        name="quantity"
+                        placeholder="Quantity"
+                        value={item?.quantity}
+                        onChange={handleChange}
+                      />
+                    ) : item?.quantity ? (
+                      item?.quantity / 10
+                    ) : (
+                      0
+                    )}{" "}
+                    {shoppingListItem?.ingredient?.units === "none"
+                      ? ""
+                      : shoppingListItem?.ingredient?.units}{" "}
+                  </h4>
+                  {!isEditing && (
+                    <EditAmountButton
                       onClick={() => {
-                        handleSubmit();
-                        setIsEditing(false);
+                        setIsEditing(true);
                       }}>
-                      Submit
-                    </SubmitAmountButton>
-                    <CancelEditAmountButton
-                      onClick={() => {
-                        setIsEditing(false);
-                      }}>
-                      &times;
-                    </CancelEditAmountButton>
-                  </EditButtonContainer>
-                )}
-              </AmountContainer>
+                      Edit Amount
+                    </EditAmountButton>
+                  )}
+                  {isEditing && (
+                    <EditButtonContainer>
+                      <SubmitAmountButton
+                        onClick={() => {
+                          handleSubmit();
+                          setIsEditing(false);
+                        }}>
+                        Submit
+                      </SubmitAmountButton>
+                      <CancelEditAmountButton
+                        onClick={() => {
+                          setIsEditing(false);
+                        }}>
+                        &times;
+                      </CancelEditAmountButton>
+                    </EditButtonContainer>
+                  )}
+                </AmountContainer>
+              </RecipeContainer>
             ))}
 
             <div>
@@ -228,7 +235,6 @@ export default function Page({ params }: { params: { id: string } }) {
               {shoppingListItem?.ingredient?.store?.name ||
                 shoppingListItem?.ingredient?.store}
             </div>
-            <div>Recipe(s): {shoppingListItem?.recipe?.name || ""}</div>
             <ButtonContainer>
               <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
               <DeleteFromShoppingListButton
