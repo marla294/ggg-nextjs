@@ -121,10 +121,10 @@ export default function Page({ params }: { params: { id: string } }) {
     setLoading(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (shoppingListItemId: string) => {
     try {
       await editShoppingListItem({
-        id: shoppingListItem?._id,
+        id: shoppingListItemId,
         quantity: inputs?.quantity,
       });
     } catch (e) {
@@ -202,7 +202,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     <EditButtonContainer>
                       <SubmitAmountButton
                         onClick={() => {
-                          handleSubmit();
+                          handleSubmit(item.id);
                           setIsEditing(false);
                         }}>
                         Submit
