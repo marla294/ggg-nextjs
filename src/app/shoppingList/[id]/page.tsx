@@ -117,7 +117,10 @@ export default function Page({ params }: { params: { id: string } }) {
 
     setShoppingListItem(tempShoppingListItems[0]);
     setShoppingListItems(tempShoppingListItems);
-    setInputs({ ...inputs, quantity: tempShoppingListItems[0]?.quantity / 10 });
+
+    tempShoppingListItems.forEach((item: any) => {
+      setInputs({ ...inputs, [`quantity_${item.id}`]: item.quantity / 10 });
+    });
     setLoading(false);
   };
 
@@ -178,7 +181,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         id="quantity"
                         name="quantity"
                         placeholder="Quantity"
-                        value={item?.quantity}
+                        value={inputs[`quantity_${item.id}`]}
                         onChange={handleChange}
                       />
                     ) : item?.quantity ? (
