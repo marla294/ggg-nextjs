@@ -178,10 +178,10 @@ export default function Page({ params }: { params: { id: string } }) {
                       <EditInput
                         required
                         type="text"
-                        id="quantity"
-                        name="quantity"
+                        id={`quantity_${item._id}`}
+                        name={`quantity_${item._id}`}
                         placeholder="Quantity"
-                        value={inputs[`quantity_${item.id}`]}
+                        value={inputs[`quantity_${item._id}`]}
                         onChange={handleChange}
                       />
                     ) : item?.quantity ? (
