@@ -11,8 +11,6 @@ export default function useForm(initial = {}) {
 
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     let { value, name } = e.target;
-
-    console.log({value, name, initial});
     
     setInputs({
       ...inputs,
