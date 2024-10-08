@@ -119,16 +119,16 @@ export default function Page({ params }: { params: { id: string } }) {
     setShoppingListItems(tempShoppingListItems);
 
     tempShoppingListItems.forEach((item: any) => {
-      setInputs({ ...inputs, [`quantity_${item.id}`]: item.quantity / 10 });
+      setInputs({ ...inputs, [`quantity_${item._id}`]: item.quantity / 10 });
     });
     setLoading(false);
   };
 
-  const handleSubmit = async (shoppingListItemId: string) => {
+  const handleSubmit = async (shoppingListItemId: string, quantity: number) => {
     try {
       await editShoppingListItem({
         id: shoppingListItemId,
-        quantity: inputs?.quantity,
+        quantity: quantity,
       });
     } catch (e) {
       console.error(e);
@@ -169,7 +169,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <div>
             <h3>{shoppingListItem?.ingredient?.name}</h3>
             {shoppingListItems?.map((item: any) => (
-              <RecipeContainer>
+              <RecipeContainer key={item?._id}>
                 <div>{item?.recipe?.name}</div>
                 <AmountContainer>
                   <h4>
@@ -184,8 +184,8 @@ export default function Page({ params }: { params: { id: string } }) {
                         value={inputs[`quantity_${item._id}`]}
                         onChange={handleChange}
                       />
-                    ) : item?.quantity ? (
-                      item?.quantity / 10
+                    ) : inputs[`quantity_${item._id}`] ? (
+                      inputs[`quantity_${item._id}`]
                     ) : (
                       0
                     )}{" "}
@@ -205,7 +205,10 @@ export default function Page({ params }: { params: { id: string } }) {
                     <EditButtonContainer>
                       <SubmitAmountButton
                         onClick={() => {
-                          handleSubmit(item.id);
+                          handleSubmit(
+                            item._id,
+                            inputs[`quantity_${item._id}`]
+                          );
                           setIsEditing(false);
                         }}>
                         Submit
