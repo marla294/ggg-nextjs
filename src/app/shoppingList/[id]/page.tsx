@@ -98,9 +98,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { handleChange, inputs, setInputs } = useForm({
-    quantity: "",
-  });
+  const { handleChange, inputs, setInputs } = useForm({});
   const searchParams = useSearchParams();
   const sortBy = searchParams?.get("sortBy");
 
@@ -118,9 +116,13 @@ export default function Page({ params }: { params: { id: string } }) {
     setShoppingListItem(tempShoppingListItems[0]);
     setShoppingListItems(tempShoppingListItems);
 
+    let items = {};
+
     tempShoppingListItems.forEach((item: any) => {
-      setInputs({ ...inputs, [`quantity_${item._id}`]: item.quantity / 10 });
+      items = { ...items, [`quantity_${item._id}`]: item.quantity / 10 };
     });
+
+    setInputs({ ...inputs, ...items });
     setLoading(false);
   };
 
