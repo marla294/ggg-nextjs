@@ -97,7 +97,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [shoppingListItems, setShoppingListItems] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<any>({});
   const { handleChange, inputs, setInputs } = useForm({});
   const searchParams = useSearchParams();
   const sortBy = searchParams?.get("sortBy");
@@ -176,7 +176,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <AmountContainer>
                   <h4>
                     Amount:{" "}
-                    {isEditing ? (
+                    {isEditing[item._id] ? (
                       <EditInput
                         required
                         type="text"
@@ -195,15 +195,15 @@ export default function Page({ params }: { params: { id: string } }) {
                       ? ""
                       : shoppingListItem?.ingredient?.units}{" "}
                   </h4>
-                  {!isEditing && (
+                  {!isEditing[item._id] && (
                     <EditAmountButton
                       onClick={() => {
-                        setIsEditing(true);
+                        setIsEditing({ ...isEditing, [item._id]: true });
                       }}>
                       Edit Amount
                     </EditAmountButton>
                   )}
-                  {isEditing && (
+                  {isEditing[item._id] && (
                     <EditButtonContainer>
                       <SubmitAmountButton
                         onClick={() => {
@@ -211,13 +211,13 @@ export default function Page({ params }: { params: { id: string } }) {
                             item._id,
                             inputs[`quantity_${item._id}`]
                           );
-                          setIsEditing(false);
+                          setIsEditing({ ...isEditing, [item._id]: false });
                         }}>
                         Submit
                       </SubmitAmountButton>
                       <CancelEditAmountButton
                         onClick={() => {
-                          setIsEditing(false);
+                          setIsEditing({ ...isEditing, [item._id]: false });
                         }}>
                         &times;
                       </CancelEditAmountButton>
