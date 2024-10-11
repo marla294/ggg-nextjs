@@ -11,6 +11,7 @@ const DeleteButton = styled.button`
   background: var(--orange);
   color: var(--darkOrange);
   border: 1px solid var(--darkOrange);
+  width: 100px;
 `;
 
 export default function DeleteFromShoppingListButton({
@@ -32,7 +33,6 @@ export default function DeleteFromShoppingListButton({
     try {
       if (sortBy === "recipe") {
         await deleteShoppingListItem({
-          // ingredientId: shoppingListItem?.ingredient?._id,
           shoppingListItemId: shoppingListItem?._id,
         });
       } else {
