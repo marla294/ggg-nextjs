@@ -151,9 +151,10 @@ export default function ShoppingList() {
                 )
               ) {
                 data?.forEach(async (grouping: any) => {
+                  console.log({ grouping });
                   grouping[1]?.forEach(async (item: any) => {
                     await deleteShoppingListItem({
-                      shoppingListItemId: item?._id,
+                      ingredientId: item?.ingredient?._id,
                     });
                   });
                 });
