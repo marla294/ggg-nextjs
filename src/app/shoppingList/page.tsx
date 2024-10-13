@@ -6,6 +6,7 @@ import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 import { ThreeDots } from "react-loader-spinner";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import useSWR from "swr";
 
 const ClearButtonStyles = styled.button`
   width: 8rem;
@@ -107,19 +108,21 @@ export default function ShoppingList() {
     const res = await getShoppingListItems({ sortBy });
     setData(JSON.parse(res as string));
     setIsLoading(false);
+    const result = JSON.parse(res as string);
+    return result;
   };
 
-  // const { data, error, isLoading } = useSWR(
-  //   { sortBy },
-  //   fetchShoppingListItems,
-  //   { refreshInterval: 1000 }
-  // );
+  // const { data } = useSWR(sortBy, fetchShoppingListItems);
 
   const handleChange = (e: any) => {
     const val = e.target.value;
     const sort = (Sort as any)[val];
     setSortBy(sort);
   };
+
+  useEffect(() => {
+    console.log({ data });
+  }, [data]);
 
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
