@@ -117,9 +117,9 @@ export default function ShoppingList() {
   const fetchShoppingListItems = async () => {
     setIsLoading(true);
     const res = await getShoppingListItems({ sortBy });
-    setIsLoading(false);
     const result = JSON.parse(res as string);
-    console.log({ result });
+    // console.log({ result });
+    setIsLoading(false);
     return result;
   };
 
@@ -130,10 +130,6 @@ export default function ShoppingList() {
     const sort = (Sort as any)[val];
     setSortBy(sort);
   };
-
-  useEffect(() => {
-    console.log({ data });
-  }, [data]);
 
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
