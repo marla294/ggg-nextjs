@@ -100,30 +100,29 @@ export default function ShoppingList() {
   const router = useRouter();
   const pathname = usePathname();
   const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
-  // const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   // Non-SWR
-  // const fetchShoppingListItems = async () => {
-  //   setIsLoading(true);
-  //   const res = await getShoppingListItems({ sortBy });
-  //   setData(JSON.parse(res as string));
-  //   setIsLoading(false);
-  //   const result = JSON.parse(res as string);
-  //   return result;
-  // };
-
-  // SWR
   const fetchShoppingListItems = async () => {
     setIsLoading(true);
     const res = await getShoppingListItems({ sortBy });
-    const result = JSON.parse(res as string);
-    // console.log({ result });
+    setData(JSON.parse(res as string));
     setIsLoading(false);
+    const result = JSON.parse(res as string);
     return result;
   };
 
-  const { data } = useSWR(sortBy, fetchShoppingListItems);
+  // SWR
+  // const fetchShoppingListItems = async () => {
+  //   setIsLoading(true);
+  //   const res = await getShoppingListItems({ sortBy });
+  //   const result = JSON.parse(res as string);
+  //   setIsLoading(false);
+  //   return result;
+  // };
+
+  // const { data } = useSWR(sortBy, fetchShoppingListItems);
 
   const handleChange = (e: any) => {
     const val = e.target.value;
