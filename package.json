@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.59.15",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.1",
     "iron-session": "^6.3.1",
