@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { NavStateProvider } from "./lib/navState";
 import Header from "./components/Header";
 import signOut from "./lib/signout";
+import ReactQueryProvider from "../../lib/ReactQueryProvider";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -83,12 +84,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <NavStateProvider>
-        <GlobalStyles />
-        <body>
-          <Header signOut={signOut}>{children}</Header>
-        </body>
-      </NavStateProvider>
+      <ReactQueryProvider>
+        <NavStateProvider>
+          <GlobalStyles />
+          <body>
+            <Header signOut={signOut}>{children}</Header>
+          </body>
+        </NavStateProvider>
+      </ReactQueryProvider>
     </html>
   );
 }
