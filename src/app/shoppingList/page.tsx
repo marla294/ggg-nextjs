@@ -6,7 +6,7 @@ import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 import { ThreeDots } from "react-loader-spinner";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import useSWR from "swr";
+// import { useQuery } from "@tanstack/react-query";
 
 const ClearButtonStyles = styled.button`
   width: 8rem;
@@ -103,7 +103,7 @@ export default function ShoppingList() {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
-  // Non-SWR
+  // non react-query
   const fetchShoppingListItems = async () => {
     setIsLoading(true);
     const res = await getShoppingListItems({ sortBy });
@@ -113,7 +113,7 @@ export default function ShoppingList() {
     return result;
   };
 
-  // SWR
+  // react-query
   // const fetchShoppingListItems = async () => {
   //   setIsLoading(true);
   //   const res = await getShoppingListItems({ sortBy });
@@ -122,7 +122,10 @@ export default function ShoppingList() {
   //   return result;
   // };
 
-  // const { data } = useSWR(sortBy, fetchShoppingListItems);
+  // const { data } = useQuery({
+  //   queryKey: ["shoppingListItems"],
+  //   queryFn: fetchShoppingListItems,
+  // });
 
   const handleChange = (e: any) => {
     const val = e.target.value;
