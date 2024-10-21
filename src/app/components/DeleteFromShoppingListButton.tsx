@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import deleteShoppingListItem from "../shoppingList/[id]/deleteShoppingListItem";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DeleteButton = styled.button`
   transition: 0.2s;
@@ -25,6 +26,7 @@ export default function DeleteFromShoppingListButton({
   fetchShoppingListItems?: any;
   sortBy?: any;
 }) {
+  const queryClient = useQueryClient();
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const handleDelete = async () => {
@@ -43,6 +45,7 @@ export default function DeleteFromShoppingListButton({
       if (fetchShoppingListItems) {
         await fetchShoppingListItems();
       }
+      queryClient.invalidateQueries();
       setDeleteLoading(false);
     } catch (e) {
       console.error(e);
