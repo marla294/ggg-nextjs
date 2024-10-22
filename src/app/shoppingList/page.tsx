@@ -100,18 +100,7 @@ export default function ShoppingList() {
   const router = useRouter();
   const pathname = usePathname();
   const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
-  // const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-
-  // non react-query
-  // const fetchShoppingListItems = async () => {
-  //   setIsLoading(true);
-  //   const res = await getShoppingListItems({ sortBy });
-  //   setData(JSON.parse(res as string));
-  //   setIsLoading(false);
-  //   const result = JSON.parse(res as string);
-  //   return result;
-  // };
 
   // react-query
   const fetchShoppingListItems = async () => {
