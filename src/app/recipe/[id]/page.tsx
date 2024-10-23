@@ -10,6 +10,7 @@ import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToSh
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
 import { useRouter } from "next/navigation";
+// import { useQuery } from "@tanstack/react-query";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -81,7 +82,6 @@ const RecipeItemContainer = styled.div`
 
 export default function Page({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<any>();
-  const [recipeItems, setRecipeItems] = useState<any>();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
     useState<boolean>(false);
@@ -89,6 +89,7 @@ export default function Page({ params }: { params: { id: string } }) {
     useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [recipeLoading, setRecipeLoading] = useState<boolean>(true);
+  const [recipeItems, setRecipeItems] = useState<any>([]);
 
   const router = useRouter();
 
@@ -99,11 +100,22 @@ export default function Page({ params }: { params: { id: string } }) {
     setRecipeLoading(false);
   };
 
+  // non react-query
   const fetchRecipeItems = async (recipeId: string) => {
     const res = await getRecipeItems({ recipeId });
     const tempRecipeItems = JSON.parse(res as string);
     setRecipeItems(tempRecipeItems);
   };
+
+  // react-query
+  // const fetchRecipeItems = async () => {
+  //   if (recipe?._id) {
+  //     const res = await getRecipeItems({ recipeId: recipe._id });
+  //     const tempRecipeItems = JSON.parse(res as string);
+  //     console.log({ tempRecipeItems });
+  //     return tempRecipeItems || [];
+  //   }
+  // };
 
   const addRecipeToShoppingList = async () => {
     for (const item of recipeItems) {
@@ -131,6 +143,11 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   }, [recipe]);
 
+  // const { data: recipeItems } = useQuery({
+  //   queryKey: ["recipeItems"],
+  //   queryFn: fetchRecipeItems,
+  // });
+
   const handleDeleteRecipe = async () => {
     setDeleteLoading(true);
 
@@ -144,108 +161,100 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   return (
-    <>
-      {recipeLoading ? (
-        <div>Loading...</div>
-      ) : recipe ? (
-        <>
-          <SingleItemStyles>
-            <div>
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt={recipe?.photo?.altText || recipe?.name}
-                />
-              ) : (
-                <div className="noPhoto">Needs photo 📸</div>
-              )}
-            </div>
-            <div>
-              <h3>{recipe?.name}</h3>
-              <div>{recipe?.description}</div>
-              {recipe?.recipeLink && (
-                <a target="_blank" href={recipe?.recipeLink}>
-                  Recipe Link
-                </a>
-              )}
-              <ButtonDivStyles>
-                <EditButton
-                  onClick={() => router.push(`/recipe/${params.id}/edit`)}>
-                  Edit Recipe
-                </EditButton>
-                <AddToShoppingListButton
-                  onClick={async () => {
-                    setLoadingAddToShoppingList(true);
-                    setAddedToShoppingList(false);
-                    await addRecipeToShoppingList();
-                    setLoadingAddToShoppingList(false);
-                    setAddedToShoppingList(true);
-                  }}>
-                  {loadingAddToShoppingList ? (
-                    <ThreeDots
-                      visible={true}
-                      height="15"
-                      width="40"
-                      color="#4fa94d"
-                      radius="9"
-                      ariaLabel="three-dots-loading"
-                      wrapperStyle={{
-                        display: "grid",
-                        justifyItems: "center",
-                      }}
-                      wrapperClass=""
-                    />
-                  ) : (
-                    <>Add To Shopping List</>
-                  )}
-                </AddToShoppingListButton>
-                <DeleteRecipeButton
-                  onClick={() => {
-                    handleDeleteRecipe();
-                  }}>
-                  {deleteLoading ? (
-                    <ThreeDots
-                      visible={true}
-                      height="13"
-                      width="40"
-                      color="#551d11"
-                      radius="9"
-                      ariaLabel="three-dots-loading"
-                      wrapperStyle={{
-                        display: "grid",
-                        justifyItems: "center",
-                      }}
-                      wrapperClass=""
-                    />
-                  ) : (
-                    "Delete Recipe"
-                  )}
-                </DeleteRecipeButton>
-              </ButtonDivStyles>
-              {loadingAddToShoppingList && (
-                <div>Adding to shopping list...</div>
-              )}
-              {addedToShoppingList && <div>Added to shopping list!</div>}
-            </div>
-          </SingleItemStyles>
+    <div>
+      <>
+        <SingleItemStyles>
           <div>
-            <AddIngredientToRecipeForm recipeId={recipe?._id} />
-            <br />
-            <h3>Ingredients</h3>
-            <RecipeItemContainer>
-              {recipeItems?.map((recipeItem: any) => (
-                <RecipeItem
-                  key={Math.random()}
-                  recipeItem={recipeItem}
-                  fetchRecipeItems={fetchRecipeItems}
-                />
-              ))}
-            </RecipeItemContainer>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={recipe?.photo?.altText || recipe?.name}
+              />
+            ) : (
+              <div className="noPhoto">Needs photo 📸</div>
+            )}
           </div>
-        </>
-      ) : (
-        <div>No recipe found!</div>
-      )}
-    </>
+          <div>
+            <h3>{recipe?.name}</h3>
+            <div>{recipe?.description}</div>
+            {recipe?.recipeLink && (
+              <a target="_blank" href={recipe?.recipeLink}>
+                Recipe Link
+              </a>
+            )}
+            <ButtonDivStyles>
+              <EditButton
+                onClick={() => router.push(`/recipe/${params.id}/edit`)}>
+                Edit Recipe
+              </EditButton>
+              <AddToShoppingListButton
+                onClick={async () => {
+                  setLoadingAddToShoppingList(true);
+                  setAddedToShoppingList(false);
+                  await addRecipeToShoppingList();
+                  setLoadingAddToShoppingList(false);
+                  setAddedToShoppingList(true);
+                }}>
+                {loadingAddToShoppingList ? (
+                  <ThreeDots
+                    visible={true}
+                    height="15"
+                    width="40"
+                    color="#4fa94d"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{
+                      display: "grid",
+                      justifyItems: "center",
+                    }}
+                    wrapperClass=""
+                  />
+                ) : (
+                  <>Add To Shopping List</>
+                )}
+              </AddToShoppingListButton>
+              <DeleteRecipeButton
+                onClick={() => {
+                  handleDeleteRecipe();
+                }}>
+                {deleteLoading ? (
+                  <ThreeDots
+                    visible={true}
+                    height="13"
+                    width="40"
+                    color="#551d11"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{
+                      display: "grid",
+                      justifyItems: "center",
+                    }}
+                    wrapperClass=""
+                  />
+                ) : (
+                  "Delete Recipe"
+                )}
+              </DeleteRecipeButton>
+            </ButtonDivStyles>
+            {loadingAddToShoppingList && <div>Adding to shopping list...</div>}
+            {addedToShoppingList && <div>Added to shopping list!</div>}
+          </div>
+        </SingleItemStyles>
+        <div>
+          <AddIngredientToRecipeForm recipeId={recipe?._id} />
+          <br />
+          <h3>Ingredients</h3>
+          <RecipeItemContainer>
+            {recipeItems?.map((recipeItem: any) => (
+              <RecipeItem
+                key={Math.random()}
+                recipeItem={recipeItem}
+                fetchRecipeItems={fetchRecipeItems}
+              />
+            ))}
+          </RecipeItemContainer>
+        </div>
+      </>
+    </div>
   );
 }
