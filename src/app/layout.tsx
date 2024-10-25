@@ -4,12 +4,6 @@ import { NavStateProvider } from "./lib/navState";
 import Header from "./components/Header";
 import signOut from "./lib/signout";
 import ReactQueryProvider from "../../lib/ReactQueryProvider";
-// import dynamic from "next/dynamic";
-
-// const ReactQueryProvider = dynamic(
-//   () => import("../../lib/ReactQueryProvider"),
-//   { ssr: false }
-// );
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -90,14 +84,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ReactQueryProvider>
-        <NavStateProvider>
-          <GlobalStyles />
-          <body>
+      <NavStateProvider>
+        <GlobalStyles />
+        <body>
+          <ReactQueryProvider>
             <Header signOut={signOut}>{children}</Header>
-          </body>
-        </NavStateProvider>
-      </ReactQueryProvider>
+          </ReactQueryProvider>
+        </body>
+      </NavStateProvider>
     </html>
   );
 }
