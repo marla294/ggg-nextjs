@@ -10,7 +10,7 @@ import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToSh
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
 import { useRouter } from "next/navigation";
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -89,7 +89,7 @@ export default function Page({ params }: { params: { id: string } }) {
     useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [recipeLoading, setRecipeLoading] = useState<boolean>(true);
-  const [recipeItems, setRecipeItems] = useState<any>([]);
+  // const [recipeItems, setRecipeItems] = useState<any>([]);
 
   const router = useRouter();
 
@@ -101,21 +101,23 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   // non react-query
-  const fetchRecipeItems = async (recipeId: string) => {
-    const res = await getRecipeItems({ recipeId });
-    const tempRecipeItems = JSON.parse(res as string);
-    setRecipeItems(tempRecipeItems);
-  };
+  // const fetchRecipeItems = async (recipeId: string) => {
+  //   const res = await getRecipeItems({ recipeId });
+  //   const tempRecipeItems = JSON.parse(res as string);
+  //   setRecipeItems(tempRecipeItems);
+  // };
 
   // react-query
-  // const fetchRecipeItems = async () => {
-  //   if (recipe?._id) {
-  //     const res = await getRecipeItems({ recipeId: recipe._id });
-  //     const tempRecipeItems = JSON.parse(res as string);
-  //     console.log({ tempRecipeItems });
-  //     return tempRecipeItems || [];
-  //   }
-  // };
+  const fetchRecipeItems = async () => {
+    if (params.id) {
+      const res = await getRecipeItems({ recipeId: params.id });
+      const tempRecipeItems = JSON.parse(res as string);
+      console.log({ tempRecipeItems });
+      return tempRecipeItems || [];
+    } else {
+      return [];
+    }
+  };
 
   const addRecipeToShoppingList = async () => {
     for (const item of recipeItems) {
@@ -138,15 +140,15 @@ export default function Page({ params }: { params: { id: string } }) {
     if (recipe?.photo?.imageUrl) {
       setImageUrl(recipe?.photo?.imageUrl);
     }
-    if (recipe?._id) {
-      fetchRecipeItems(recipe._id);
-    }
+    // if (recipe?._id) {
+    //   fetchRecipeItems(recipe._id);
+    // }
   }, [recipe]);
 
-  // const { data: recipeItems } = useQuery({
-  //   queryKey: ["recipeItems"],
-  //   queryFn: fetchRecipeItems,
-  // });
+  const { data: recipeItems } = useQuery({
+    queryKey: ["recipeItemsQuery"],
+    queryFn: fetchRecipeItems,
+  });
 
   const handleDeleteRecipe = async () => {
     setDeleteLoading(true);
