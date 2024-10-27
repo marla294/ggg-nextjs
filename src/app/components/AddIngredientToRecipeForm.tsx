@@ -5,6 +5,7 @@ import useForm from "../lib/useForm";
 import getIngredients from "../ingredients/getIngredients";
 import useDebounce from "../hooks/useDebounce";
 import addRecipeItem from "../recipe/[id]/addRecipeItem";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 
 const FormStyles = styled.form`
   box-shadow: var(--bs);
@@ -157,6 +158,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
+  const queryClient = useQueryClient();
 
   const handleSearchChange = (e: any) => {
     const val = e.target.value;
@@ -201,6 +203,10 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
         recipeId,
       });
       setLoading(false);
+      const invalidateQueriesFilters = [
+        "recipeItemsQuery",
+      ] as InvalidateQueryFilters;
+      queryClient.invalidateQueries(invalidateQueriesFilters);
     } catch (e) {
       console.error(e);
     }
