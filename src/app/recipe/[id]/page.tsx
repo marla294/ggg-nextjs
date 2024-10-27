@@ -112,7 +112,6 @@ export default function Page({ params }: { params: { id: string } }) {
     if (params.id) {
       const res = await getRecipeItems({ recipeId: params.id });
       const tempRecipeItems = JSON.parse(res as string);
-      console.log({ tempRecipeItems });
       return tempRecipeItems || [];
     } else {
       return [];

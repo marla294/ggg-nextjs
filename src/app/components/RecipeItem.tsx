@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import deleteRecipeItem from "../recipe/[id]/deleteRecipeItem";
 import useForm from "../lib/useForm";
 import editRecipeItem from "../recipe/[id]/editRecipeItem";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 
 const ListItemStyles = styled.div`
   background: white;
@@ -73,6 +74,7 @@ const RecipeItem = ({
   const { handleChange, inputs, setInputs } = useForm({
     quantity: "",
   });
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const { ingredient: ingredientTemp } = recipeItem;
@@ -117,6 +119,10 @@ const RecipeItem = ({
         recipeItemId: recipeItem?._id,
       });
       await fetchRecipeItems(recipeItem?.recipe?._id);
+      const invalidateQueriesFilters = [
+        "recipeItemsQuery",
+      ] as InvalidateQueryFilters;
+      queryClient.invalidateQueries(invalidateQueriesFilters);
     } catch (e) {
       console.error(e);
     }
