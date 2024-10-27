@@ -112,7 +112,7 @@ export default function ShoppingList() {
   };
 
   const { data } = useQuery({
-    queryKey: ["shoppingListItems"],
+    queryKey: ["shoppingListItems", { sortBy }],
     queryFn: fetchShoppingListItems,
   });
 
@@ -129,14 +129,14 @@ export default function ShoppingList() {
     }
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams((searchParams || "").toString());
-    if (sortBy) {
-      params.set("sortBy", sortBy);
-      router.push(pathname + "?" + params.toString());
-      fetchShoppingListItems();
-    }
-  }, [sortBy]);
+  // useEffect(() => {
+  //   const params = new URLSearchParams((searchParams || "").toString());
+  //   if (sortBy) {
+  //     params.set("sortBy", sortBy);
+  //     router.push(pathname + "?" + params.toString());
+  //     fetchShoppingListItems();
+  //   }
+  // }, [sortBy]);
 
   return (
     <>
