@@ -89,7 +89,6 @@ export default function Page({ params }: { params: { id: string } }) {
     useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [recipeLoading, setRecipeLoading] = useState<boolean>(true);
-  // const [recipeItems, setRecipeItems] = useState<any>([]);
 
   const router = useRouter();
 
@@ -100,14 +99,6 @@ export default function Page({ params }: { params: { id: string } }) {
     setRecipeLoading(false);
   };
 
-  // non react-query
-  // const fetchRecipeItems = async (recipeId: string) => {
-  //   const res = await getRecipeItems({ recipeId });
-  //   const tempRecipeItems = JSON.parse(res as string);
-  //   setRecipeItems(tempRecipeItems);
-  // };
-
-  // react-query
   const fetchRecipeItems = async () => {
     if (params.id) {
       const res = await getRecipeItems({ recipeId: params.id });
@@ -139,9 +130,6 @@ export default function Page({ params }: { params: { id: string } }) {
     if (recipe?.photo?.imageUrl) {
       setImageUrl(recipe?.photo?.imageUrl);
     }
-    // if (recipe?._id) {
-    //   fetchRecipeItems(recipe._id);
-    // }
   }, [recipe]);
 
   const { data: recipeItems } = useQuery({

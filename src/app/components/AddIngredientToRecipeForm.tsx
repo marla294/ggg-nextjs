@@ -174,6 +174,13 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
 
   const debouncedFetchIngredients = useDebounce(fetchIngredients, 200);
 
+  const clearForm = () => {
+    setIngredient(undefined);
+    setSearchTerm("");
+    setInputs({ ...inputs, quantity: "" });
+    setDropdownOpen(false);
+  };
+
   useEffect(() => {
     debouncedFetchIngredients();
   }, [searchTerm]);
@@ -202,7 +209,9 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
         ingredientId: ingredient?._id,
         recipeId,
       });
+      clearForm();
       setLoading(false);
+
       const invalidateQueriesFilters = [
         "recipeItemsQuery",
       ] as InvalidateQueryFilters;
@@ -307,10 +316,7 @@ const AddIngredientToRecipeForm = ({ recipeId }: { recipeId: any }) => {
           type="button"
           className="clear"
           onClick={() => {
-            setIngredient(null);
-            setSearchTerm("");
-            setInputs({ ...inputs, quantity: "" });
-            setDropdownOpen(false);
+            clearForm();
           }}>
           Clear
         </button>
