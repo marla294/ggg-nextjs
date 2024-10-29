@@ -12,10 +12,6 @@ const ListItemStyles = styled.div`
   grid-auto-flow: column;
   grid-template-columns: 5rem 5fr;
   border: 1px solid var(--lightGray);
-  &:hover {
-    background: var(--lightGray);
-    cursor: pointer;
-  }
 
   img {
     padding: 1rem;
@@ -44,6 +40,10 @@ const ListItemStyles = styled.div`
     text-overflow: ellipsis;
     align-self: center;
     justify-self: center;
+    &:hover {
+      background: var(--lightGray);
+      cursor: pointer;
+    }
   }
 `;
 
@@ -141,10 +141,7 @@ const RecipeItem = ({
   };
 
   return (
-    <ListItemStyles
-      onClick={() => {
-        setIsEditing(true);
-      }}>
+    <ListItemStyles>
       {imageUrl ? (
         <img
           src={imageUrl}
@@ -154,7 +151,12 @@ const RecipeItem = ({
         <div className="noPhoto">🛒</div>
       )}
 
-      <div className="details" ref={recipeItemRef}>
+      <div
+        className="details"
+        ref={recipeItemRef}
+        onClick={() => {
+          setIsEditing(true);
+        }}>
         <h4>{ingredient?.name}</h4>
         <div>
           {isEditing && (
