@@ -132,7 +132,7 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   }, [recipe]);
 
-  const { data: recipeItems } = useQuery({
+  const { data: recipeItems, isLoading: recipeItemsLoading } = useQuery({
     queryKey: ["recipeItemsQuery"],
     queryFn: fetchRecipeItems,
   });
@@ -234,13 +234,31 @@ export default function Page({ params }: { params: { id: string } }) {
           <br />
           <h3>Ingredients</h3>
           <RecipeItemContainer>
-            {recipeItems?.map((recipeItem: any) => (
-              <RecipeItem
-                key={Math.random()}
-                recipeItem={recipeItem}
-                fetchRecipeItems={fetchRecipeItems}
-              />
-            ))}
+            {recipeItemsLoading ? (
+              <div>
+                <ThreeDots
+                  visible={true}
+                  height="15"
+                  width="40"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{
+                    display: "grid",
+                    justifyItems: "center",
+                  }}
+                  wrapperClass=""
+                />
+              </div>
+            ) : (
+              recipeItems?.map((recipeItem: any) => (
+                <RecipeItem
+                  key={Math.random()}
+                  recipeItem={recipeItem}
+                  fetchRecipeItems={fetchRecipeItems}
+                />
+              ))
+            )}
           </RecipeItemContainer>
         </div>
       </>
