@@ -81,22 +81,19 @@ const RecipeItemContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [recipe, setRecipe] = useState<any>();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
     useState<boolean>(false);
   const [addedToShoppingList, setAddedToShoppingList] =
     useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [recipeLoading, setRecipeLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
   const fetchRecipe = async () => {
     const res = await getRecipes({ id: params.id });
     const tempRecipes = JSON.parse(res as string);
-    setRecipe(tempRecipes[0]);
-    setRecipeLoading(false);
+    return tempRecipes[0];
   };
 
   const fetchRecipeItems = async () => {
@@ -119,9 +116,10 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
-  useEffect(() => {
-    fetchRecipe();
-  }, []);
+  const { data: recipe } = useQuery({
+    queryKey: ["recipeQuery"],
+    queryFn: fetchRecipe,
+  });
 
   useEffect(() => {
     if (recipe?.photo?.image?._meta?.url) {
