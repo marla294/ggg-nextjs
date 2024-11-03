@@ -10,7 +10,7 @@ import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToSh
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -106,15 +106,21 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
-  const addRecipeToShoppingList = async () => {
-    for (const item of recipeItems) {
-      await addIngredientToShoppingList({
-        ingredientId: item?.ingredient?._id,
-        quantity: item?.quantity / 10,
-        recipeId: params?.id,
-      });
-    }
-  };
+  const addRecipeToShoppingListMutation = useMutation({
+    mutationFn: async () => {
+      for (const item of recipeItems) {
+        await addIngredientToShoppingList({
+          ingredientId: item?.ingredient?._id,
+          quantity: item?.quantity / 10,
+          recipeId: params?.id,
+        });
+      }
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      // queryClient.invalidateQueries({ queryKey: ['todos'] })
+    },
+  });
 
   const { data: recipe, isLoading: isLoadingRecipe } = useQuery({
     queryKey: ["recipeQuery"],
@@ -192,10 +198,10 @@ export default function Page({ params }: { params: { id: string } }) {
                   Edit Recipe
                 </EditButton>
                 <AddToShoppingListButton
-                  onClick={async () => {
+                  onClick={() => {
                     setLoadingAddToShoppingList(true);
                     setAddedToShoppingList(false);
-                    await addRecipeToShoppingList();
+                    addRecipeToShoppingListMutation.mutate();
                     setLoadingAddToShoppingList(false);
                     setAddedToShoppingList(true);
                   }}>
