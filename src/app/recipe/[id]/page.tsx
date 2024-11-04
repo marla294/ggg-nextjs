@@ -10,7 +10,7 @@ import addIngredientToShoppingList from "../../ingredient/[id]/addIngredientToSh
 import { ThreeDots } from "react-loader-spinner";
 import deleteRecipe from "./deleteRecipe";
 import { useRouter } from "next/navigation";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -82,12 +82,14 @@ const RecipeItemContainer = styled.div`
 
 export default function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string>("");
+  // TODO: Convert loadingAddToShoppingList to React Query
   const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
     useState<boolean>(false);
   const [addedToShoppingList, setAddedToShoppingList] =
     useState<boolean>(false);
+  // TODO: Convert deleteLoading to React Query
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const fetchRecipe = async () => {
@@ -117,14 +119,19 @@ export default function Page({ params }: { params: { id: string } }) {
       }
     },
     onSuccess: () => {
-      // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey: ['todos'] })
+      // TODO: Invalidate shopping list query once that is in
+      queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
     },
   });
 
   const { data: recipe, isLoading: isLoadingRecipe } = useQuery({
     queryKey: ["recipeQuery"],
     queryFn: fetchRecipe,
+  });
+
+  const { data: recipeItems, isLoading: recipeItemsLoading } = useQuery({
+    queryKey: ["recipeItemsQuery"],
+    queryFn: fetchRecipeItems,
   });
 
   useEffect(() => {
@@ -136,11 +143,7 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   }, [recipe]);
 
-  const { data: recipeItems, isLoading: recipeItemsLoading } = useQuery({
-    queryKey: ["recipeItemsQuery"],
-    queryFn: fetchRecipeItems,
-  });
-
+  // TODO: Convert handleDeleteRecipe to React Query
   const handleDeleteRecipe = async () => {
     setDeleteLoading(true);
 
