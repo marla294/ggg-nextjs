@@ -108,6 +108,16 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
+  const { data: recipe, isLoading: isLoadingRecipe } = useQuery({
+    queryKey: ["recipeQuery"],
+    queryFn: fetchRecipe,
+  });
+
+  const { data: recipeItems, isLoading: recipeItemsLoading } = useQuery({
+    queryKey: ["recipeItemsQuery"],
+    queryFn: fetchRecipeItems,
+  });
+
   const addRecipeToShoppingListMutation = useMutation({
     mutationFn: async () => {
       for (const item of recipeItems) {
@@ -124,14 +134,22 @@ export default function Page({ params }: { params: { id: string } }) {
     },
   });
 
-  const { data: recipe, isLoading: isLoadingRecipe } = useQuery({
-    queryKey: ["recipeQuery"],
-    queryFn: fetchRecipe,
-  });
+  const deleteRecipeMutation = useMutation({
+    mutationFn: async () => {
+      setDeleteLoading(true);
 
-  const { data: recipeItems, isLoading: recipeItemsLoading } = useQuery({
-    queryKey: ["recipeItemsQuery"],
-    queryFn: fetchRecipeItems,
+      try {
+        await deleteRecipe({ recipeId: recipe?._id });
+        setDeleteLoading(false);
+        router.push("/recipes");
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    onSuccess: () => {
+      // TODO: Invalidate shopping list query once that is in
+      queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
+    },
   });
 
   useEffect(() => {
@@ -142,19 +160,6 @@ export default function Page({ params }: { params: { id: string } }) {
       setImageUrl(recipe?.photo?.imageUrl);
     }
   }, [recipe]);
-
-  // TODO: Convert handleDeleteRecipe to React Query
-  const handleDeleteRecipe = async () => {
-    setDeleteLoading(true);
-
-    try {
-      await deleteRecipe({ recipeId: recipe?._id });
-      setDeleteLoading(false);
-      router.push("/recipes");
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   return (
     <div>
@@ -228,7 +233,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 </AddToShoppingListButton>
                 <DeleteRecipeButton
                   onClick={() => {
-                    handleDeleteRecipe();
+                    // handleDeleteRecipe();
+                    deleteRecipeMutation.mutate();
                   }}>
                   {deleteLoading ? (
                     <ThreeDots
