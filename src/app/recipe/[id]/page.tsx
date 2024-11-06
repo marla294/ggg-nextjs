@@ -87,8 +87,6 @@ export default function Page({ params }: { params: { id: string } }) {
     useState<boolean>(false);
   const [addedToShoppingList, setAddedToShoppingList] =
     useState<boolean>(false);
-  // TODO: Convert deleteLoading to React Query
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -136,11 +134,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const deleteRecipeMutation = useMutation({
     mutationFn: async () => {
-      setDeleteLoading(true);
-
       try {
         await deleteRecipe({ recipeId: recipe?._id });
-        setDeleteLoading(false);
         router.push("/recipes");
       } catch (e) {
         console.error(e);
@@ -236,7 +231,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     // handleDeleteRecipe();
                     deleteRecipeMutation.mutate();
                   }}>
-                  {deleteLoading ? (
+                  {deleteRecipeMutation?.isPending ? (
                     <ThreeDots
                       visible={true}
                       height="13"
