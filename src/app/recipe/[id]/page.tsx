@@ -81,12 +81,7 @@ const RecipeItemContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [imageUrl, setImageUrl] = useState<string>("");
-  // TODO: Convert loadingAddToShoppingList to React Query
-  const [loadingAddToShoppingList, setLoadingAddToShoppingList] =
-    useState<boolean>(false);
-  const [addedToShoppingList, setAddedToShoppingList] =
-    useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string | null>("");
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -150,9 +145,10 @@ export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (recipe?.photo?.image?._meta?.url) {
       setImageUrl(recipe?.photo?.image?._meta?.url);
-    }
-    if (recipe?.photo?.imageUrl) {
+    } else if (recipe?.photo?.imageUrl) {
       setImageUrl(recipe?.photo?.imageUrl);
+    } else {
+      setImageUrl(null);
     }
   }, [recipe]);
 
@@ -202,13 +198,9 @@ export default function Page({ params }: { params: { id: string } }) {
                 </EditButton>
                 <AddToShoppingListButton
                   onClick={() => {
-                    setLoadingAddToShoppingList(true);
-                    setAddedToShoppingList(false);
                     addRecipeToShoppingListMutation.mutate();
-                    setLoadingAddToShoppingList(false);
-                    setAddedToShoppingList(true);
                   }}>
-                  {loadingAddToShoppingList ? (
+                  {addRecipeToShoppingListMutation?.isPending ? (
                     <ThreeDots
                       visible={true}
                       height="15"
@@ -228,7 +220,6 @@ export default function Page({ params }: { params: { id: string } }) {
                 </AddToShoppingListButton>
                 <DeleteRecipeButton
                   onClick={() => {
-                    // handleDeleteRecipe();
                     deleteRecipeMutation.mutate();
                   }}>
                   {deleteRecipeMutation?.isPending ? (
@@ -250,10 +241,12 @@ export default function Page({ params }: { params: { id: string } }) {
                   )}
                 </DeleteRecipeButton>
               </ButtonDivStyles>
-              {loadingAddToShoppingList && (
+              {addRecipeToShoppingListMutation?.isPending && (
                 <div>Adding to shopping list...</div>
               )}
-              {addedToShoppingList && <div>Added to shopping list!</div>}
+              {addRecipeToShoppingListMutation?.isSuccess && (
+                <div>Added to shopping list!</div>
+              )}
             </div>
           </SingleItemStyles>
           <div>
