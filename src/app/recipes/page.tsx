@@ -6,6 +6,7 @@ import RecipeListItem from "../components/RecipeListItem";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 const ListBarStyles = styled.div`
   display: grid;
@@ -85,13 +86,14 @@ export default function Recipes() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const [displayRecipes, setDisplayRecipes] = useState<any>(null);
+  // const [displayRecipes, setDisplayRecipes] = useState<any>(null);
   const [sortBy, setSortBy] = useState<string>(Sort.type);
 
   const fetchRecipes = async (sort: string) => {
     const res = await getRecipes({ sortBy: sort });
     const tempRecipes = JSON.parse(res as string);
-    setDisplayRecipes(tempRecipes);
+    return tempRecipes;
+    // setDisplayRecipes(tempRecipes);
   };
 
   const handleChange = (e: any) => {
@@ -112,8 +114,17 @@ export default function Recipes() {
     const params = new URLSearchParams((searchParams || "").toString());
     params.set("sortBy", sortBy);
     router.push(pathname + "?" + params.toString());
-    fetchRecipes(sortBy);
+    // fetchRecipes(sortBy);
   }, [sortBy]);
+
+  const { data: displayRecipes } = useQuery({
+    queryKey: [sortBy],
+    queryFn: async () => {
+      const tempRecipes = await fetchRecipes(sortBy);
+      // console.log({ tempRecipes });
+      return tempRecipes;
+    },
+  });
 
   return (
     <>
