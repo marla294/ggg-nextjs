@@ -6,7 +6,7 @@ import RecipeListItem from "../components/RecipeListItem";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const ListBarStyles = styled.div`
   display: grid;
@@ -88,6 +88,7 @@ export default function Recipes() {
   const router = useRouter();
   // const [displayRecipes, setDisplayRecipes] = useState<any>(null);
   const [sortBy, setSortBy] = useState<string>(Sort.type);
+  const queryClient = useQueryClient();
 
   const fetchRecipes = async (sort: string) => {
     const res = await getRecipes({ sortBy: sort });
@@ -111,6 +112,7 @@ export default function Recipes() {
   }, []);
 
   useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["recipes"] });
     const params = new URLSearchParams((searchParams || "").toString());
     params.set("sortBy", sortBy);
     router.push(pathname + "?" + params.toString());
@@ -118,10 +120,9 @@ export default function Recipes() {
   }, [sortBy]);
 
   const { data: displayRecipes } = useQuery({
-    queryKey: [sortBy],
+    queryKey: ["recipes", sortBy],
     queryFn: async () => {
       const tempRecipes = await fetchRecipes(sortBy);
-      // console.log({ tempRecipes });
       return tempRecipes;
     },
   });
