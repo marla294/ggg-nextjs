@@ -119,10 +119,11 @@ export default function Recipes() {
     // fetchRecipes(sortBy);
   }, [sortBy]);
 
-  const { data: displayRecipes } = useQuery({
-    queryKey: ["recipes", sortBy],
-    queryFn: async () => {
+  const { data: displayRecipes, isLoading } = useQuery({
+    queryKey: ["recipes", { sortBy }],
+    queryFn: async (variables: any) => {
       const tempRecipes = await fetchRecipes(sortBy);
+      // const tempRecipes = await fetchRecipes("type");
       return tempRecipes;
     },
   });
@@ -161,6 +162,7 @@ export default function Recipes() {
       <ListContainer>
         <div>Sort: {sortBy}</div>
         {displayRecipes?.map((grouping: any) => {
+          console.log({ grouping });
           return (
             <div key={grouping[0]}>
               <h3>{grouping[0]}</h3>
