@@ -7,6 +7,7 @@ const capitalize = (s: string) => {
 }
 
 export default function groupArrayBy(arr: any[] = [], groupBy: any, subProperty?: string) {
+  
   const grouping = arr.reduce((groupingObject: any, currentVal: any) => {
     let current = currentVal;
 

@@ -6,7 +6,11 @@ import RecipeListItem from "../components/RecipeListItem";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 
 const ListBarStyles = styled.div`
   display: grid;
@@ -86,7 +90,6 @@ export default function Recipes() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  // const [displayRecipes, setDisplayRecipes] = useState<any>(null);
   const [sortBy, setSortBy] = useState<string>(Sort.type);
   const queryClient = useQueryClient();
 
@@ -94,12 +97,11 @@ export default function Recipes() {
     const res = await getRecipes({ sortBy: sort });
     const tempRecipes = JSON.parse(res as string);
     return tempRecipes;
-    // setDisplayRecipes(tempRecipes);
   };
 
   const handleChange = (e: any) => {
     const val = e.target.value;
-    setSortBy(val);
+    setSortBy(val === Sort.type ? Sort.type : Sort.alphabetical);
   };
 
   useEffect(() => {
@@ -111,19 +113,17 @@ export default function Recipes() {
     }
   }, []);
 
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["recipes"] });
-    const params = new URLSearchParams((searchParams || "").toString());
-    params.set("sortBy", sortBy);
-    router.push(pathname + "?" + params.toString());
-    // fetchRecipes(sortBy);
-  }, [sortBy]);
+  // useEffect(() => {
+  //   queryClient.invalidateQueries({ queryKey: ["recipes"] });
+  //   const params = new URLSearchParams((searchParams || "").toString());
+  //   params.set("sortBy", sortBy);
+  //   router.push(pathname + "?" + params.toString());
+  // }, [sortBy]);
 
   const { data: displayRecipes, isLoading } = useQuery({
     queryKey: ["recipes", { sortBy }],
     queryFn: async (variables: any) => {
       const tempRecipes = await fetchRecipes(sortBy);
-      // const tempRecipes = await fetchRecipes("type");
       return tempRecipes;
     },
   });
@@ -162,7 +162,6 @@ export default function Recipes() {
       <ListContainer>
         <div>Sort: {sortBy}</div>
         {displayRecipes?.map((grouping: any) => {
-          console.log({ grouping });
           return (
             <div key={grouping[0]}>
               <h3>{grouping[0]}</h3>
