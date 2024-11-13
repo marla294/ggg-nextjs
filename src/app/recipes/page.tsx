@@ -6,11 +6,7 @@ import RecipeListItem from "../components/RecipeListItem";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import {
-  useQuery,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const ListBarStyles = styled.div`
   display: grid;
@@ -91,7 +87,6 @@ export default function Recipes() {
   const pathname = usePathname();
   const router = useRouter();
   const [sortBy, setSortBy] = useState<string>(Sort.type);
-  const queryClient = useQueryClient();
 
   const fetchRecipes = async (sort: string) => {
     const res = await getRecipes({ sortBy: sort });
@@ -104,6 +99,12 @@ export default function Recipes() {
     setSortBy(val === Sort.type ? Sort.type : Sort.alphabetical);
   };
 
+  const setSortByParams = (sort: any) => {
+    const params = new URLSearchParams((searchParams || "").toString());
+    params.set("sortBy", sort);
+    router.push(pathname + "?" + params.toString());
+  };
+
   useEffect(() => {
     const params = new URLSearchParams((searchParams || "").toString());
     let tempSort: any = null;
@@ -113,17 +114,11 @@ export default function Recipes() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   queryClient.invalidateQueries({ queryKey: ["recipes"] });
-  //   const params = new URLSearchParams((searchParams || "").toString());
-  //   params.set("sortBy", sortBy);
-  //   router.push(pathname + "?" + params.toString());
-  // }, [sortBy]);
-
   const { data: displayRecipes, isLoading } = useQuery({
     queryKey: ["recipes", { sortBy }],
-    queryFn: async (variables: any) => {
+    queryFn: async () => {
       const tempRecipes = await fetchRecipes(sortBy);
+      setSortByParams(sortBy);
       return tempRecipes;
     },
   });
