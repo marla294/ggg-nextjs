@@ -72,31 +72,21 @@ const ListContainer = styled.div`
   margin-top: 4rem;
 `;
 
-enum Sort {
-  alphabetical = "alphabetical",
-  type = "type",
-}
-
 const sortOptions: SortOption[] = [
-  { display: "Alphabetical", value: Sort.alphabetical },
-  { display: "Type", value: Sort.type },
+  { display: "Alphabetical", value: "alphabetical" },
+  { display: "Type", value: "type" },
 ];
 
 export default function Recipes() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const [sortBy, setSortBy] = useState<string>(Sort.type);
+  const [sortBy, setSortBy] = useState<string>("type");
 
   const fetchRecipes = async (sort: string) => {
     const res = await getRecipes({ sortBy: sort });
     const tempRecipes = JSON.parse(res as string);
     return tempRecipes;
-  };
-
-  const handleChange = (e: any) => {
-    const val = e.target.value;
-    setSortBy(val === Sort.type ? Sort.type : Sort.alphabetical);
   };
 
   const setSortByParams = (sort: any) => {
@@ -109,7 +99,7 @@ export default function Recipes() {
     const params = new URLSearchParams((searchParams || "").toString());
     let tempSort: any = null;
     if (params.get("sortBy")) {
-      tempSort = params.get("sortBy") || Sort.alphabetical;
+      tempSort = params.get("sortBy") || "alphabetical";
       setSortBy(tempSort);
     }
   }, []);
@@ -140,13 +130,13 @@ export default function Recipes() {
             <select
               name="sortBy"
               id="sortBy"
-              value={sortBy}
-              onChange={handleChange}>
+              value={sortBy || sortOptions[0].value}
+              onChange={(e) => setSortBy(e.target.value)}>
               {sortOptions.map((option) => (
                 <option
                   value={option.value}
                   id={option.value}
-                  key={Math.random()}>
+                  key={option.value}>
                   {option.display}
                 </option>
               ))}
