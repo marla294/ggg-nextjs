@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { ThreeDots } from "react-loader-spinner";
 
 const ListBarStyles = styled.div`
   display: grid;
@@ -144,20 +145,42 @@ export default function Recipes() {
           </SortByStyles>
         </ListBarStyles>
       </BarContainer>
+      <div>Sort: {sortBy}</div>
       <ListContainer>
-        <div>Sort: {sortBy}</div>
-        {displayRecipes?.map((grouping: any) => {
-          return (
-            <div key={grouping[0]}>
-              <h3>{grouping[0]}</h3>
-              <GroupingContainer>
-                {grouping[1]?.map((recipe: any) => {
-                  return <RecipeListItem key={recipe._id} recipe={recipe} />;
-                })}
-              </GroupingContainer>
-            </div>
-          );
-        })}
+        {isLoading ? (
+          <div>
+            <ThreeDots
+              visible={true}
+              height="15"
+              width="40"
+              color="#4fa94d"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{
+                display: "grid",
+                justifyItems: "center",
+              }}
+              wrapperClass=""
+            />
+          </div>
+        ) : (
+          <>
+            {displayRecipes?.map((grouping: any) => {
+              return (
+                <div key={grouping[0]}>
+                  <h3>{grouping[0]}</h3>
+                  <GroupingContainer>
+                    {grouping[1]?.map((recipe: any) => {
+                      return (
+                        <RecipeListItem key={recipe._id} recipe={recipe} />
+                      );
+                    })}
+                  </GroupingContainer>
+                </div>
+              );
+            })}
+          </>
+        )}
       </ListContainer>
     </>
   );
