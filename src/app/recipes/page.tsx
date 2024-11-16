@@ -15,9 +15,15 @@ const ListBarStyles = styled.div`
   grid-gap: 0.3rem;
   font-size: 0.8rem;
 
-  input,
-  select {
+  input {
     padding: 1rem;
+    border: 1px solid black;
+    font-size: 1rem;
+    height: 2rem;
+  }
+
+  select {
+    padding: 0 10px;
     border: 1px solid black;
     font-size: 1rem;
     height: 2rem;
@@ -129,15 +135,12 @@ export default function Recipes() {
           <SortByStyles>
             <label htmlFor="sortBy">Sort:</label>
             <select
-              name="sortBy"
-              id="sortBy"
-              value={sortBy || sortOptions[0].value}
-              onChange={(e) => setSortBy(e.target.value)}>
+              name="type"
+              id="type"
+              onChange={(e) => setSortBy(e.target.value)}
+              value={sortBy || 1}>
               {sortOptions.map((option) => (
-                <option
-                  value={option.value}
-                  id={option.value}
-                  key={option.value}>
+                <option value={option.value} key={option.value}>
                   {option.display}
                 </option>
               ))}
