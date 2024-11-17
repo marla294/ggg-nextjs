@@ -28,9 +28,15 @@ const ListBarStyles = styled.div`
   grid-gap: 0.5rem;
   font-size: 1rem;
 
-  input,
-  select {
+  input {
     padding: 1rem;
+    border: 1px solid black;
+    font-size: 1rem;
+    height: 2rem;
+  }
+
+  select {
+    padding: 0 10px;
     border: 1px solid black;
     font-size: 1rem;
     height: 2rem;
