@@ -5,7 +5,7 @@ import getShoppingListItems from "./getShoppingListItems";
 import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 import { ThreeDots } from "react-loader-spinner";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 const ClearButtonStyles = styled.button`
@@ -103,21 +103,16 @@ const sortOptions: SortOption[] = [
 
 export default function ShoppingList() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
   const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   // react-query
   const fetchShoppingListItems = async () => {
-    setIsLoading(true);
     const res = await getShoppingListItems({ sortBy });
     const result = JSON.parse(res as string);
-    setIsLoading(false);
     return result;
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["shoppingListItems", { sortBy }],
     queryFn: fetchShoppingListItems,
   });
@@ -134,15 +129,6 @@ export default function ShoppingList() {
       setSortBy(params.get("sortBy") || Sort.homeArea);
     }
   }, []);
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams((searchParams || "").toString());
-  //   if (sortBy) {
-  //     params.set("sortBy", sortBy);
-  //     router.push(pathname + "?" + params.toString());
-  //     fetchShoppingListItems();
-  //   }
-  // }, [sortBy]);
 
   return (
     <>
