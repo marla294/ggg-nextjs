@@ -108,6 +108,7 @@ export default function ShoppingList() {
   // react-query
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
+    console.log({ res });
     const result = JSON.parse(res as string);
     return result;
   };
@@ -208,7 +209,6 @@ export default function ShoppingList() {
                         ingredient={ingredient}
                         quantity={shoppingListItem?.quantity}
                         shoppingListItemId={shoppingListItem?._id}
-                        fetchShoppingListItems={fetchShoppingListItems}
                         sortBy={sortBy}
                       />
                     );

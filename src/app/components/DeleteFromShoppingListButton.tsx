@@ -18,12 +18,10 @@ const DeleteButton = styled.button`
 export default function DeleteFromShoppingListButton({
   shoppingListItem,
   isInList,
-  fetchShoppingListItems,
   sortBy,
 }: {
   shoppingListItem: any;
   isInList: boolean;
-  fetchShoppingListItems?: any;
   sortBy?: any;
 }) {
   const queryClient = useQueryClient();
@@ -42,10 +40,7 @@ export default function DeleteFromShoppingListButton({
           ingredientId: shoppingListItem?.ingredient?._id,
         });
       }
-      if (fetchShoppingListItems) {
-        await fetchShoppingListItems();
-      }
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: ["shoppingListItems"] });
       setDeleteLoading(false);
     } catch (e) {
       console.error(e);
