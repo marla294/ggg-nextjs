@@ -6,7 +6,7 @@ import ShoppingListItem from "../components/ShoppingListItem";
 import deleteShoppingListItem from "./[id]/deleteShoppingListItem";
 import { ThreeDots } from "react-loader-spinner";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const ClearButtonStyles = styled.button`
   width: 8rem;
@@ -103,6 +103,7 @@ const sortOptions: SortOption[] = [
 
 export default function ShoppingList() {
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
 
   // react-query
@@ -151,7 +152,9 @@ export default function ShoppingList() {
                     });
                   });
                 });
-                await fetchShoppingListItems();
+                queryClient.invalidateQueries({
+                  queryKey: ["shoppingListItems"],
+                });
               }
             }}>
             Clear
