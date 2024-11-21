@@ -7,6 +7,7 @@ import useForm from "../../lib/useForm";
 import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -93,8 +94,6 @@ const RecipeContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [shoppingListItem, setShoppingListItem] = useState<any>();
-  const [shoppingListItems, setShoppingListItems] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isEditing, setIsEditing] = useState<any>({});
@@ -102,7 +101,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const searchParams = useSearchParams();
   const sortBy = searchParams?.get("sortBy");
 
-  const fetchShoppingListItem = async () => {
+  const fetchShoppingListItems = async () => {
     let filterShoppingListItems: any;
     if (sortBy === "recipe") {
       filterShoppingListItems = { id: params.id };
@@ -113,9 +112,6 @@ export default function Page({ params }: { params: { id: string } }) {
     const res = await getShoppingListItems(filterShoppingListItems);
     const tempShoppingListItems = JSON.parse(res as string);
 
-    setShoppingListItem(tempShoppingListItems[0]);
-    setShoppingListItems(tempShoppingListItems);
-
     let items = {};
 
     tempShoppingListItems.forEach((item: any) => {
@@ -124,8 +120,11 @@ export default function Page({ params }: { params: { id: string } }) {
 
     setInputs({ ...inputs, ...items });
     setLoading(false);
+
+    return tempShoppingListItems;
   };
 
+  // TODO: Use react-query here
   const handleSubmit = async (shoppingListItemId: string, quantity: number) => {
     try {
       await editShoppingListItem({
@@ -137,18 +136,25 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
-  useEffect(() => {
-    fetchShoppingListItem();
-  }, []);
+  const { data: shoppingListItems } = useQuery({
+    queryKey: ["shoppingListItem"],
+    queryFn: fetchShoppingListItems,
+  });
 
   useEffect(() => {
-    if (shoppingListItem?.ingredient?.photo?.image?._meta?.url) {
-      setImageUrl(shoppingListItem?.ingredient?.photo?.image?._meta?.url);
+    if (
+      shoppingListItems?.length &&
+      shoppingListItems[0]?.ingredient?.photo?.image?._meta?.url
+    ) {
+      setImageUrl(shoppingListItems[0]?.ingredient?.photo?.image?._meta?.url);
     }
-    if (shoppingListItem?.ingredient?.photo?.imageUrl) {
-      setImageUrl(shoppingListItem?.ingredient?.photo?.imageUrl);
+    if (
+      shoppingListItems?.length &&
+      shoppingListItems[0]?.ingredient?.photo?.imageUrl
+    ) {
+      setImageUrl(shoppingListItems[0]?.ingredient?.photo?.imageUrl);
     }
-  }, [shoppingListItem]);
+  }, [shoppingListItems]);
 
   return (
     <div>
@@ -160,8 +166,8 @@ export default function Page({ params }: { params: { id: string } }) {
               <img
                 src={imageUrl}
                 alt={
-                  shoppingListItem?.ingredient?.photo?.altText ||
-                  shoppingListItem?.ingredient?.name
+                  shoppingListItems[0]?.ingredient?.photo?.altText ||
+                  shoppingListItems[0]?.ingredient?.name
                 }
               />
             ) : (
@@ -169,84 +175,105 @@ export default function Page({ params }: { params: { id: string } }) {
             )}
           </div>
           <div>
-            <h3>{shoppingListItem?.ingredient?.name}</h3>
-            {shoppingListItems?.map((item: any) => (
-              <RecipeContainer key={item?._id}>
-                <div>{item?.recipe?.name}</div>
-                <AmountContainer>
-                  <h4>
-                    Amount:{" "}
-                    {isEditing[item._id] ? (
-                      <EditInput
-                        required
-                        type="text"
-                        id={`quantity_${item._id}`}
-                        name={`quantity_${item._id}`}
-                        placeholder="Quantity"
-                        value={inputs[`quantity_${item._id}`]}
-                        onChange={handleChange}
-                      />
-                    ) : inputs[`quantity_${item._id}`] ? (
-                      inputs[`quantity_${item._id}`]
-                    ) : (
-                      0
-                    )}{" "}
-                    {shoppingListItem?.ingredient?.units === "none"
-                      ? ""
-                      : shoppingListItem?.ingredient?.units}{" "}
-                  </h4>
-                  {!isEditing[item._id] && (
-                    <EditAmountButton
-                      onClick={() => {
-                        setIsEditing({ ...isEditing, [item._id]: true });
-                      }}>
-                      Edit Amount
-                    </EditAmountButton>
-                  )}
-                  {isEditing[item._id] && (
-                    <EditButtonContainer>
-                      <SubmitAmountButton
+            <h3>
+              {shoppingListItems?.length &&
+                shoppingListItems[0]?.ingredient?.name}
+            </h3>
+            {shoppingListItems?.length &&
+              shoppingListItems?.map((item: any) => (
+                <RecipeContainer key={item?._id}>
+                  <div>{item?.recipe?.name}</div>
+                  <AmountContainer>
+                    <h4>
+                      Amount:{" "}
+                      {isEditing[item._id] ? (
+                        <EditInput
+                          required
+                          type="text"
+                          id={`quantity_${item._id}`}
+                          name={`quantity_${item._id}`}
+                          placeholder="Quantity"
+                          value={inputs[`quantity_${item._id}`]}
+                          onChange={handleChange}
+                        />
+                      ) : inputs[`quantity_${item._id}`] ? (
+                        inputs[`quantity_${item._id}`]
+                      ) : (
+                        0
+                      )}{" "}
+                      {shoppingListItems[0]?.ingredient?.units === "none"
+                        ? ""
+                        : shoppingListItems[0]?.ingredient?.units}{" "}
+                    </h4>
+                    {!isEditing[item._id] && (
+                      <EditAmountButton
                         onClick={() => {
-                          handleSubmit(
-                            item._id,
-                            inputs[`quantity_${item._id}`]
-                          );
-                          setIsEditing({ ...isEditing, [item._id]: false });
+                          setIsEditing({ ...isEditing, [item._id]: true });
                         }}>
-                        Submit
-                      </SubmitAmountButton>
-                      <CancelEditAmountButton
-                        onClick={() => {
-                          setIsEditing({ ...isEditing, [item._id]: false });
-                        }}>
-                        &times;
-                      </CancelEditAmountButton>
-                    </EditButtonContainer>
-                  )}
-                </AmountContainer>
-              </RecipeContainer>
-            ))}
+                        Edit Amount
+                      </EditAmountButton>
+                    )}
+                    {isEditing[item._id] && (
+                      <EditButtonContainer>
+                        <SubmitAmountButton
+                          onClick={() => {
+                            handleSubmit(
+                              item._id,
+                              inputs[`quantity_${item._id}`]
+                            );
+                            setIsEditing({ ...isEditing, [item._id]: false });
+                          }}>
+                          Submit
+                        </SubmitAmountButton>
+                        <CancelEditAmountButton
+                          onClick={() => {
+                            setIsEditing({ ...isEditing, [item._id]: false });
+                          }}>
+                          &times;
+                        </CancelEditAmountButton>
+                      </EditButtonContainer>
+                    )}
+                  </AmountContainer>
+                </RecipeContainer>
+              ))}
 
             <div>
               Aisle:{" "}
-              {shoppingListItem?.ingredient?.aisle?.name ||
-                shoppingListItem?.ingredient?.aisle}
+              {(shoppingListItems?.length &&
+                shoppingListItems[0]?.ingredient?.aisle?.name) ||
+                (shoppingListItems?.length &&
+                  shoppingListItems[0]?.ingredient?.aisle)}
             </div>
             <div>
               Home Area:{" "}
-              {shoppingListItem?.ingredient?.homeArea?.name ||
-                shoppingListItem?.ingredient?.homeArea}
+              {(shoppingListItems?.length &&
+                shoppingListItems[0]?.ingredient?.homeArea?.name) ||
+                (shoppingListItems?.length &&
+                  shoppingListItems[0]?.ingredient?.homeArea)}
             </div>
-            <div>Units: {shoppingListItem?.ingredient?.units}</div>
+            <div>
+              Units:{" "}
+              {shoppingListItems?.length &&
+                shoppingListItems[0]?.ingredient?.units}
+            </div>
             <div>
               Store:{" "}
-              {shoppingListItem?.ingredient?.store?.name ||
-                shoppingListItem?.ingredient?.store}
+              {(shoppingListItems?.length &&
+                shoppingListItems[0]?.ingredient?.store?.name) ||
+                (shoppingListItems?.length &&
+                  shoppingListItems[0]?.ingredient?.store)}
             </div>
             <ButtonContainer>
-              <EditIngredientButton id={shoppingListItem?.ingredient?._id} />
+              <EditIngredientButton
+                id={
+                  shoppingListItems?.length &&
+                  shoppingListItems[0]?.ingredient?._id
+                }
+              />
               <DeleteFromShoppingListButton
-                shoppingListItem={shoppingListItem}
+                shoppingListItem={
+                  shoppingListItems?.length && shoppingListItems[0]
+                }
                 isInList={false}
               />
             </ButtonContainer>
