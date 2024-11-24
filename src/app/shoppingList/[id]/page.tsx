@@ -94,7 +94,6 @@ const RecipeContainer = styled.div`
 `;
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [loading, setLoading] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isEditing, setIsEditing] = useState<any>({});
   const { handleChange, inputs, setInputs } = useForm({});
@@ -119,7 +118,6 @@ export default function Page({ params }: { params: { id: string } }) {
     });
 
     setInputs({ ...inputs, ...items });
-    setLoading(false);
 
     return tempShoppingListItems;
   };
@@ -136,7 +134,7 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
-  const { data: shoppingListItems } = useQuery({
+  const { data: shoppingListItems, isLoading } = useQuery({
     queryKey: ["shoppingListItem"],
     queryFn: fetchShoppingListItems,
   });
@@ -156,10 +154,12 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   }, [shoppingListItems]);
 
+  // TODO: If shopping list item doesn't exist, show them a message
+  // TODO: Loading symbol
   return (
     <div>
-      {loading && <div>Loading...</div>}
-      {!loading && (
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && (
         <SingleItemStyles>
           <div>
             {imageUrl ? (
