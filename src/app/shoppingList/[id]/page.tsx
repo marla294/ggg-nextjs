@@ -8,6 +8,7 @@ import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingLis
 import EditIngredientButton from "../../components/EditIngredientButton";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { ThreeDots } from "react-loader-spinner";
 
 const SingleItemStyles = styled.div`
   padding: 0 10%;
@@ -158,7 +159,21 @@ export default function Page({ params }: { params: { id: string } }) {
   // TODO: Loading symbol
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <ThreeDots
+          visible={true}
+          height="13"
+          width="40"
+          color="gray"
+          radius="9"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{
+            display: "grid",
+            justifyItems: "center",
+          }}
+          wrapperClass=""
+        />
+      )}
       {!isLoading && (
         <SingleItemStyles>
           <div>
