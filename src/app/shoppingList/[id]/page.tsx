@@ -7,7 +7,7 @@ import useForm from "../../lib/useForm";
 import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 const SingleItemStyles = styled.div`
@@ -123,17 +123,21 @@ export default function Page({ params }: { params: { id: string } }) {
     return tempShoppingListItems;
   };
 
-  // TODO: Use react-query here
-  const handleSubmit = async (shoppingListItemId: string, quantity: number) => {
-    try {
+  const addRecipeToShoppingListMutation = useMutation({
+    mutationFn: async (vars: {
+      shoppingListItemId: string;
+      quantity: number;
+    }) => {
       await editShoppingListItem({
-        id: shoppingListItemId,
-        quantity: quantity,
+        id: vars?.shoppingListItemId,
+        quantity: vars?.quantity,
       });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+    },
+    onSuccess: () => {
+      // TODO: Invalidate queries
+      // queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
+    },
+  });
 
   const { data: shoppingListItems, isLoading } = useQuery({
     queryKey: ["shoppingListItem"],
@@ -156,7 +160,6 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [shoppingListItems]);
 
   // TODO: If shopping list item doesn't exist, show them a message
-  // TODO: Loading symbol
   return (
     <div>
       {isLoading && (
@@ -232,10 +235,10 @@ export default function Page({ params }: { params: { id: string } }) {
                       <EditButtonContainer>
                         <SubmitAmountButton
                           onClick={() => {
-                            handleSubmit(
-                              item._id,
-                              inputs[`quantity_${item._id}`]
-                            );
+                            addRecipeToShoppingListMutation.mutate({
+                              shoppingListItemId: item?._id || "",
+                              quantity: inputs[`quantity_${item._id}`] || 0,
+                            });
                             setIsEditing({ ...isEditing, [item._id]: false });
                           }}>
                           Submit
