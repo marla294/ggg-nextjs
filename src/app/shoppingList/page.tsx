@@ -106,7 +106,6 @@ export default function ShoppingList() {
   const queryClient = useQueryClient();
   const [sortBy, setSortBy] = useState<any>(Sort.homeArea);
 
-  // react-query
   const fetchShoppingListItems = async () => {
     const res = await getShoppingListItems({ sortBy });
     const result = JSON.parse(res as string);

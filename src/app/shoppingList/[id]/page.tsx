@@ -7,7 +7,7 @@ import useForm from "../../lib/useForm";
 import DeleteFromShoppingListButton from "../../components/DeleteFromShoppingListButton";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import { useSearchParams } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 const SingleItemStyles = styled.div`
@@ -100,6 +100,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const { handleChange, inputs, setInputs } = useForm({});
   const searchParams = useSearchParams();
   const sortBy = searchParams?.get("sortBy");
+  const queryClient = useQueryClient();
 
   const fetchShoppingListItems = async () => {
     let filterShoppingListItems: any;
@@ -123,7 +124,7 @@ export default function Page({ params }: { params: { id: string } }) {
     return tempShoppingListItems;
   };
 
-  const addRecipeToShoppingListMutation = useMutation({
+  const editShoppingListItemMutation = useMutation({
     mutationFn: async (vars: {
       shoppingListItemId: string;
       quantity: number;
@@ -134,8 +135,7 @@ export default function Page({ params }: { params: { id: string } }) {
       });
     },
     onSuccess: () => {
-      // TODO: Invalidate queries
-      // queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
+      queryClient.invalidateQueries({ queryKey: ["shoppingListItems"] });
     },
   });
 
@@ -235,7 +235,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <EditButtonContainer>
                         <SubmitAmountButton
                           onClick={() => {
-                            addRecipeToShoppingListMutation.mutate({
+                            editShoppingListItemMutation.mutate({
                               shoppingListItemId: item?._id || "",
                               quantity: inputs[`quantity_${item._id}`] || 0,
                             });
