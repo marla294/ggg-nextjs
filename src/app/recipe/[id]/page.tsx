@@ -122,8 +122,9 @@ export default function Page({ params }: { params: { id: string } }) {
       }
     },
     onSuccess: () => {
-      // TODO: Invalidate shopping list query once that is in
-      queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
+      queryClient.invalidateQueries({
+        queryKey: ["recipeQuery", "shoppingListItems"],
+      });
     },
   });
 
@@ -137,8 +138,9 @@ export default function Page({ params }: { params: { id: string } }) {
       }
     },
     onSuccess: () => {
-      // TODO: Invalidate shopping list query once that is in
-      queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
+      queryClient.invalidateQueries({
+        queryKey: ["recipeQuery", "shoppingListItems"],
+      });
     },
   });
 

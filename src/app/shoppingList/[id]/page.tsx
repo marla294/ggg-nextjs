@@ -145,7 +145,6 @@ export default function Page({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    console.log({ shoppingListItems });
     if (
       shoppingListItems?.length &&
       shoppingListItems[0]?.ingredient?.photo?.image?._meta?.url
