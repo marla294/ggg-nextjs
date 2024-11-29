@@ -24,6 +24,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     setInputs({ ...inputs, ...tempRecipes[0] });
   };
 
+  // TODO: Convert to react-query
   useEffect(() => {
     fetchRecipe();
   }, []);
@@ -34,6 +35,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     reader.readAsDataURL(changeEvent.target.files[0]);
   };
 
+  // TODO: Convert to react-query
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
