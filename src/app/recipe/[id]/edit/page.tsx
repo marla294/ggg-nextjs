@@ -7,6 +7,7 @@ import getRecipes from "../../../recipes/getRecipes";
 import addRecipeImage from "../../../recipes/add/addRecipeImage";
 import editRecipe from "./editRecipe";
 import RecipeForm from "../../../components/RecipeForm";
+import { useQuery } from "@tanstack/react-query";
 
 export default function EditRecipe({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -28,6 +29,11 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
   useEffect(() => {
     fetchRecipe();
   }, []);
+
+  const { data: shoppingListItems, isLoading } = useQuery({
+    queryKey: ["recipeQuery"],
+    queryFn: fetchRecipe,
+  });
 
   const handleImageChange = (changeEvent: any) => {
     const reader = new FileReader();
