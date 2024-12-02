@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useForm from "../../../lib/useForm";
-import IngredientForm from "../../../components/IngredientForm";
 import getRecipes from "../../../recipes/getRecipes";
 import addRecipeImage from "../../../recipes/add/addRecipeImage";
 import editRecipe from "./editRecipe";
 import RecipeForm from "../../../components/RecipeForm";
 import { useQuery } from "@tanstack/react-query";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function EditRecipe({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -22,18 +22,19 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
   const fetchRecipe = async () => {
     const res = await getRecipes({ id: params.id });
     const tempRecipes = JSON.parse(res as string);
-    setInputs({ ...inputs, ...tempRecipes[0] });
+    return tempRecipes;
   };
 
-  // TODO: Convert to react-query
-  useEffect(() => {
-    fetchRecipe();
-  }, []);
-
-  const { data: shoppingListItems, isLoading } = useQuery({
+  const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipeQuery"],
     queryFn: fetchRecipe,
   });
+
+  useEffect(() => {
+    if (recipes) {
+      setInputs({ ...inputs, ...recipes[0] });
+    }
+  }, [recipes]);
 
   const handleImageChange = (changeEvent: any) => {
     const reader = new FileReader();
@@ -95,14 +96,32 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <RecipeForm
-        handleChange={handleChange}
-        inputs={inputs}
-        handleImageChange={handleImageChange}
-        handleSubmit={handleSubmit}
-        loading={loading}
-        formName={"Edit"}
-      />
+      {isLoading ? (
+        <div className="details">
+          <ThreeDots
+            visible={true}
+            height="15"
+            width="40"
+            color="#4fa94d"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{
+              display: "grid",
+              justifyItems: "center",
+            }}
+            wrapperClass=""
+          />
+        </div>
+      ) : (
+        <RecipeForm
+          handleChange={handleChange}
+          inputs={inputs}
+          handleImageChange={handleImageChange}
+          handleSubmit={handleSubmit}
+          loading={loading}
+          formName={"Edit"}
+        />
+      )}
     </div>
   );
 }
