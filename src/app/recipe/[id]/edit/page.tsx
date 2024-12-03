@@ -6,7 +6,7 @@ import getRecipes from "../../../recipes/getRecipes";
 import addRecipeImage from "../../../recipes/add/addRecipeImage";
 import editRecipe from "./editRecipe";
 import RecipeForm from "../../../components/RecipeForm";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function EditRecipe({ params }: { params: { id: string } }) {
@@ -28,6 +28,19 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipeQuery"],
     queryFn: fetchRecipe,
+  });
+
+  const editRecipeMutation = useMutation({
+    mutationFn: async (vars: { img: any }) => {
+      await editRecipe({
+        id: params.id,
+        ...inputs,
+        photoId: vars?.img?._id,
+      });
+    },
+    onSuccess: () => {
+      // queryClient.invalidateQueries({ queryKey: ["shoppingListItems"] });
+    },
   });
 
   useEffect(() => {
