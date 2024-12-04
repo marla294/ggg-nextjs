@@ -40,6 +40,8 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     },
     onSuccess: () => {
       // queryClient.invalidateQueries({ queryKey: ["shoppingListItems"] });
+      setLoading(false);
+      router.push("/recipes");
     },
   });
 
@@ -95,13 +97,14 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     }
 
     try {
-      await editRecipe({
-        id: params.id,
-        ...inputs,
-        photoId: img?._id,
-      });
-      setLoading(false);
-      router.push("/recipes");
+      // await editRecipe({
+      //   id: params.id,
+      //   ...inputs,
+      //   photoId: img?._id,
+      // });
+      await editRecipeMutation.mutate({ img });
+      // setLoading(false);
+      // router.push("/recipes");
     } catch (e) {
       console.error(e);
     }
