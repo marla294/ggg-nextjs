@@ -6,7 +6,7 @@ import getRecipes from "../../../recipes/getRecipes";
 import addRecipeImage from "../../../recipes/add/addRecipeImage";
 import editRecipe from "./editRecipe";
 import RecipeForm from "../../../components/RecipeForm";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function EditRecipe({ params }: { params: { id: string } }) {
@@ -18,6 +18,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     description: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   const fetchRecipe = async () => {
     const res = await getRecipes({ id: params.id });
@@ -39,9 +40,12 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
       });
     },
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["shoppingListItems"] });
+      queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
       setLoading(false);
       router.push("/recipes");
+    },
+    onError: (e) => {
+      console.error(e);
     },
   });
 
@@ -57,7 +61,6 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     reader.readAsDataURL(changeEvent.target.files[0]);
   };
 
-  // TODO: Convert to react-query
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
@@ -96,18 +99,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
       img = tempRecipeImage;
     }
 
-    try {
-      // await editRecipe({
-      //   id: params.id,
-      //   ...inputs,
-      //   photoId: img?._id,
-      // });
-      await editRecipeMutation.mutate({ img });
-      // setLoading(false);
-      // router.push("/recipes");
-    } catch (e) {
-      console.error(e);
-    }
+    await editRecipeMutation.mutate({ img });
   };
 
   return (
