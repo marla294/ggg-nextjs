@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useForm from "../../../lib/useForm";
 import getRecipes from "../../../recipes/getRecipes";
@@ -17,7 +17,6 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     recipeLink: "",
     description: "",
   });
-  const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const fetchRecipe = async () => {
@@ -41,7 +40,6 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["recipeQuery"] });
-      setLoading(false);
       router.push("/recipes");
     },
     onError: (e) => {
@@ -63,7 +61,6 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
 
     const form = e.currentTarget;
     const fileInput: any = Array.from(form.elements).find(
@@ -126,7 +123,7 @@ export default function EditRecipe({ params }: { params: { id: string } }) {
           inputs={inputs}
           handleImageChange={handleImageChange}
           handleSubmit={handleSubmit}
-          loading={loading}
+          loading={editRecipeMutation.isPending}
           formName={"Edit"}
         />
       )}
