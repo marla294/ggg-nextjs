@@ -200,7 +200,23 @@ export default function ShoppingList() {
           data?.map((grouping: any) => {
             return (
               <div key={grouping[0]}>
-                <h3>{grouping[0]}</h3>
+                <h3>
+                  {grouping[0]}{" "}
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      grouping[1]?.forEach(async (item: any) => {
+                        await deleteShoppingListItem({
+                          ingredientId: item?.ingredient?._id,
+                        });
+                      });
+                      queryClient.invalidateQueries({
+                        queryKey: ["shoppingListItems"],
+                      });
+                    }}>
+                    &times;
+                  </button>
+                </h3>
                 <GroupingContainer>
                   {grouping[1]?.map((shoppingListItem: any) => {
                     const { ingredient } = shoppingListItem;
