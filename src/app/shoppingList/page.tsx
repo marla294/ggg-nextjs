@@ -207,7 +207,7 @@ export default function ShoppingList() {
                     onClick={async () => {
                       grouping[1]?.forEach(async (item: any) => {
                         await deleteShoppingListItem({
-                          ingredientId: item?.ingredient?._id,
+                          shoppingListItemId: item?._id,
                         });
                       });
                       queryClient.invalidateQueries({
