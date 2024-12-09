@@ -112,7 +112,7 @@ export default function ShoppingList() {
     return result;
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["shoppingListItems", { sortBy }],
     queryFn: fetchShoppingListItems,
   });
@@ -195,7 +195,9 @@ export default function ShoppingList() {
             />
           </CenteredContainer>
         )}
-        {/* {error && <CenteredContainer>An error has occurred</CenteredContainer>} */}
+        {isError && (
+          <CenteredContainer>An error has occurred</CenteredContainer>
+        )}
         {!isLoading &&
           data?.map((grouping: any) => {
             return (
