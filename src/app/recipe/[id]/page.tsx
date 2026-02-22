@@ -154,6 +154,14 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   }, [recipe]);
 
+  const handleDeleteRecipe = () => {
+    const confirmed = confirm("Are you sure you want to delete?");
+
+    if (!confirmed) return;
+
+    deleteRecipeMutation.mutate();
+  };
+
   return (
     <div>
       {isLoadingRecipe ? (
@@ -222,7 +230,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 </AddToShoppingListButton>
                 <DeleteRecipeButton
                   onClick={() => {
-                    deleteRecipeMutation.mutate();
+                    handleDeleteRecipe();
                   }}>
                   {deleteRecipeMutation?.isPending ? (
                     <ThreeDots
