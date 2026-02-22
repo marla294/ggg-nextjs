@@ -15,7 +15,7 @@ export async function getSession() : Promise<User | null> {
     const session = encryptedSession
         ? await unsealData(encryptedSession, {
             password: sessionPassword,
-        })
+        }) as string
         : null;
 
     return session ? JSON.parse(session) as User : null;
