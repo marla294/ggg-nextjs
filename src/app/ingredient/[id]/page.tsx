@@ -1,14 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import getIngredients from "../../ingredients/getIngredients";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
-import deleteIngredient from "./deleteIngredient";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import ButtonStyles from "../../components/styles/ButtonStyles";
-import getRecipeItems from "../../recipes/getRecipeItems";
+import useIngredient from "./useIngredient";
 
 const CenteredContainer = styled.div`
   height: 50vh;
@@ -95,67 +92,20 @@ const ButtonContainer = styled.div`
 
 export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const [ingredient, setIngredient] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [recipesLoading, setRecipesLoading] = useState<boolean>(true);
-  const [addToShoppingListLoading, setAddToShoppingListLoading] =
-    useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(1);
-  const [recipes, setRecipes] = useState<any>();
 
-  const fetchIngredient = async () => {
-    const res = await getIngredients({ id: params.id });
-    const tempIngredients = JSON.parse(res as string);
-    setIngredient(tempIngredients[0]);
-    setLoading(false);
-  };
-
-  const fetchRecipes = async () => {
-    if (ingredient) {
-      const res = await getRecipeItems({ ingredientId: ingredient?._id });
-      const tempRecipeItems = JSON.parse(res as string);
-      const tempRecipes = tempRecipeItems.map(
-        (recipeItem: any) => recipeItem?.recipe?.name
-      );
-      setRecipes(tempRecipes);
-      setRecipesLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    setDeleteLoading(true);
-
-    try {
-      await deleteIngredient({
-        ingredientId: ingredient?._id,
-      });
-      setLoading(false);
-      router.push("/ingredients");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleQuantityChange = (e: any) => {
-    const val = e.target.value;
-    setQuantity(val);
-  };
-
-  useEffect(() => {
-    fetchIngredient();
-  }, []);
-
-  useEffect(() => {
-    if (ingredient?.photo?.image?._meta?.url) {
-      setImageUrl(ingredient?.photo?.image?._meta?.url);
-    }
-    if (ingredient?.photo?.imageUrl) {
-      setImageUrl(ingredient?.photo?.imageUrl);
-    }
-    fetchRecipes();
-  }, [ingredient]);
+  const {
+    ingredient,
+    loading,
+    imageUrl,
+    deleteLoading,
+    recipesLoading,
+    addToShoppingListLoading,
+    setAddToShoppingListLoading,
+    quantity,
+    recipes,
+    handleDelete,
+    handleQuantityChange,
+  } = useIngredient(params.id);
 
   return (
     <div>
