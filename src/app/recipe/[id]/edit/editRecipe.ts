@@ -3,6 +3,14 @@ import { ObjectId } from "mongodb";
 import dbConnect from "../../../../../lib/dbconnect";
 import Recipe from "../../../../../models/Recipe";
 
+type RecipeDTO = {
+  name?: string | null | undefined;
+  type?: string | null | undefined;
+  recipeLink?: string | null | undefined;
+  description?: string | null | undefined;
+  photo?: any;
+}
+
 export default async ({
   id,
   name,
@@ -22,7 +30,7 @@ export default async ({
     await dbConnect();
 
     const filter = { _id: id};
-    let update: any = {name, type, recipeLink, description};
+    let update: RecipeDTO = {name, type, recipeLink, description};
 
     if (photoId) {
       update = {...update, photo: new ObjectId(photoId)}
