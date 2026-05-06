@@ -1,83 +1,121 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import deleteIngredient from "./deleteIngredient";
 import getRecipeItems from "../../recipes/getRecipeItems";
 import { useRouter } from "next/navigation";
 import getIngredients from "../../ingredients/getIngredients";
 
-const useIngredient = (id: any) => {
-  const [ingredient, setIngredient] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [recipesLoading, setRecipesLoading] = useState<boolean>(true);
+type Action = {
+  type: string;
+  payload: any;
+};
+
+const useIngredient = (id: string) => {
   const [addToShoppingListLoading, setAddToShoppingListLoading] =
     useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(1);
-  const [recipes, setRecipes] = useState<any>();
   const router = useRouter();
 
+  const reducer = (state: any, action: Action) => {
+    switch (action.type) {
+      case "fetchIngredientSuccess":
+        return { ...state, loading: false, ingredient: action.payload };
+      case "fetchRecipes":
+        return { ...state, recipesLoading: false, recipes: action.payload };
+      case "setLoadingState":
+        return { ...state, loading: action.payload };
+      case "setDeleteLoadingState":
+        return { ...state, deleteLoading: action.payload };
+      case "setImageUrl":
+        return { ...state, imageUrl: action.payload };
+      case "updateQuantity":
+        return { ...state, quantity: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, {
+    ingredient: null,
+    loading: true,
+    imageUrl: "",
+    deleteLoading: false,
+    recipesLoading: true,
+    quantity: 1,
+    recipes: null,
+  });
+
   const fetchIngredient = useCallback(async () => {
-    const res = await getIngredients({ id });
-    const tempIngredients = JSON.parse(res as string);
-    setIngredient(tempIngredients[0]);
-    setLoading(false);
+    dispatch({ type: "setLoadingState", payload: true });
+    try {
+      const res = await getIngredients({ id });
+      const tempIngredients = JSON.parse(res as string);
+      dispatch({ type: "fetchIngredientSuccess", payload: tempIngredients[0] });
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: "setLoadingState", payload: false });
+    }
   }, []);
 
   const fetchRecipes = useCallback(async () => {
-    if (ingredient) {
-      const res = await getRecipeItems({ ingredientId: ingredient?._id });
+    if (state.ingredient) {
+      const res = await getRecipeItems({ ingredientId: state.ingredient?._id });
       const tempRecipeItems = JSON.parse(res as string);
       const tempRecipes = tempRecipeItems.map(
         (recipeItem: any) => recipeItem?.recipe?.name,
       );
-      setRecipes(tempRecipes);
-      setRecipesLoading(false);
+      dispatch({ type: "fetchRecipes", payload: tempRecipes });
     }
-  }, [ingredient]);
+  }, [state.ingredient]);
 
   const handleDelete = async () => {
-    setDeleteLoading(true);
+    dispatch({ type: "setDeleteLoadingState", payload: true });
 
     try {
       await deleteIngredient({
-        ingredientId: ingredient?._id,
+        ingredientId: state.ingredient?._id,
       });
-      setLoading(false);
+      dispatch({ type: "setDeleteLoadingState", payload: false });
       router.push("/ingredients");
     } catch (e) {
       console.error(e);
+      dispatch({ type: "setDeleteLoadingState", payload: false });
     }
   };
 
   const handleQuantityChange = (e: any) => {
-    const val = e.target.value;
-    setQuantity(val);
+    dispatch({ type: "updateQuantity", payload: e.target.value });
   };
 
   useEffect(() => {
     fetchIngredient();
   }, []);
 
+  // TODO: refactor
   useEffect(() => {
-    if (ingredient?.photo?.image?._meta?.url) {
-      setImageUrl(ingredient?.photo?.image?._meta?.url);
+    if (state.ingredient?.photo?.image?._meta?.url) {
+      dispatch({
+        type: "setImageUrl",
+        payload: state.ingredient?.photo?.image?._meta?.url,
+      });
     }
-    if (ingredient?.photo?.imageUrl) {
-      setImageUrl(ingredient?.photo?.imageUrl);
+    if (state.ingredient?.photo?.imageUrl) {
+      dispatch({
+        type: "setImageUrl",
+        payload: state.ingredient?.photo?.imageUrl,
+      });
     }
     fetchRecipes();
-  }, [ingredient]);
+  }, [state.ingredient]);
 
   return {
-    ingredient,
-    loading,
-    imageUrl,
-    deleteLoading,
-    recipesLoading,
+    ingredient: state.ingredient,
+    loading: state.loading,
+    imageUrl: state.imageUrl,
+    deleteLoading: state.deleteLoading,
+    recipesLoading: state.recipesLoading,
     addToShoppingListLoading,
     setAddToShoppingListLoading,
-    quantity,
-    recipes,
+    quantity: state.quantity,
+    recipes: state.recipes,
     handleDelete,
     handleQuantityChange,
   };
