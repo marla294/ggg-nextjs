@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useReducer, useState } from "react";
-import deleteIngredient from "./deleteIngredient";
-import getRecipeItems from "../../recipes/getRecipeItems";
+import deleteIngredient from "../ingredient/[id]/deleteIngredient";
+import getRecipeItems from "../recipes/getRecipeItems";
 import { useRouter } from "next/navigation";
-import getIngredients from "../../ingredients/getIngredients";
+import getIngredients from "../ingredients/getIngredients";
 
 type Action = {
   type: string;
@@ -17,9 +17,23 @@ const useIngredient = (id: string) => {
   const reducer = (state: any, action: Action) => {
     switch (action.type) {
       case "fetchIngredientSuccess":
-        return { ...state, loading: false, ingredient: action.payload };
-      case "fetchRecipes":
+        return {
+          ...state,
+          ingredientLoading: false,
+          ingredient: action.payload,
+          ingredientError: false,
+        };
+      case "fetchIngredientError":
+        return {
+          ...state,
+          ingredientLoading: false,
+          ingredient: null,
+          ingredientError: true,
+        };
+      case "fetchRecipesSuccess":
         return { ...state, recipesLoading: false, recipes: action.payload };
+      case "setRecipesLoadingState":
+        return { ...state, recipesLoading: action.payload };
       case "setLoadingState":
         return { ...state, loading: action.payload };
       case "setDeleteLoadingState":
@@ -35,7 +49,8 @@ const useIngredient = (id: string) => {
 
   const [state, dispatch] = useReducer(reducer, {
     ingredient: null,
-    loading: true,
+    ingredientLoading: true,
+    ingredientError: false,
     imageUrl: "",
     deleteLoading: false,
     recipesLoading: true,
@@ -48,21 +63,35 @@ const useIngredient = (id: string) => {
     try {
       const res = await getIngredients({ id });
       const tempIngredients = JSON.parse(res as string);
-      dispatch({ type: "fetchIngredientSuccess", payload: tempIngredients[0] });
+      if (!tempIngredients || tempIngredients.length === 0) {
+        dispatch({ type: "fetchIngredientError", payload: null });
+      } else {
+        dispatch({
+          type: "fetchIngredientSuccess",
+          payload: tempIngredients[0],
+        });
+      }
     } catch (e) {
-      console.error(e);
-      dispatch({ type: "setLoadingState", payload: false });
+      dispatch({ type: "fetchIngredientError", payload: null });
     }
   }, []);
 
   const fetchRecipes = useCallback(async () => {
     if (state.ingredient) {
-      const res = await getRecipeItems({ ingredientId: state.ingredient?._id });
-      const tempRecipeItems = JSON.parse(res as string);
-      const tempRecipes = tempRecipeItems.map(
-        (recipeItem: any) => recipeItem?.recipe?.name,
-      );
-      dispatch({ type: "fetchRecipes", payload: tempRecipes });
+      dispatch({ type: "setRecipesLoadingState", payload: true });
+      try {
+        const res = await getRecipeItems({
+          ingredientId: state.ingredient?._id,
+        });
+        const tempRecipeItems = JSON.parse(res as string);
+        const tempRecipes = tempRecipeItems.map(
+          (recipeItem: any) => recipeItem?.recipe?.name,
+        );
+        dispatch({ type: "fetchRecipesSuccess", payload: tempRecipes });
+      } catch (e) {
+        console.error(e);
+        dispatch({ type: "setRecipesLoadingState", payload: false });
+      }
     }
   }, [state.ingredient]);
 
@@ -108,7 +137,8 @@ const useIngredient = (id: string) => {
 
   return {
     ingredient: state.ingredient,
-    loading: state.loading,
+    ingredientError: state.ingredientError,
+    loading: state.ingredientLoading,
     imageUrl: state.imageUrl,
     deleteLoading: state.deleteLoading,
     recipesLoading: state.recipesLoading,

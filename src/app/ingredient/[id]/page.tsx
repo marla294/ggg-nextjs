@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import addIngredientToShoppingList from "./addIngredientToShoppingList";
 import EditIngredientButton from "../../components/EditIngredientButton";
 import ButtonStyles from "../../components/styles/ButtonStyles";
-import useIngredient from "./useIngredient";
+import useIngredient from "../../hooks/useIngredient";
 
 const CenteredContainer = styled.div`
   height: 50vh;
@@ -95,6 +95,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const {
     ingredient,
+    ingredientError,
     loading,
     imageUrl,
     deleteLoading,
@@ -126,7 +127,7 @@ export default function Page({ params }: { params: { id: string } }) {
           />
         </CenteredContainer>
       )}
-      {!loading && (
+      {!loading && !ingredientError && (
         <SingleItemStyles>
           <div>
             {imageUrl ? (
@@ -220,6 +221,11 @@ export default function Page({ params }: { params: { id: string } }) {
             )}
           </div>
         </SingleItemStyles>
+      )}
+      {ingredientError && (
+        <CenteredContainer>
+          An error occurred loading this ingredient. Please try again.
+        </CenteredContainer>
       )}
     </div>
   );
