@@ -6,7 +6,7 @@ import getIngredients from "../ingredients/getIngredients";
 
 type Action = {
   type: string;
-  payload: any;
+  payload?: any;
 };
 
 const useIngredient = (id: string) => {
@@ -16,26 +16,31 @@ const useIngredient = (id: string) => {
 
   const reducer = (state: any, action: Action) => {
     switch (action.type) {
+      case "startFetchingIngredient":
+        return {
+          ...state,
+          ingredientLoading: true,
+          ingredient: null,
+          ingredientError: null,
+        };
       case "fetchIngredientSuccess":
         return {
           ...state,
           ingredientLoading: false,
           ingredient: action.payload,
-          ingredientError: false,
+          ingredientError: null,
         };
       case "fetchIngredientError":
         return {
           ...state,
           ingredientLoading: false,
           ingredient: null,
-          ingredientError: true,
+          ingredientError: action.payload,
         };
       case "fetchRecipesSuccess":
         return { ...state, recipesLoading: false, recipes: action.payload };
       case "setRecipesLoadingState":
         return { ...state, recipesLoading: action.payload };
-      case "setLoadingState":
-        return { ...state, loading: action.payload };
       case "setDeleteLoadingState":
         return { ...state, deleteLoading: action.payload };
       case "setImageUrl":
@@ -59,12 +64,15 @@ const useIngredient = (id: string) => {
   });
 
   const fetchIngredient = useCallback(async () => {
-    dispatch({ type: "setLoadingState", payload: true });
+    dispatch({ type: "startFetchingIngredient" });
     try {
       const res = await getIngredients({ id });
       const tempIngredients = JSON.parse(res as string);
       if (!tempIngredients || tempIngredients.length === 0) {
-        dispatch({ type: "fetchIngredientError", payload: null });
+        dispatch({
+          type: "fetchIngredientError",
+          payload: "Could not find ingredient, please try again.",
+        });
       } else {
         dispatch({
           type: "fetchIngredientSuccess",
@@ -72,7 +80,10 @@ const useIngredient = (id: string) => {
         });
       }
     } catch (e) {
-      dispatch({ type: "fetchIngredientError", payload: null });
+      dispatch({
+        type: "fetchIngredientError",
+        payload: "An error occurred, please try again.",
+      });
     }
   }, []);
 

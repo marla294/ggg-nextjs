@@ -223,9 +223,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </SingleItemStyles>
       )}
       {ingredientError && (
-        <CenteredContainer>
-          An error occurred loading this ingredient. Please try again.
-        </CenteredContainer>
+        <CenteredContainer>{ingredientError}</CenteredContainer>
       )}
     </div>
   );
